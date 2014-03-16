@@ -32,6 +32,8 @@ public class Objects {
 	public static Sprite fish_sprite;
 	public static Texture shark_image;
 	public static Sprite shark_sprite;
+	public static Texture enemy1_image;
+	public static Sprite enemy1_sprite;
 	
 	public static void loadMainMenu(){
 		wave_image = new Texture(Gdx.files.internal("menu/waves.png"));
@@ -77,6 +79,10 @@ public class Objects {
 		
 		turtle_image = new Texture(Gdx.files.internal("play/turtle.png"));
 		turtle_sprite = new Sprite(turtle_image);
+		
+		enemy1_image = new Texture(Gdx.files.internal("play/turtle.png"));
+		enemy1_sprite =  new Sprite(enemy1_image);
+		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));
 		fish_sprite = new Sprite(turtle_image);
