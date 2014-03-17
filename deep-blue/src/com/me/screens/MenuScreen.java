@@ -50,10 +50,10 @@ public class MenuScreen implements Screen{
 		wave_x++;
 		
 		batch.draw(Objects.background_sprite, 0, 0);
-		batch.draw(Objects.tutorial_sprite, 709, 347);
-		batch.draw(Objects.play_sprite, 881, 501);
-		batch.draw(Objects.leaderboards_sprite, 675, 669);
-		batch.draw(Objects.credits_sprite, 809, 831);
+		batch.draw(Objects.tutorial_sprite, 359, 377);
+		batch.draw(Objects.play_sprite, 57, 360);
+		batch.draw(Objects.leaderboards_sprite, 640, 371);
+		batch.draw(Objects.credits_sprite, 919, 348);
 		
 		batch.end();
 	}
