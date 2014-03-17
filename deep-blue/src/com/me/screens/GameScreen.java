@@ -18,7 +18,10 @@ public class GameScreen implements Screen{
 	Player player;
 	Enemy enemy;
 	int tracker = 0;
-	long start = System.currentTimeMillis();
+	long start = System.currentTimeMillis();	//Keep track of enemy spawning
+	long startGameTime = System.currentTimeMillis(); //Keep track of total game length
+	boolean firstEnemy = false;
+	int levelSpeed = 1;
 	
 	public GameScreen(DeepBlue game){
 		Objects.loadPlay();
@@ -31,9 +34,22 @@ public class GameScreen implements Screen{
 		player = new Player();
 	}
 	
+	//Spawn Enemy1 Function
 	public void spawnEnemy()
 	{
+		//TODO Edit Spawn enemy function based on enemies height.
 		enemy = new Enemy((int)camera.position.x + 700, 100 + (int)(Math.random() * ((500 - 100) + 1)));
+		firstEnemy = true;
+	}
+	
+	//Flip Enemy to chase function
+	public void turnEnemy()
+	{
+		if(enemy.forward)
+		{
+			Objects.enemy1_sprite.flip(true, false); 
+			enemy.forward = false;
+		}
 	}
 	
 	@Override
@@ -47,8 +63,15 @@ public class GameScreen implements Screen{
 		batch.begin();
 		//RENDERING CODE GOES HERE
 		
-		//Default scroll speed
-		camera.position.x++;
+		//Scroll Speed Increase for level feel TODO balance int increases are too abrupt
+		long currentGameTime = System.currentTimeMillis();
+		if(currentGameTime - startGameTime > 50000)
+		{
+			levelSpeed++;
+			startGameTime = System.currentTimeMillis();
+			currentGameTime = System.currentTimeMillis();
+		}
+		camera.position.x += levelSpeed;
 		//System.out.println(camera.position.x++);
 		
 		//Scrolling screen code
@@ -59,15 +82,37 @@ public class GameScreen implements Screen{
 		//Enemy Spawning Timer (Randomness to come)
 		long current = System.currentTimeMillis();
 		//System.out.println(start - current);
-		if(current - start > 15000)
+		if(current - start > 22000)
 		{
-			spawnEnemy();
-			start = System.currentTimeMillis();
-			current = System.currentTimeMillis();
+			if(firstEnemy == false)
+			{
+				spawnEnemy();	
+				start = System.currentTimeMillis();
+				current = System.currentTimeMillis();
+			} else {
+				if(!enemy.alive)
+				{
+					spawnEnemy();	
+					start = System.currentTimeMillis();
+					current = System.currentTimeMillis();
+				}
+			}
 		}
 		//Enemy Pursue
-		if(enemy != null && enemy.x > player.x) //Stops pursuing if it has been passed
-			enemy.pursue(player.y);
+		if(enemy != null && !enemy.checkPassed(player.x)) //Stops pursuing if it has been passed
+		{
+			enemy.pursue(player.y,1);
+		}
+		//kill the enemy if it has gone off the screen
+		else if(enemy != null && enemy.x < player.x + 2000)
+		{
+			enemy.killUnit();
+		}
+		else if(enemy != null)
+		{
+			enemy.chase(1);
+			turnEnemy();
+		}
 		
 		
 		Objects.sea_sprite.draw(batch);
