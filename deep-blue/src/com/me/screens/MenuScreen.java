@@ -43,6 +43,8 @@ public class MenuScreen implements Screen{
 		batch.begin();
 		
 		//RENDERING CODE GOES HERE
+		batch.draw(Objects.blue_sprite, 0, 0);
+		
 		if(wave_x >= 1200)
 			wave_x = 0;
 		batch.draw(Objects.wave_sprite, wave_x, 0);
@@ -62,7 +64,7 @@ public class MenuScreen implements Screen{
 		if(Gdx.input.isTouched()){
 			click.set(Gdx.input.getX(),Gdx.input.getY(),0);
 			camera.unproject(click);
-			if(click.x >= 881 && click.x <= 1121 && click.y >= 501 && click.y <= 650){
+			if(click.x >= 57 && click.x <= 290 && click.y >= 360 && click.y <= 504){
 				dispose();
 				play_screen = new GameScreen(game);
 				game.setScreen(play_screen);

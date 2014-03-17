@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class Objects {
 
 	//Main Menu Images
+	public static Texture blue_image;
+	public static Sprite blue_sprite;
 	public static Texture wave_image;
 	public static Sprite wave_sprite;
 	public static Sprite wave_sprite1;
@@ -36,6 +38,11 @@ public class Objects {
 	public static Sprite enemy1_sprite;
 	
 	public static void loadMainMenu(){
+		blue_image = new Texture(Gdx.files.internal("menu/blueSea.jpg"));
+		blue_image.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		blue_sprite = new Sprite(blue_image);
+		blue_sprite.flip(false, true);
+		
 		wave_image = new Texture(Gdx.files.internal("menu/waves.png"));
 		wave_image.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		wave_sprite = new Sprite(wave_image);
