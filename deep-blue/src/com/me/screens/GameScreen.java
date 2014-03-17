@@ -1,9 +1,12 @@
 package com.me.screens;
 
+import java.awt.Font;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Objects;
@@ -15,8 +18,11 @@ public class GameScreen implements Screen{
 	DeepBlue game;
 	OrthographicCamera camera;
 	SpriteBatch batch;
+	BitmapFont font = new BitmapFont(true);
+	//BitmapFont font = new BitmapFont((Gdx.files.internal("data/Cartoon Blocks.ttf")), true);
 	Player player;
 	Enemy enemy;
+	float score = 0;
 	int tracker = 0;
 	long start = System.currentTimeMillis();	//Keep track of enemy spawning
 	long startGameTime = System.currentTimeMillis(); //Keep track of total game length
@@ -124,12 +130,14 @@ public class GameScreen implements Screen{
 		//batch.draw(Objects.sea_sprite, 0, 0);
 		
 		batch.draw(Objects.turtle_sprite, player.x, player.y);
+		font.draw(batch, "Score: " + Integer.toString((int)score), camera.position.x, camera.position.y - 250);
 		batch.end();
 	}
 	
 	public void update(){
 		camera.update();
 		player.update();
+		score += 0.01;
 	}
 
 	@Override
