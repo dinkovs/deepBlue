@@ -4,10 +4,12 @@ import java.awt.Font;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Objects;
 import com.me.units.Enemy;
@@ -18,8 +20,9 @@ public class GameScreen implements Screen{
 	DeepBlue game;
 	OrthographicCamera camera;
 	SpriteBatch batch;
-	BitmapFont font = new BitmapFont(true);
-	//BitmapFont font = new BitmapFont((Gdx.files.internal("data/Cartoon Blocks.ttf")), true);
+	FileHandle fontFile;
+	FreeTypeFontGenerator generator;
+	BitmapFont font;
 	Player player;
 	Enemy enemy;
 	float score = 0;
@@ -38,6 +41,12 @@ public class GameScreen implements Screen{
 		
 		batch = new SpriteBatch();
 		player = new Player();
+		
+		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
+		generator = new FreeTypeFontGenerator(fontFile);
+		font = generator.generateFont(70);
+		generator.dispose();
+		font.setScale(1,-1);
 	}
 	
 	//Spawn Enemy1 Function
@@ -130,14 +139,14 @@ public class GameScreen implements Screen{
 		//batch.draw(Objects.sea_sprite, 0, 0);
 		
 		batch.draw(Objects.turtle_sprite, player.x, player.y);
-		font.draw(batch, "Score: " + Integer.toString((int)score), camera.position.x, camera.position.y - 250);
+		font.draw(batch, "Score: " + Integer.toString((int)score), camera.position.x - 550, camera.position.y - 230);
 		batch.end();
 	}
 	
 	public void update(){
 		camera.update();
 		player.update();
-		score += 0.01;
+		score += 0.03;
 	}
 
 	@Override
