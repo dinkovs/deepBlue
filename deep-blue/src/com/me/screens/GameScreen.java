@@ -1,19 +1,21 @@
 package com.me.screens;
 
-import java.awt.Font;
-
+import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.deepblue.DeepBlue;
-import com.me.deepblue.Objects;
-import com.me.units.Enemy;
-import com.me.units.Player;
+import com.me.deepblue.Images;
+import com.me.entities.Bubble;
+import com.me.entities.Enemy;
+import com.me.entities.Player;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class GameScreen implements Screen{
 
@@ -22,7 +24,6 @@ public class GameScreen implements Screen{
 	SpriteBatch batch;
 	FileHandle fontFile;
 	FreeTypeFontGenerator generator;
-	BitmapFont font;
 	Player player;
 	Enemy enemy;
 	float score = 0;
@@ -32,16 +33,27 @@ public class GameScreen implements Screen{
 	boolean firstEnemy = false;
 	int levelSpeed = 1;
 	
-	public GameScreen(DeepBlue game){
-		Objects.loadPlay();
+	private BitmapFont font = new BitmapFont();
+	//for the turtle
+	Character speedy;
+	ArrayList<Bubble> bubbles;
+	ShapeRenderer sr; // <--- for bubbles, for now
+	
+	public GameScreen(DeepBlue game) {
+		Images.loadPlay();
 		this.game = game;
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true,1200,600);
 		
 		batch = new SpriteBatch();
-		player = new Player();
 		
+		//allows player to shoot bubbles
+		sr = new ShapeRenderer();
+		bubbles = new ArrayList<Bubble>();
+		player = new Player(bubbles);
+		
+		//cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
 		generator = new FreeTypeFontGenerator(fontFile);
 		font = generator.generateFont(70);
@@ -62,17 +74,18 @@ public class GameScreen implements Screen{
 	{
 		if(enemy.forward)
 		{
-			Objects.enemy1_sprite.flip(true, false); 
+			Images.enemy1_sprite.flip(true, false); 
 			enemy.forward = false;
 		}
 	}
+	
 	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		update();
+		update(Gdx.graphics.getDeltaTime());
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
@@ -90,9 +103,9 @@ public class GameScreen implements Screen{
 		//System.out.println(camera.position.x++);
 		
 		//Scrolling screen code
-		if(camera.position.x -1200 / 2 > Objects.sea_sprite1.getX()){
-			Objects.sea_sprite.setPosition(Objects.sea_sprite1.getX(),0);
-	        Objects.sea_sprite1.setPosition(Objects.sea_sprite.getX() + 1200, 0);
+		if(camera.position.x -1200 / 2 > Images.sea_sprite1.getX()){
+			Images.sea_sprite.setPosition(Images.sea_sprite1.getX(),0);
+	        Images.sea_sprite1.setPosition(Images.sea_sprite.getX() + 1200, 0);
 	    }
 		//Enemy Spawning Timer (Randomness to come)
 		long current = System.currentTimeMillis();
@@ -130,25 +143,48 @@ public class GameScreen implements Screen{
 		}
 		
 		
-		Objects.sea_sprite.draw(batch);
-		Objects.sea_sprite1.draw(batch);	
+		Images.sea_sprite.draw(batch);
+		Images.sea_sprite1.draw(batch);	
 		
 		if(enemy != null)
-			batch.draw(Objects.enemy1_sprite,enemy.x,enemy.y);
+			batch.draw(Images.enemy1_sprite,enemy.x,enemy.y);
 		
 		//batch.draw(Objects.sea_sprite, 0, 0);
 		
-		batch.draw(Objects.turtle_sprite, player.x, player.y);
+		batch.draw(Images.turtle_sprite, player.x, player.y);
 		font.draw(batch, "Score: " + Integer.toString((int)score), camera.position.x - 550, camera.position.y - 230);
+
 		batch.end();
+		
+		}
+	
+	public void update(float dt){
+		camera.update();
+		player.handleInput();
+		score += 0.03;
+		//for shooting bubbles
+		for(int i = 0; i < bubbles.size(); i++) {
+			bubbles.get(i).update(dt);
+			if (bubbles.get(i).shouldRemove()) {
+				bubbles.remove(i);
+				i--;
+			}	
+		}
 	}
 	
-	public void update(){
-		camera.update();
-		player.update();
-		score += 0.03;
+	public void draw() {
+		//drawing bubbles
+		for(int i = 0; i < bubbles.size(); i++) {
+			bubbles.get(i).draw(sr);
+			
+		//drawing score - DOESN'T WORK YET
+		batch.setColor(Color.CYAN);
+		batch.begin();
+		font.draw(batch, "Score: ", 1000, 1000);
+		batch.end();
+		}
 	}
-
+	
 	@Override
 	public void show() {
 		

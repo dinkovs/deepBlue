@@ -1,8 +1,8 @@
-package com.me.units;
+package com.me.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Enemy 
+public class Enemy extends SeaObjects
 {
 	public int x;
 	public int y;
@@ -19,7 +19,7 @@ public class Enemy
 	
 	//Lame pursue algorithm only "chases" on the y at some vertical speed based on multiplier
 	//Horizontal speed is determined by the camera speed
-	public void pursue(int player_y, int multiplier)
+	public void pursue(float player_y, int multiplier)
 	{
 		if(y != player_y)
 		{
@@ -38,7 +38,7 @@ public class Enemy
 	
 	//Method to check whether this enemy has been paced by the player
 	//In which case a new AI approach will be used
-	public boolean checkPassed(int player_x)
+	public boolean checkPassed(float player_x)
 	{
 		if(player_x > x)
 			return true; //Player has passed the enemy
