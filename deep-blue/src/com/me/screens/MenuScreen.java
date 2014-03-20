@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.me.deepblue.DeepBlue;
-import com.me.deepblue.Objects;
+import com.me.deepblue.Images;
 
 public class MenuScreen implements Screen{
 
@@ -20,7 +20,7 @@ public class MenuScreen implements Screen{
 	public GameScreen play_screen;
 	
 	public MenuScreen(DeepBlue game){
-		Objects.loadMainMenu();
+		Images.loadMainMenu();
 		this.game = game;
 		
 		
@@ -43,19 +43,20 @@ public class MenuScreen implements Screen{
 		batch.begin();
 		
 		//RENDERING CODE GOES HERE
-		batch.draw(Objects.blue_sprite, 0, 0);
+		batch.draw(Images.blue_sprite, 0, 0);
 		
 		if(wave_x >= 1200)
 			wave_x = 0;
-		batch.draw(Objects.wave_sprite, wave_x, 0);
-		batch.draw(Objects.wave_sprite1, wave_x - 1200, 0);
+		batch.draw(Images.wave_sprite, wave_x, 0);
+		batch.draw(Images.wave_sprite1, wave_x - 1200, 0);
 		wave_x++;
 		
-		batch.draw(Objects.background_sprite, 0, 0);
-		batch.draw(Objects.tutorial_sprite, 359, 377);
-		batch.draw(Objects.play_sprite, 57, 360);
-		batch.draw(Objects.leaderboards_sprite, 640, 371);
-		batch.draw(Objects.credits_sprite, 919, 348);
+
+		batch.draw(Images.background_sprite, 0, 0);
+		batch.draw(Images.tutorial_sprite, 359, 377);
+		batch.draw(Images.play_sprite, 57, 360);
+		batch.draw(Images.leaderboards_sprite, 640, 371);
+		batch.draw(Images.credits_sprite, 919, 348);
 		
 		batch.end();
 	}
