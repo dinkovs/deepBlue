@@ -1,9 +1,11 @@
 package com.me.entities;
 
+
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.me.screens.GameScreen;
 
 //Speedy the Turtle
 //Flipper the Dolphin
@@ -22,7 +24,7 @@ public class Player extends SeaObjects {
     //Power-up
     private ArrayList<Bubble> bubbles;
     
-    public Player(ArrayList<Bubble> bubbles) {
+    public Player(ArrayList<Bubble> bubbles, GameScreen play_screen) {
 	//START PLAYER IN MIDDLE OF SCREEN
 	x = 960 - 64;
 	y = 540 - 64;
@@ -63,7 +65,10 @@ public class Player extends SeaObjects {
   	//movement
   	public void handleInput(){
   		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
-  			x -= 5;
+  			//if (x - 5 <= player.getCameraX() + 600) didn't get this working, i don't
+  			//think i can't just use game screen as a parameter unless i change the camera
+  			//position in this class as well
+  				x -= 5;
   		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
   			x += 5;
   		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))

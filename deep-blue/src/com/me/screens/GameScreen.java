@@ -51,7 +51,7 @@ public class GameScreen implements Screen{
 		//allows player to shoot bubbles
 		sr = new ShapeRenderer();
 		bubbles = new ArrayList<Bubble>();
-		player = new Player(bubbles);
+		player = new Player(bubbles, this);
 		
 		//cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
@@ -215,5 +215,8 @@ public class GameScreen implements Screen{
 
 	@Override
 	public void hide() {
+	}
+	public int getCameraX() {
+		return (int)camera.position.x;
 	}
 }
