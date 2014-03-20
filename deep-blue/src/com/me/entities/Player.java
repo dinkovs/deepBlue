@@ -67,9 +67,13 @@ public class Player extends SeaObjects {
   		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
   			x += 5;
   		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
+  			if (y + 5 <= 472)
   			y += 5;
+  			else y = 472;
   		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
-  			y -= 5;
+  			if (y - 5 >= 0)
+  				y -= 5;
+  			else y = 0;
   		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
   			for (int i = 1; i <= 10; i++) {
   			System.out.println(i + ". SHOOTING NOW");
