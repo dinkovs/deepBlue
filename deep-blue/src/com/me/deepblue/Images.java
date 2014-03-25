@@ -36,6 +36,10 @@ public class Images {
 	public static Sprite shark_sprite;
 	public static Texture enemy1_image;
 	public static Sprite enemy1_sprite;
+	public static Texture scoreplus_image;
+	public static Sprite scoreplus_sprite;
+	public static Texture scorespeedup_image;
+	public static Sprite scorespeedup_sprite;
 	
 	public static void loadMainMenu(){
 		blue_image = new Texture(Gdx.files.internal("menu/blueSea.jpg"));
@@ -90,6 +94,14 @@ public class Images {
 		enemy1_image = new Texture(Gdx.files.internal("play/shark.png"));
 		enemy1_sprite =  new Sprite(enemy1_image);
 		enemy1_sprite.flip(false, true);
+		
+		scoreplus_image = new Texture(Gdx.files.internal("play/scoreplus.png"));
+		scoreplus_sprite =  new Sprite(scoreplus_image);
+		scoreplus_sprite.flip(false, true);
+		
+		scorespeedup_image = new Texture(Gdx.files.internal("play/scorespeedup.png"));
+		scorespeedup_sprite =  new Sprite(scorespeedup_image);
+		scorespeedup_sprite.flip(false, true);
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));

@@ -15,16 +15,19 @@ import com.me.deepblue.Images;
 import com.me.entities.Bubble;
 import com.me.entities.Enemy;
 import com.me.entities.Player;
+import com.me.entities.PowerUp;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class GameScreen implements Screen{
 
 	DeepBlue game;
 	OrthographicCamera camera;
-	SpriteBatch batch;
+	public SpriteBatch batch;
 	FileHandle fontFile;
 	FreeTypeFontGenerator generator;
 	Player player;
+	PowerUp scorePlus;
+	PowerUp scoreSpeedUp;
 	Enemy enemy;
 	float score = 0;
 	int tracker = 0;
@@ -52,6 +55,8 @@ public class GameScreen implements Screen{
 		sr = new ShapeRenderer();
 		bubbles = new ArrayList<Bubble>();
 		player = new Player(bubbles, this);
+		scorePlus = new PowerUp(1,800);
+		scoreSpeedUp = new PowerUp(1,800);
 		
 		//cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
@@ -151,9 +156,10 @@ public class GameScreen implements Screen{
 		
 		//batch.draw(Objects.sea_sprite, 0, 0);
 		
+		batch.draw(Images.scorespeedup_sprite, scoreSpeedUp.x, scoreSpeedUp.y);
 		batch.draw(Images.turtle_sprite, player.x, player.y);
 		font.draw(batch, "Score: " + Integer.toString((int)score), camera.position.x - 550, camera.position.y - 230);
-
+		
 		batch.end();
 		
 		}

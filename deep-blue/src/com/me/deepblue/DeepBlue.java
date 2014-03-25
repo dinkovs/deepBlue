@@ -4,11 +4,13 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.screens.MenuScreen;
 
 public class DeepBlue extends Game implements ApplicationListener{
 
 	public MenuScreen main_menu_screen;
+	public SpriteBatch batch;
 	
 	@Override
 	public void create() {
