@@ -28,6 +28,7 @@ public class GameScreen implements Screen{
 	Player player;
 	PowerUp scorePlus;
 	PowerUp scoreSpeedUp;
+	float powerUpCountDown;
 	Enemy enemy;
 	float score = 0;
 	int tracker = 0;
@@ -55,8 +56,8 @@ public class GameScreen implements Screen{
 		sr = new ShapeRenderer();
 		bubbles = new ArrayList<Bubble>();
 		player = new Player(bubbles, this);
-		scorePlus = new PowerUp(1,800);
-		scoreSpeedUp = new PowerUp(1,800);
+		scorePlus = new PowerUp(1, 800);
+		scoreSpeedUp = new PowerUp(2, 800);
 		
 		//cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
@@ -147,17 +148,50 @@ public class GameScreen implements Screen{
 			turnEnemy();
 		}
 		
-		
+		//DRAW BACKGROUND
 		Images.sea_sprite.draw(batch);
 		Images.sea_sprite1.draw(batch);	
 		
-		if(enemy != null)
+		//DRAW OBJECTS
+		if (enemy != null)
 			batch.draw(Images.enemy1_sprite,enemy.x,enemy.y);
-		
-		//batch.draw(Objects.sea_sprite, 0, 0);
-		
-		batch.draw(Images.scorespeedup_sprite, scoreSpeedUp.x, scoreSpeedUp.y);
+		if (!scoreSpeedUp.activated)
+			batch.draw(scoreSpeedUp.image, scoreSpeedUp.x, scoreSpeedUp.y);
+		if (!scorePlus.activated)
+			batch.draw(scorePlus.image, scorePlus.x, scorePlus.y);
 		batch.draw(Images.turtle_sprite, player.x, player.y);
+		
+		//CHECK COLLISIONS
+		if(player.boundingBox.overlaps(scoreSpeedUp.boundingBox) &&
+				!scoreSpeedUp.activated) {
+			scoreSpeedUp.active = true;
+			scoreSpeedUp.activated = true;
+			powerUpCountDown = 10;
+		}
+		
+		if(player.boundingBox.overlaps(scorePlus.boundingBox) &&
+				!scorePlus.activated) {
+			scorePlus.activated = true;
+			score += 100;
+		}
+		
+		//CHECK POWERUPS
+		if(powerUpCountDown <= 0) {
+			scoreSpeedUp.active = false;
+		} 
+		else {
+			powerUpCountDown -= .02;
+			font.draw(batch, "PowerUp: " + Integer.toString((int)powerUpCountDown), camera.position.x - 150, camera.position.y);
+			if (scoreSpeedUp.active == true) score += .1;
+		}
+		
+		//RESET THE POWERUPS
+		if ((System.currentTimeMillis() % 22000) < 1000)
+			scoreSpeedUp.reset(camera.position.x);
+		if ((System.currentTimeMillis() % 30000) < 1000)
+			scorePlus.reset(camera.position.x);
+		
+		//DISPLAY SCORE
 		font.draw(batch, "Score: " + Integer.toString((int)score), camera.position.x - 550, camera.position.y - 230);
 		
 		batch.end();
@@ -167,7 +201,7 @@ public class GameScreen implements Screen{
 	public void update(float dt){
 		camera.update();
 		player.handleInput();
-		score += 0.03;
+		score += 0.02;
 		//for shooting bubbles
 		for(int i = 0; i < bubbles.size(); i++) {
 			bubbles.get(i).update(dt);
@@ -182,12 +216,6 @@ public class GameScreen implements Screen{
 		//drawing bubbles
 		for(int i = 0; i < bubbles.size(); i++) {
 			bubbles.get(i).draw(sr);
-			
-		//drawing score - DOESN'T WORK YET
-		batch.setColor(Color.CYAN);
-		batch.begin();
-		font.draw(batch, "Score: ", 1000, 1000);
-		batch.end();
 		}
 	}
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.Rectangle;
 import com.me.screens.GameScreen;
 
 //Speedy the Turtle
@@ -25,13 +26,14 @@ public class Player extends SeaObjects {
     private ArrayList<Bubble> bubbles;
     
     public Player(ArrayList<Bubble> bubbles, GameScreen play_screen) {
-	//START PLAYER IN MIDDLE OF SCREEN
-	x = 960 - 64;
-	y = 540 - 64;
-	
-	health = 100;
-	lives = 3;
-	score = 0;
+    	//START PLAYER IN MIDDLE OF SCREEN
+    	x = 960 - 64;
+    	y = 540 - 64;
+    	boundingBox = new Rectangle (this.x,y,144,121);
+    	
+    	health = 100;
+    	lives = 3;
+    	score = 0;
 	
 	this.bubbles = bubbles;
 	}
@@ -68,16 +70,22 @@ public class Player extends SeaObjects {
   			//if (x - 5 <= player.getCameraX() + 600) didn't get this working, i don't
   			//think i can't just use game screen as a parameter unless i change the camera
   			//position in this class as well
-  				x -= 5;
+  			x -= 5;
+  			boundingBox.x = x;
   		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
   			x += 5;
+  			boundingBox.x = x;
   		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
-  			if (y + 5 <= 472)
-  			y += 5;
+  			if (y + 5 <= 472) {
+  				y += 5;
+  				boundingBox.y = y;
+  			}
   			else y = 472;
   		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
-  			if (y - 5 >= 0)
+  			if (y - 5 >= 0) {
   				y -= 5;
+  				boundingBox.y = y;
+  			}
   			else y = 0;
   		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
   			for (int i = 1; i <= 10; i++) {
