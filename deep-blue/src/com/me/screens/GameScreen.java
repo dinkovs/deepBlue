@@ -207,15 +207,6 @@ public class GameScreen implements Screen{
 		
 		//UPLOAD SCORE TO LEADERBOARD
 		if (player.health == 0) {
-		    // if (lastScore >= Settings.highscores[4])
-		    //  scoreString = "NEW HIGHSCORE: " + lastScore;
-		    // else
-		    //  scoreString = "SCORE: " + lastScore;
-		    // Settings.addScore(lastScore);
-		    // Settings.save();
-		    
-		    // Submit score to the leaderboard
-		    // Replace MY_LEADERBOARD_ID with your Leaderboard ID from the Swarm Admin Panel
 		    SwarmLeaderboard.submitScore(15236, score);
 		}
 		
