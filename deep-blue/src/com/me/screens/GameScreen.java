@@ -17,6 +17,7 @@ import com.me.entities.Bubble;
 import com.me.entities.Enemy;
 import com.me.entities.Player;
 import com.me.entities.PowerUp;
+import com.swarmconnect.SwarmLeaderboard;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class GameScreen implements Screen{
@@ -164,11 +165,11 @@ public class GameScreen implements Screen{
 		
 		//CHECK COLLISIONS
 		
-		if (player.boundingBox.overlaps(enemy.boundingBox)) {
+		/*if (player.boundingBox.overlaps(enemy.boundingBox)) {
 			scoreSpeedUp.active = true;
 			scoreSpeedUp.activated = true;
 			powerUpCountDown = 10;
-}
+		}*/
 		
 		if(player.boundingBox.overlaps(scoreSpeedUp.boundingBox) &&
 				!scoreSpeedUp.activated) {
@@ -204,6 +205,19 @@ public class GameScreen implements Screen{
 		
 		batch.end();
 		
+		//UPLOAD SCORE TO LEADERBOARD
+		if (player.health == 0) {
+		    // if (lastScore >= Settings.highscores[4])
+		    //  scoreString = "NEW HIGHSCORE: " + lastScore;
+		    // else
+		    //  scoreString = "SCORE: " + lastScore;
+		    // Settings.addScore(lastScore);
+		    // Settings.save();
+		    
+		    // Submit score to the leaderboard
+		    // Replace MY_LEADERBOARD_ID with your Leaderboard ID from the Swarm Admin Panel
+		    SwarmLeaderboard.submitScore(15236, score);
+		}
 		
 	}
 	
