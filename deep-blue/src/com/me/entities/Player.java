@@ -19,7 +19,7 @@ public class Player extends SeaObjects {
 	Player player;
 	private final int MAX_BUBBLES = 10;
 	TextureRegion[][] image = TextureRegion.split(Images.turtle_image, 128, 100);
-	int imageIterator;
+	float imageIterator;
 	
     //Attributes
     public int health;
@@ -46,10 +46,10 @@ public class Player extends SeaObjects {
     public TextureRegion getImage() {
 		
     	if (imageIterator < 49)
-    		imageIterator++;
+    		imageIterator += 0.5;
     	else
     		imageIterator = 0;
-    	return image[imageIterator / 5][4 - (imageIterator % 5)];
+    	return image[(int)imageIterator / 5][4 - ((int)imageIterator % 5)];
     	
     }
     

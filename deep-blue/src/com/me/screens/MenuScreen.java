@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Images;
+import com.swarmconnect.Swarm;
 
 public class MenuScreen implements Screen{
 
@@ -70,6 +71,8 @@ public class MenuScreen implements Screen{
 				play_screen = new GameScreen(game);
 				game.setScreen(play_screen);
 			}
+			else
+				Swarm.showLeaderboards();
 		}
 	}
 
