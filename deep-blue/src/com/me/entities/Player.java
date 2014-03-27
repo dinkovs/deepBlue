@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.me.deepblue.Images;
 import com.me.screens.GameScreen;
 
 //Speedy the Turtle
@@ -16,6 +18,8 @@ public class Player extends SeaObjects {
 	
 	Player player;
 	private final int MAX_BUBBLES = 10;
+	TextureRegion[][] image = TextureRegion.split(Images.turtle_image, 128, 100);
+	int imageIterator;
 	
     //Attributes
     private int health;
@@ -30,6 +34,7 @@ public class Player extends SeaObjects {
     	x = 960 - 64;
     	y = 540 - 64;
     	boundingBox = new Rectangle (this.x,y,144,121);
+    	imageIterator = -1;
     	
     	health = 100;
     	lives = 3;
@@ -37,6 +42,16 @@ public class Player extends SeaObjects {
 	
 	this.bubbles = bubbles;
 	}
+    
+    public TextureRegion getImage() {
+		
+    	if (imageIterator < 49)
+    		imageIterator++;
+    	else
+    		imageIterator = 0;
+    	return image[imageIterator / 5][imageIterator % 5];
+    	
+    }
     
     public int getHealth() { 
     	return health;

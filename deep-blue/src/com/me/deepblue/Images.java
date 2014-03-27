@@ -89,7 +89,6 @@ public class Images {
 		sea_sprite1.flip(false, true);
 		
 		turtle_image = new Texture(Gdx.files.internal("play/turtle.png"));
-		turtle_sprite = new Sprite(turtle_image);
 		
 		enemy1_image = new Texture(Gdx.files.internal("play/shark.png"));
 		enemy1_sprite =  new Sprite(enemy1_image);

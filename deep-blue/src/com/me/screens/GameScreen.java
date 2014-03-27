@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Images;
@@ -159,7 +160,7 @@ public class GameScreen implements Screen{
 			batch.draw(scoreSpeedUp.image, scoreSpeedUp.x, scoreSpeedUp.y);
 		if (!scorePlus.activated)
 			batch.draw(scorePlus.image, scorePlus.x, scorePlus.y);
-		batch.draw(Images.turtle_sprite, player.x, player.y);
+		batch.draw(player.getImage(), player.x, player.y);
 		
 		//CHECK COLLISIONS
 		if(player.boundingBox.overlaps(scoreSpeedUp.boundingBox) &&
