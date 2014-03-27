@@ -204,7 +204,8 @@ public class GameScreen implements Screen{
 		
 		batch.end();
 		
-		}
+		
+	}
 	
 	public void update(float dt){
 		camera.update();
