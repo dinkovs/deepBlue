@@ -22,7 +22,7 @@ public class Player extends SeaObjects {
 	int imageIterator;
 	
     //Attributes
-    private int health;
+    public int health;
     private int lives;
     private int score;
     
@@ -81,27 +81,34 @@ public class Player extends SeaObjects {
   
   	//movement
   	public void handleInput(float cameraX){
-  		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
-  			//if (x - 5 <= player.getCameraX() + 600) didn't get this working, i don't
-  			//think i can't just use game screen as a parameter unless i change the camera
-  			//position in this class as well
-  			x -= 5;
-  			boundingBox.x = x;
-  		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT))
-  			x += 5;
-  			boundingBox.x = x;
-  		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN))
+  		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
+  			if (x - 5 >= cameraX - 600) {
+  				x -= 5;
+  			}
+  			else x = cameraX - 600;
+			boundingBox.x = x;
+  		}
+  		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
+  			if (x + 5 <= cameraX + 472) {
+  				x += 5;
+  				boundingBox.x = x;
+  			}
+  			else x = cameraX + 472;
+  		}
+  		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
   			if (y + 5 <= 472) {
   				y += 5;
   				boundingBox.y = y;
   			}
   			else y = 472;
-  		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP))
+  		}
+  		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
   			if (y - 5 >= 0) {
   				y -= 5;
   				boundingBox.y = y;
   			}
   			else y = 0;
+  		}
   		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
   			for (int i = 1; i <= 10; i++) {
   			System.out.println(i + ". SHOOTING NOW");
@@ -111,4 +118,5 @@ public class Player extends SeaObjects {
 
     
 }
+
             

@@ -1,6 +1,7 @@
 package com.me.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Enemy extends SeaObjects
 {
@@ -15,6 +16,7 @@ public class Enemy extends SeaObjects
 		this.x = x;
 		this.y = y;
 		alive = true;
+    	boundingBox = new Rectangle (this.x,y,144,121);
 	}
 	
 	//Lame pursue algorithm only "chases" on the y at some vertical speed based on multiplier

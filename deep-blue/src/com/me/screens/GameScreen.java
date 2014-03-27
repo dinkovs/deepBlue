@@ -163,6 +163,13 @@ public class GameScreen implements Screen{
 		batch.draw(player.getImage(), player.x, player.y);
 		
 		//CHECK COLLISIONS
+		
+		if (player.boundingBox.overlaps(enemy.boundingBox)) {
+			scoreSpeedUp.active = true;
+			scoreSpeedUp.activated = true;
+			powerUpCountDown = 10;
+}
+		
 		if(player.boundingBox.overlaps(scoreSpeedUp.boundingBox) &&
 				!scoreSpeedUp.activated) {
 			scoreSpeedUp.active = true;
