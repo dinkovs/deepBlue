@@ -49,7 +49,7 @@ public class Player extends SeaObjects {
     		imageIterator++;
     	else
     		imageIterator = 0;
-    	return image[imageIterator / 5][imageIterator % 5];
+    	return image[imageIterator / 5][4 - (imageIterator % 5)];
     	
     }
     
@@ -80,7 +80,7 @@ public class Player extends SeaObjects {
     }
   
   	//movement
-  	public void handleInput(){
+  	public void handleInput(float cameraX){
   		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT))
   			//if (x - 5 <= player.getCameraX() + 600) didn't get this working, i don't
   			//think i can't just use game screen as a parameter unless i change the camera
