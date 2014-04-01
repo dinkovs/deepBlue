@@ -15,6 +15,7 @@ import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Images;
 import com.me.entities.Bubble;
 import com.me.entities.Enemy;
+import com.me.entities.Hook;
 import com.me.entities.Player;
 import com.me.entities.PowerUp;
 import com.swarmconnect.SwarmLeaderboard;
@@ -30,6 +31,8 @@ public class GameScreen implements Screen{
 	Player player;
 	PowerUp scorePlus;
 	PowerUp scoreSpeedUp;
+	Hook hook1;
+	Hook hook2;
 	float powerUpCountDown;
 	Enemy enemy;
 	float score = 0;
@@ -58,8 +61,13 @@ public class GameScreen implements Screen{
 		sr = new ShapeRenderer();
 		bubbles = new ArrayList<Bubble>();
 		player = new Player(bubbles, this);
+		
+		//IMPLEMENT GAME OBJECTS
 		scorePlus = new PowerUp(1, 800);
 		scoreSpeedUp = new PowerUp(2, 800);
+		hook1 = new Hook();
+		hook2 = new Hook ();
+		
 		
 		//cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
@@ -161,6 +169,8 @@ public class GameScreen implements Screen{
 		if (!scorePlus.activated)
 			batch.draw(scorePlus.image, scorePlus.x, scorePlus.y);
 		batch.draw(player.getImage(), player.x, player.y);
+		batch.draw(hook1.image, hook1.x, hook1.y);
+		batch.draw(hook2.image, hook2.x, hook2.y);
 		
 		//CHECK COLLISIONS
 		
@@ -183,12 +193,25 @@ public class GameScreen implements Screen{
 			score += 100;
 		}
 		
+		if(player.boundingBox.overlaps(hook1.boundingBox) &&
+				player.y != 0 && !hook1.hooked) {
+			player.pullUp();
+			hook1.pullUp();
+		}
+		
+		if(player.boundingBox.overlaps(hook2.boundingBox) &&
+				player.y != 0 && !hook2.hooked) {
+			player.pullUp();
+			hook2.pullUp();
+		}
+		
 		//CHECK POWERUPS
 		if(powerUpCountDown <= 0) {
 			scoreSpeedUp.active = false;
 		} 
 		else {
 			powerUpCountDown -= .02;
+			
 			font.draw(batch, "PowerUp: " + Integer.toString((int)powerUpCountDown), camera.position.x - 150, camera.position.y);
 			if (scoreSpeedUp.active == true) score += .1;
 		}
@@ -198,6 +221,10 @@ public class GameScreen implements Screen{
 			scoreSpeedUp.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 30000) < 1000)
 			scorePlus.reset(camera.position.x);
+		if ((System.currentTimeMillis() % 25000) < 1000)
+			hook1.reset(camera.position.x);
+		if ((System.currentTimeMillis() % 30000) < 1000)
+			hook2.reset(camera.position.x);
 		
 		//DISPLAY SCORE
 		font.draw(batch, "Score: " + Integer.toString((int)score), camera.position.x - 550, camera.position.y - 230);

@@ -40,6 +40,9 @@ public class Images {
 	public static Sprite scoreplus_sprite;
 	public static Texture scorespeedup_image;
 	public static Sprite scorespeedup_sprite;
+	public static Texture hook_image;
+	public static Sprite hook_sprite;
+	
 	
 	public static void loadMainMenu(){
 		blue_image = new Texture(Gdx.files.internal("menu/blueSea.jpg"));
@@ -101,6 +104,10 @@ public class Images {
 		scorespeedup_image = new Texture(Gdx.files.internal("play/scorespeedup.png"));
 		scorespeedup_sprite =  new Sprite(scorespeedup_image);
 		scorespeedup_sprite.flip(false, true);
+		
+		hook_image = new Texture(Gdx.files.internal("play/hook.png"));
+		hook_sprite =  new Sprite(hook_image);
+		hook_sprite.flip(false, true);
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));

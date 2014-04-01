@@ -78,6 +78,11 @@ public class Player extends SeaObjects {
     	System.out.println("SHOOTING NOW");
     	bubbles.add(new Bubble(x, y, radians));
     }
+    
+    public void pullUp() {
+    	y -= 10;
+    	boundingBox.y -= 10;
+    }
   
   	//movement
   	public void handleInput(float cameraX){

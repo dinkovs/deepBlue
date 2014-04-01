@@ -7,7 +7,6 @@ import com.me.deepblue.Images;
 
 public class PowerUp extends SeaObjects{
 	
-	public Sprite image;
 	public boolean active;
 	public boolean activated;
 	int type;
