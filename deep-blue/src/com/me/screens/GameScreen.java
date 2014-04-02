@@ -195,14 +195,16 @@ public class GameScreen implements Screen{
 		
 		if(player.boundingBox.overlaps(hook1.boundingBox) &&
 				player.y != 0 && !hook1.hooked) {
-			player.pullUp();
 			hook1.pullUp();
+			if((hook1.y + hook1.image.getHeight() - 128) < player.y )
+				player.pullUp();
 		}
 		
 		if(player.boundingBox.overlaps(hook2.boundingBox) &&
 				player.y != 0 && !hook2.hooked) {
-			player.pullUp();
 			hook2.pullUp();
+			if((hook2.y + hook2.image.getHeight() - 128) < player.y )
+				player.pullUp();
 		}
 		
 		//CHECK POWERUPS
