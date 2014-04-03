@@ -35,9 +35,8 @@ public class Player extends SeaObjects {
     private ArrayList<Bubble> bubbles;
     
     public Player(ArrayList<Bubble> bubbles, GameScreen play_screen) {
-    	//START PLAYER IN MIDDLE OF SCREEN
-    	x = 960 - 64;
-    	y = 540 - 64;
+    	x = 400;
+    	y = 250;
     	boundingBox = new Rectangle (this.x,y,144,121);
     	imageIterator = -1;
     	

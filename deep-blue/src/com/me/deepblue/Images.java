@@ -42,6 +42,11 @@ public class Images {
 	public static Sprite fishpowerup_sprite;
 	public static Texture hook_image;
 	public static Sprite hook_sprite;
+	public static Texture school_image;
+	public static Sprite school_sprite;
+	public static Texture school_image2;
+	public static Sprite school_sprite2;
+
 	
 	
 	public static void loadMainMenu(){
@@ -113,6 +118,14 @@ public class Images {
 		hook_image = new Texture(Gdx.files.internal("play/hook.png"));
 		hook_sprite =  new Sprite(hook_image);
 		hook_sprite.flip(false, true);
+		
+		school_image = new Texture(Gdx.files.internal("play/school.png"));
+		school_sprite =  new Sprite(school_image);
+		school_sprite.flip(true, true);
+		
+		school_image2 = new Texture(Gdx.files.internal("play/school2.png"));
+		school_sprite2 =  new Sprite(school_image2);
+		school_sprite2.flip(true, true);
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));
