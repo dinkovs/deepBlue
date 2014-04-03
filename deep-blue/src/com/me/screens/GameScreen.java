@@ -226,16 +226,17 @@ public class GameScreen implements Screen{
 		} 
 		else {
 			powerUpCountDown -= .02;
-			font.draw(batch, "PowerUp: " + Integer.toString((int)powerUpCountDown), camera.position.x - 150, camera.position.y);
+			font.draw(batch, "Score Speed-Up: " + Integer.toString((int)powerUpCountDown), camera.position.x - 180, camera.position.y + 100);
 			if (scoreSpeedUp.active == true) score += .1;
 		}
 		
 		if(fishCountDown <= 0) {
 			fishPowerUp.active = false;
+			player.form = 0;
 		} 
 		else {
 			fishCountDown -= .02;
-			font.draw(batch, "Fish Mode: " + Integer.toString((int)fishCountDown), camera.position.x - 150, camera.position.y + 300);
+			font.draw(batch, "Fish Mode: " + Integer.toString((int)fishCountDown), camera.position.x - 150, camera.position.y + 200);
 		}
 		
 		//RESET THE POWERUPS
@@ -249,7 +250,7 @@ public class GameScreen implements Screen{
 			hook2.reset(camera.position.x);
 		
 		//DISPLAY SCORE
-		font.draw(batch, "Score: " + Integer.toString((int)score), camera.position.x - 550, camera.position.y - 230);
+		font.draw(batch, "Score: " + Integer.toString((int)score), camera.position.x - 580, camera.position.y - 270);
 		
 		batch.end();
 		
