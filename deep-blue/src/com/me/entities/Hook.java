@@ -19,7 +19,7 @@ public class Hook extends SeaObjects{
 		if(x < (cameraX-600) || x > (cameraX+600)){
 			hooked = false;
 			x = cameraX + 600 + (float) (100 + (Math.random() * 1200));
-			y = (float) (Math.random() * -500);
+			y = (float) (Math.random() * -300) - 200;
 			boundingBox.x = x;
 			boundingBox.y = y;
 		}
