@@ -31,9 +31,11 @@ public class GameScreen implements Screen{
 	Player player;
 	PowerUp scorePlus;
 	PowerUp scoreSpeedUp;
+	PowerUp fishPowerUp;
 	Hook hook1;
 	Hook hook2;
 	float powerUpCountDown;
+	float fishCountDown;
 	Enemy enemy;
 	float score = 0;
 	int tracker = 0;
@@ -65,6 +67,7 @@ public class GameScreen implements Screen{
 		//IMPLEMENT GAME OBJECTS
 		scorePlus = new PowerUp(1, 800);
 		scoreSpeedUp = new PowerUp(2, 800);
+		fishPowerUp = new PowerUp(3, 1200);
 		hook1 = new Hook();
 		hook2 = new Hook ();
 		
@@ -168,6 +171,8 @@ public class GameScreen implements Screen{
 			batch.draw(scoreSpeedUp.image, scoreSpeedUp.x, scoreSpeedUp.y);
 		if (!scorePlus.activated)
 			batch.draw(scorePlus.image, scorePlus.x, scorePlus.y);
+		if (!fishPowerUp.activated)
+			batch.draw(fishPowerUp.image, fishPowerUp.x, fishPowerUp.y);
 		batch.draw(player.getImage(), player.x, player.y);
 		batch.draw(hook1.image, hook1.x, hook1.y);
 		batch.draw(hook2.image, hook2.x, hook2.y);
@@ -193,6 +198,14 @@ public class GameScreen implements Screen{
 			score += 100;
 		}
 		
+		if(player.boundingBox.overlaps(fishPowerUp.boundingBox) &&
+				!fishPowerUp.activated) {
+			fishPowerUp.activated = true;
+			fishPowerUp.active = true;
+			fishCountDown = 30;
+			player.form = 1;
+		}
+		
 		if(player.boundingBox.overlaps(hook1.boundingBox) &&
 				player.y != 0 && !hook1.hooked) {
 			hook1.pullUp();
@@ -213,9 +226,16 @@ public class GameScreen implements Screen{
 		} 
 		else {
 			powerUpCountDown -= .02;
-			
 			font.draw(batch, "PowerUp: " + Integer.toString((int)powerUpCountDown), camera.position.x - 150, camera.position.y);
 			if (scoreSpeedUp.active == true) score += .1;
+		}
+		
+		if(fishCountDown <= 0) {
+			fishPowerUp.active = false;
+		} 
+		else {
+			fishCountDown -= .02;
+			font.draw(batch, "Fish Mode: " + Integer.toString((int)fishCountDown), camera.position.x - 150, camera.position.y + 300);
 		}
 		
 		//RESET THE POWERUPS
@@ -234,7 +254,7 @@ public class GameScreen implements Screen{
 		batch.end();
 		
 		//UPLOAD SCORE TO LEADERBOARD
-		if (player.health == 0) {
+		if (false) {
 		    SwarmLeaderboard.submitScore(15236, score);
 		}
 		

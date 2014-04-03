@@ -18,13 +18,18 @@ public class Player extends SeaObjects {
 	
 	Player player;
 	private final int MAX_BUBBLES = 10;
-	TextureRegion[][] image = TextureRegion.split(Images.turtle_image, 128, 100);
+	TextureRegion[][] imageTurtle = TextureRegion.split(Images.turtle_image, 128, 100);
+	TextureRegion[][] imageFish = TextureRegion.split(Images.fish_image, 128, 86);
 	float imageIterator;
 	
+	/*
+	 * 0 - TURTLE
+	 * 1 - FISH
+	 */
+	public int form;
+	
     //Attributes
-    public int health;
     private int lives;
-    private int score;
     
     //Power-up
     private ArrayList<Bubble> bubbles;
@@ -36,40 +41,37 @@ public class Player extends SeaObjects {
     	boundingBox = new Rectangle (this.x,y,144,121);
     	imageIterator = -1;
     	
-    	health = 100;
+    	form = 0;
     	lives = 3;
-    	score = 0;
 	
-	this.bubbles = bubbles;
+    	this.bubbles = bubbles;
 	}
     
     public TextureRegion getImage() {
-		
-    	if (imageIterator < 49)
-    		imageIterator += 0.5;
-    	else
-    		imageIterator = 0;
-    	return image[(int)imageIterator / 5][4 - ((int)imageIterator % 5)];
-    	
+		if (form == 0 ) {
+			if (imageIterator < 49)
+    			imageIterator += 0.5;
+    		else
+    			imageIterator = 0;
+    		return imageTurtle[(int)imageIterator / 5][4 - ((int)imageIterator % 5)];
+		}
+		else if (form == 1) {
+			if (imageIterator < 21)
+    			imageIterator += 0.5;
+    		else
+    			imageIterator = 0;
+    		return imageFish[(int)imageIterator / 2][1 - ((int)imageIterator % 2)];
+		}
+		return null;
     }
     
-    public int getHealth() { 
-    	return health;
-    }
-    public void lostHealth() {
-    	health -= 10;
-    }
+   
+
     public int getLives() { 
     	return lives; 
     }
     public void loseLife() {
     	lives--;
-    }
-    public int getScore() {
-    	return score;
-    }
-    public void addScore() {
-    	score++;
     }
     
     //initial power-up

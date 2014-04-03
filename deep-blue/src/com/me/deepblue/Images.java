@@ -29,9 +29,7 @@ public class Images {
 	public static Sprite sea_sprite;
 	public static Sprite sea_sprite1;
 	public static Texture turtle_image;
-	public static Sprite turtle_sprite;
 	public static Texture fish_image;
-	public static Sprite fish_sprite;
 	public static Texture shark_image;
 	public static Sprite shark_sprite;
 	public static Texture enemy1_image;
@@ -40,6 +38,8 @@ public class Images {
 	public static Sprite scoreplus_sprite;
 	public static Texture scorespeedup_image;
 	public static Sprite scorespeedup_sprite;
+	public static Texture fishpowerup_image;
+	public static Sprite fishpowerup_sprite;
 	public static Texture hook_image;
 	public static Sprite hook_sprite;
 	
@@ -92,6 +92,7 @@ public class Images {
 		sea_sprite1.flip(false, true);
 		
 		turtle_image = new Texture(Gdx.files.internal("play/turtle.png"));
+		fish_image = new Texture(Gdx.files.internal("play/fish.png"));
 		
 		enemy1_image = new Texture(Gdx.files.internal("play/shark.png"));
 		enemy1_sprite =  new Sprite(enemy1_image);
@@ -104,6 +105,10 @@ public class Images {
 		scorespeedup_image = new Texture(Gdx.files.internal("play/scorespeedup.png"));
 		scorespeedup_sprite =  new Sprite(scorespeedup_image);
 		scorespeedup_sprite.flip(false, true);
+		
+		fishpowerup_image = new Texture(Gdx.files.internal("play/fishpowerup.png"));
+		fishpowerup_sprite =  new Sprite(fishpowerup_image);
+		fishpowerup_sprite.flip(false, true);
 		
 		hook_image = new Texture(Gdx.files.internal("play/hook.png"));
 		hook_sprite =  new Sprite(hook_image);

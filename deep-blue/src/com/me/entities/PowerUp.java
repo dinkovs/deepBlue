@@ -9,6 +9,11 @@ public class PowerUp extends SeaObjects{
 	
 	public boolean active;
 	public boolean activated;
+	/*
+	 * 1 - ScorePlus
+	 * 2 - ScoreSpeedUp
+	 * 3 - FishPowerUp
+	 */
 	int type;
 	SpriteBatch batch;
 	
@@ -21,6 +26,9 @@ public class PowerUp extends SeaObjects{
 			break;
 		case 2:
 			image = Images.scorespeedup_sprite;
+			break;
+		case 3:
+			image = Images.fishpowerup_sprite;
 			break;
 		}
 		
