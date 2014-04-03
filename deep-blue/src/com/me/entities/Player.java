@@ -89,10 +89,10 @@ public class Player extends SeaObjects {
   	//movement
   	public void handleInput(float cameraX){
   		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
-  			if (x - 5 >= cameraX - 600) {
+  			//if (x - 5 >= cameraX - 600) {
   				x -= 5;
-  			}
-  			else x = cameraX - 600;
+  			//}
+  			//else x = cameraX - 600;
 			boundingBox.x = x;
   		}
   		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {

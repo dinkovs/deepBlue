@@ -263,6 +263,9 @@ public class GameScreen implements Screen{
 	public void update(float dt){
 		camera.update();
 		player.handleInput(camera.position.x);
+		if (player.x <= camera.position.x - 600) {
+			player.x = camera.position.x - 600;
+		}
 		score += 0.02;
 		//for shooting bubbles
 		for(int i = 0; i < bubbles.size(); i++) {
