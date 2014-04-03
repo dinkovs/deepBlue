@@ -89,16 +89,16 @@ public class GameScreen implements Screen {
 	// Set up School Spawning
 	public void spawnSchool() {
 
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 30; i++) {
 			Fish fish = new Fish(Color.YELLOW);
 			fish.setSpeed(2);
-			fish.setMaxTurnTheta(5);
+			fish.setMaxTurnTheta(2);
 			flock.addFish(fish);
 		}
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 30; i++) {
 			Fish fish = new Fish(Color.GREEN);
 			fish.setSpeed(2);
-			fish.setMaxTurnTheta(5);
+			fish.setMaxTurnTheta(2);
 			flock.addFish(fish);
 		}
 	}

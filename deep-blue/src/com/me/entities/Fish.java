@@ -13,7 +13,7 @@ public class Fish {
 	public Sprite image;
 	
 	protected static int separationRange=15;
-	protected static int detectionRange=60;
+	protected static int detectionRange=50;
 
 	protected Point location = new Point(0, 0); // The current location of this
 												// fish
@@ -44,19 +44,12 @@ public class Fish {
 			image = Images.school_sprite2;
 	}
 
-	/**
-	 * Causes the bird to attempt to face a new direction. Based on
-	 * maxTurnTheta, the bird may not be able to complete the turn.
-	 * 
-	 * @param newHeading
-	 *            The direction in degrees that the bird should turn toward.
-	 */
+	
 	public void move(int newHeading) {
 		// determine if it is better to turn left or right for the new heading
 		int left = (newHeading - currentTheta + 360) % 360;
 		int right = (currentTheta - newHeading + 360) % 360;
 
-		// after deciding which way to turn, find out if we can turn that much
 		int thetaChange = 0;
 		if (left < right) {
 			// if left > than the max turn, then we can't fully adopt the new
@@ -70,10 +63,6 @@ public class Fish {
 		// Make the turn
 		currentTheta = (currentTheta + thetaChange + 360) % 360;
 
-		// Now move currentSpeed pixels in the direction the bird now faces.
-		// Note: Because values are truncated, a speed of 1 will result in no
-		// movement unless the bird is moving exactly vertically or
-		// horizontally.
 		location.x += (int) (currentSpeed * Math.cos(currentTheta * Math.PI
 				/ 180))
 				+ map.width;
@@ -84,17 +73,6 @@ public class Fish {
 		location.y %= map.height;
 	}
 
-	/*
-	public void draw(Graphics g) {
-		g.setColor(this.color);
-		g.fillArc(location.x - 12, location.y - 12, 24, 24,
-				currentTheta + 180 - 20, 40);
-
-		if (showRanges) {
-			drawRanges(g);
-		}
-	}
-	*/
 	
 	public int getDistance(Fish otherFish) {
 		//distance between this fish and another one
