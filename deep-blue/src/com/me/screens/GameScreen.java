@@ -56,6 +56,7 @@ public class GameScreen implements Screen {
 	ArrayList<Bubble> bubbles;
 	ShapeRenderer sr; // <--- for bubbles, for now
 	int t = 0;
+	private float invincibleTimer;
 
 	public GameScreen(DeepBlue game) {
 		Images.loadPlay();
@@ -142,8 +143,6 @@ public class GameScreen implements Screen {
 			startGameTime = System.currentTimeMillis();
 			currentGameTime = System.currentTimeMillis();
 		}
-		camera.position.x += levelSpeed;
-		// System.out.println(camera.position.x++);
 
 		// Scrolling screen code
 		if (camera.position.x - 1200 / 2 > Images.sea_sprite1.getX()) {
@@ -202,7 +201,8 @@ public class GameScreen implements Screen {
 			batch.draw(scorePlus.image, scorePlus.x, scorePlus.y);
 		if (!fishPowerUp.activated)
 			batch.draw(fishPowerUp.image, fishPowerUp.x, fishPowerUp.y);
-		batch.draw(player.getImage(), player.x, player.y);
+		if ((int)(invincibleTimer*3)%2 == 0)
+			batch.draw(player.getImage(), player.x, player.y);
 		batch.draw(hook1.image, hook1.x, hook1.y);
 		batch.draw(hook2.image, hook2.x, hook2.y);
 
@@ -252,6 +252,10 @@ public class GameScreen implements Screen {
 			if ((hook2.y + hook2.image.getHeight() - 128) < player.y)
 				player.pullUp();
 		}
+		
+		if (player.y < 0 && !player.invincible)
+			loseLife();
+			
 
 		// CHECK POWERUPS
 		if (powerUpCountDown <= 0) {
@@ -259,19 +263,20 @@ public class GameScreen implements Screen {
 		} else {
 			powerUpCountDown -= .02;
 			font.draw(batch,
-					"PowerUp: " + Integer.toString((int) powerUpCountDown),
-					camera.position.x - 150, camera.position.y);
+					"Score Speed-Up: " + Integer.toString((int) powerUpCountDown),
+					camera.position.x - 200, camera.position.y + 190);
 			if (scoreSpeedUp.active == true)
 				score += .1;
 		}
 
 		if (fishCountDown <= 0) {
 			fishPowerUp.active = false;
+			player.form = 0;
 		} else {
 			fishCountDown -= .02;
 			font.draw(batch,
 					"Fish Mode: " + Integer.toString((int) fishCountDown),
-					camera.position.x - 150, camera.position.y + 300);
+					camera.position.x - 150, camera.position.y + 240);
 		}
 
 		// RESET THE POWERUPS
@@ -286,7 +291,23 @@ public class GameScreen implements Screen {
 
 		// DISPLAY SCORE
 		font.draw(batch, "Score: " + Integer.toString((int) score),
-				camera.position.x - 550, camera.position.y - 230);
+				camera.position.x - 590, 10);
+		
+		//DISPLAY LIFE
+		for(int i = 1; i <= player.lives; i++) {
+			int x = ((int) camera.position.x) + 600 - (i * (10 + Images.life_image.getWidth())) ;
+			batch.draw(Images.life_sprite, x, 10);
+		}
+		
+		if (player.invincible) {
+			if (invincibleTimer <= 0)
+				player.invincible = false;
+			else 
+				invincibleTimer -= 0.02;
+		}
+		
+		camera.position.x += levelSpeed;
+		// System.out.println(camera.position.x++);
 
 		batch.end();
 
@@ -311,6 +332,19 @@ public class GameScreen implements Screen {
 				bubbles.remove(i);
 				i--;
 			}
+		}
+	}
+	
+	public void loseLife() {
+		if (player.lives > 0) {
+			player.lives--;
+			player.x = camera.position.x;
+			player.y = camera.position.y;
+			player.invincible = true;
+			invincibleTimer = 5;
+		}
+		else {
+			//GAME OVER
 		}
 	}
 
@@ -347,9 +381,5 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void hide() {
-	}
-
-	public int getCameraX() {
-		return (int) camera.position.x;
 	}
 }

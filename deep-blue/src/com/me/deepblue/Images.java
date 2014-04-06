@@ -46,6 +46,8 @@ public class Images {
 	public static Sprite school_sprite;
 	public static Texture school_image2;
 	public static Sprite school_sprite2;
+	public static Texture life_image;
+	public static Sprite life_sprite;
 
 	
 	
@@ -118,6 +120,10 @@ public class Images {
 		hook_image = new Texture(Gdx.files.internal("play/hook.png"));
 		hook_sprite =  new Sprite(hook_image);
 		hook_sprite.flip(false, true);
+		
+		life_image = new Texture(Gdx.files.internal("play/life.png"));
+		life_sprite =  new Sprite(life_image);
+		life_sprite.flip(false, true);
 		
 		school_image = new Texture(Gdx.files.internal("play/school.png"));
 		school_sprite =  new Sprite(school_image);

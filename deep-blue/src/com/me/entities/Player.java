@@ -29,10 +29,11 @@ public class Player extends SeaObjects {
 	public int form;
 	
     //Attributes
-    private int lives;
+    public int lives;
     
     //Power-up
     private ArrayList<Bubble> bubbles;
+	public boolean invincible;
     
     public Player(ArrayList<Bubble> bubbles, GameScreen play_screen) {
     	x = 400;
@@ -44,6 +45,7 @@ public class Player extends SeaObjects {
     	lives = 3;
 	
     	this.bubbles = bubbles;
+    	invincible = false;
 	}
     
     public TextureRegion getImage() {
