@@ -1,6 +1,7 @@
 package com.me.screens;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -40,15 +41,17 @@ public class GameScreen implements Screen {
 	Hook hook2;
 	float powerUpCountDown;
 	float fishCountDown;
-	Enemy enemy;
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	float score = 0;
 	int tracker = 0;
 	long start = System.currentTimeMillis(); // Keep track of enemy spawning
 	long startGameTime = System.currentTimeMillis(); // Keep track of total game
 														// length
+	long current; // Keep track of current time versus start time
 	boolean firstEnemy = false;
-	int levelSpeed = 1;
+	double levelSpeed = 1;
 	Flock flock = new Flock();
+	Random ran = new Random();
 
 	private BitmapFont font = new BitmapFont();
 	// for the turtle
@@ -103,20 +106,40 @@ public class GameScreen implements Screen {
 			flock.addFish(fish);
 		}
 	}
-
-	// Spawn Enemy1 Function
-	public void spawnEnemy() {
-		// TODO Edit Spawn enemy function based on enemies height.
-		enemy = new Enemy((int) camera.position.x + 700,
-				100 + (int) (Math.random() * ((500 - 100) + 1)));
-		firstEnemy = true;
+	
+	// Spawn Enemy Function
+	public void spawnEnemies() {
+		current = System.currentTimeMillis();
+		if(current - start > Math.random() * ((1000000 - 40000) + 1))
+		{
+			//Make sure enemy spawns off to the right of the screen with a random Y height
+			enemies.add(new Enemy((int) camera.position.x + 700, 
+					100 + (int) (Math.random() * ((500 - 100) + 1)),
+					ran.nextInt(2)));
+			start = System.currentTimeMillis();
+			current = System.currentTimeMillis();
+		}
 	}
-
-	// Flip Enemy to chase function
-	public void turnEnemy() {
-		if (enemy.forward) {
-			Images.enemy1_sprite.flip(true, false);
-			enemy.forward = false;
+	
+	//Check for enemies that have gone off the screen and remove them from the enemy array.
+	public void removeEnemies() {
+		for(int i = 0; i < enemies.size(); i++)
+		{
+			if(enemies.get(i).x < (player.x - 2000))
+				enemies.remove(i);
+		}
+	}
+	
+	//Engage enemy AI depending on type of enemy
+	public void enemyAI(int type, Enemy enemy)
+	{
+		if(type == 0) //shark
+		{
+			enemy.pursue(player.y, 1);
+		}
+		else if(type == 1) //barracuda
+		{
+			enemy.burst(player.y, 1);
 		}
 	}
 
@@ -125,21 +148,21 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		update(Gdx.graphics.getDeltaTime());
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		// RENDERING CODE GOES HERE
+		
+		//Spawn the school make sure it hasn't already been spawned
 		if(t != 1)
 		{
 			spawnSchool();
 			t = 1;
 		}
 
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		// RENDERING CODE GOES HERE
-
-		// Scroll Speed Increase for level feel TODO balance int increases are
-		// too abrupt
+		// Scroll Speed Increase 
 		long currentGameTime = System.currentTimeMillis();
-		if (currentGameTime - startGameTime > 50000) {
-			levelSpeed++;
+		if (currentGameTime - startGameTime > 25000) {
+			levelSpeed+= .2;
 			startGameTime = System.currentTimeMillis();
 			currentGameTime = System.currentTimeMillis();
 		}
@@ -149,36 +172,19 @@ public class GameScreen implements Screen {
 			Images.sea_sprite.setPosition(Images.sea_sprite1.getX(), 0);
 			Images.sea_sprite1.setPosition(Images.sea_sprite.getX() + 1200, 0);
 		}
-		// Enemy Spawning Timer (Randomness to come)
-		long current = System.currentTimeMillis();
-		// System.out.println(start - current);
-		if (current - start > 22000) {
-			if (firstEnemy == false) {
-				spawnEnemy();
-				start = System.currentTimeMillis();
-				current = System.currentTimeMillis();
-			} else {
-				if (!enemy.alive) {
-					spawnEnemy();
-					start = System.currentTimeMillis();
-					current = System.currentTimeMillis();
-				}
-			}
-		}
-		// Enemy Pursue
-		if (enemy != null && !enemy.checkPassed(player.x)) // Stops pursuing if
-															// it has been
-															// passed
+		
+		//Enemy Spawning
+		spawnEnemies();
+		
+		//Check for enemies that have gone off the screen
+		removeEnemies();
+		
+		//Engage the Enemy AI
+		for(int j = 0; j < enemies.size(); j++)
 		{
-			enemy.pursue(player.y, 1);
+			enemyAI(enemies.get(j).type, enemies.get(j));
 		}
-		// kill the enemy if it has gone off the screen
-		else if (enemy != null && enemy.x < player.x + 2000) {
-			enemy.killUnit();
-		} else if (enemy != null) {
-			enemy.chase(1);
-			turnEnemy();
-		}
+	
 
 		// DRAW BACKGROUND
 		Images.sea_sprite.draw(batch);
@@ -186,15 +192,18 @@ public class GameScreen implements Screen {
 		
 		// DRAW AND UPDATE SCHOOL OF FISH 
 		flock.move();
-
 		for (int k = 0; k < flock.fishes.size(); k++) {
 			Fish fish = (Fish) flock.fishes.elementAt(k);
 			batch.draw(fish.image, fish.getLocation().x + camera.position.x - 600, fish.getLocation().y);
 		}
+		
+		//DRAW THE ENEMIES
+		for(int p = 0; p < enemies.size(); p++)
+		{
+			batch.draw(enemies.get(p).image, enemies.get(p).x, enemies.get(p).y);
+		}
 
 		// DRAW OBJECTS
-		if (enemy != null)
-			batch.draw(Images.enemy1_sprite, enemy.x, enemy.y);
 		if (!scoreSpeedUp.activated)
 			batch.draw(scoreSpeedUp.image, scoreSpeedUp.x, scoreSpeedUp.y);
 		if (!scorePlus.activated)
@@ -203,21 +212,11 @@ public class GameScreen implements Screen {
 			batch.draw(fishPowerUp.image, fishPowerUp.x, fishPowerUp.y);
 		if ((int)(invincibleTimer*3)%2 == 0)
 			batch.draw(player.getImage(), player.x, player.y);
+		
 		batch.draw(hook1.image, hook1.x, hook1.y);
 		batch.draw(hook2.image, hook2.x, hook2.y);
 
-		
-
 		// CHECK COLLISIONS
-
-		/*
-		 * if (player.boundingBox.overlaps(enemy.boundingBox)) {
-		 * scoreSpeedUp.active = true; scoreSpeedUp.activated = true;
-		 * powerUpCountDown = 10; }
-		 */
-		
-		
-
 		if (player.boundingBox.overlaps(scoreSpeedUp.boundingBox)
 				&& !scoreSpeedUp.activated) {
 			scoreSpeedUp.active = true;

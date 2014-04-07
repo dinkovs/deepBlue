@@ -32,8 +32,6 @@ public class Images {
 	public static Texture fish_image;
 	public static Texture shark_image;
 	public static Sprite shark_sprite;
-	public static Texture enemy1_image;
-	public static Sprite enemy1_sprite;
 	public static Texture scoreplus_image;
 	public static Sprite scoreplus_sprite;
 	public static Texture scorespeedup_image;
@@ -48,6 +46,8 @@ public class Images {
 	public static Sprite school_sprite2;
 	public static Texture life_image;
 	public static Sprite life_sprite;
+	public static Texture barracuda_image;
+	public static Sprite barracuda_sprite;
 
 	
 	
@@ -101,9 +101,13 @@ public class Images {
 		turtle_image = new Texture(Gdx.files.internal("play/turtle.png"));
 		fish_image = new Texture(Gdx.files.internal("play/fish.png"));
 		
-		enemy1_image = new Texture(Gdx.files.internal("play/shark.png"));
-		enemy1_sprite =  new Sprite(enemy1_image);
-		enemy1_sprite.flip(false, true);
+		shark_image = new Texture(Gdx.files.internal("play/shark.png"));
+		shark_sprite =  new Sprite(shark_image);
+		shark_sprite.flip(false, true);
+		
+		barracuda_image = new Texture(Gdx.files.internal("play/barracuda.jpeg"));
+		barracuda_sprite =  new Sprite(barracuda_image);
+		barracuda_sprite.flip(false, true);
 		
 		scoreplus_image = new Texture(Gdx.files.internal("play/scoreplus.png"));
 		scoreplus_sprite =  new Sprite(scoreplus_image);

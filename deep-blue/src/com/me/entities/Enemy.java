@@ -1,27 +1,41 @@
 package com.me.entities;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.me.deepblue.Images;
 
 public class Enemy extends SeaObjects
 {
 	public int x;
 	public int y;
-	public boolean alive;
 	public boolean forward = true;
+	public int type;
+	
+	//KEYS FOR ENEMY TYPES
+	/*
+	 * Shark == 0
+	 * Barracuda == 1
+	 */
 	
 	//Start the enemy at a given position
-	public Enemy(int x, int y)
+	public Enemy(int x, int y, int type)
 	{
 		this.x = x;
 		this.y = y;
-		alive = true;
+		this.type = type;
+		switch(type)
+		{
+			case(0):super.image = Images.shark_sprite;
+					break;
+			case(1):super.image = Images.barracuda_sprite;
+					break;
+		}
     	boundingBox = new Rectangle (this.x,y,144,121);
 	}
 	
 	//Lame pursue algorithm only "chases" on the y at some vertical speed based on multiplier
 	//Horizontal speed is determined by the camera speed
-	public void pursue(float player_y, int multiplier)
+	//return 1 when aligned 0 when not
+	public int pursue(float player_y, int multiplier)
 	{
 		if(y != player_y)
 		{
@@ -29,7 +43,21 @@ public class Enemy extends SeaObjects
 				y -= multiplier;
 			else
 				y += multiplier;
-		}	
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
+	}
+	
+	//Algorithm that once aligned in the y direction will burst across the screen towards player
+	public void burst(float player_y, int multiplier)
+	{
+		if(pursue(player_y, multiplier) == 1)
+		{
+			x -= 50;
+		}
 	}
 	
 	//Accelerated Pursuing method
@@ -52,12 +80,5 @@ public class Enemy extends SeaObjects
 	public void chase(int multipler)
 	{
 		//TODO
-	}
-	
-	//Method to kill the enemy (was somehow killed)
-	public void killUnit()
-	{
-		this.alive = false;
-	}
-	
+	}	
 }
