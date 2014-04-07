@@ -38,6 +38,8 @@ public class Images {
 	public static Sprite scorespeedup_sprite;
 	public static Texture fishpowerup_image;
 	public static Sprite fishpowerup_sprite;
+	public static Texture bubblebeam_image;
+	public static Sprite bubblebeam_sprite;
 	public static Texture hook_image;
 	public static Sprite hook_sprite;
 	public static Texture school_image;
@@ -120,6 +122,10 @@ public class Images {
 		fishpowerup_image = new Texture(Gdx.files.internal("play/fishpowerup.png"));
 		fishpowerup_sprite =  new Sprite(fishpowerup_image);
 		fishpowerup_sprite.flip(false, true);
+		
+		bubblebeam_image = new Texture(Gdx.files.internal("play/bubblebeam.png"));
+		bubblebeam_sprite =  new Sprite(bubblebeam_image);
+		bubblebeam_sprite.flip(false, true);
 		
 		hook_image = new Texture(Gdx.files.internal("play/hook.png"));
 		hook_sprite =  new Sprite(hook_image);

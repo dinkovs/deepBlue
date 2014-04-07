@@ -2,7 +2,6 @@ package com.me.screens;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Images;
@@ -24,7 +22,6 @@ import com.me.entities.Player;
 import com.me.entities.PowerUp;
 import com.swarmconnect.SwarmLeaderboard;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Intersector;
 
 public class GameScreen implements Screen {
 
@@ -37,6 +34,7 @@ public class GameScreen implements Screen {
 	PowerUp scorePlus;
 	PowerUp scoreSpeedUp;
 	PowerUp fishPowerUp;
+	PowerUp bubbleBeam;
 	Hook hook1;
 	Hook hook2;
 	float powerUpCountDown;
@@ -79,6 +77,7 @@ public class GameScreen implements Screen {
 		scorePlus = new PowerUp(1, 800);
 		scoreSpeedUp = new PowerUp(2, 800);
 		fishPowerUp = new PowerUp(3, 1200);
+		bubbleBeam = new PowerUp(4, 1000);
 		hook1 = new Hook();
 		hook2 = new Hook();
 
@@ -93,13 +92,13 @@ public class GameScreen implements Screen {
 	// Set up School Spawning
 	public void spawnSchool() {
 
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 20; i++) {
 			Fish fish = new Fish(Color.YELLOW);
 			fish.setSpeed(2);
 			fish.setMaxTurnTheta(2);
 			flock.addFish(fish);
 		}
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 20; i++) {
 			Fish fish = new Fish(Color.GREEN);
 			fish.setSpeed(2);
 			fish.setMaxTurnTheta(2);
@@ -139,7 +138,7 @@ public class GameScreen implements Screen {
 		}
 		else if(type == 1) //barracuda
 		{
-			enemy.burst(player.y, 1);
+			enemy.burst(player.y, 2);
 		}
 	}
 
@@ -206,10 +205,16 @@ public class GameScreen implements Screen {
 		// DRAW OBJECTS
 		if (!scoreSpeedUp.activated)
 			batch.draw(scoreSpeedUp.image, scoreSpeedUp.x, scoreSpeedUp.y);
+		
 		if (!scorePlus.activated)
 			batch.draw(scorePlus.image, scorePlus.x, scorePlus.y);
+		
 		if (!fishPowerUp.activated)
 			batch.draw(fishPowerUp.image, fishPowerUp.x, fishPowerUp.y);
+		
+		if (!bubbleBeam.activated)
+			batch.draw(bubbleBeam.image, bubbleBeam.x, bubbleBeam.y);
+		
 		if ((int)(invincibleTimer*3)%2 == 0)
 			batch.draw(player.getImage(), player.x, player.y);
 		
@@ -236,6 +241,15 @@ public class GameScreen implements Screen {
 			fishPowerUp.active = true;
 			fishCountDown = 30;
 			player.form = 1;
+		}
+		
+		if (player.boundingBox.overlaps(bubbleBeam.boundingBox)
+				&& !bubbleBeam.activated) {
+			bubbleBeam.active = true;
+			bubbleBeam.activated = true;
+			score += 150;
+			powerUpCountDown = 10;
+			
 		}
 
 		if (player.boundingBox.overlaps(hook1.boundingBox) && player.y != 0
@@ -283,6 +297,8 @@ public class GameScreen implements Screen {
 			scoreSpeedUp.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 30000) < 1000)
 			scorePlus.reset(camera.position.x);
+		if ((System.currentTimeMillis() % 28000) < 1000)
+			bubbleBeam.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 25000) < 1000)
 			hook1.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 30000) < 1000)

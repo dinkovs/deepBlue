@@ -96,6 +96,7 @@ public class Flock {
 		            dist = normalisePoint(dist, 100); // final weight is 100
 		            target = sumPoints(target, 1.0, dist, 1.0);
             	}
+            	//Other type of fish in the flock we will avoid them
             	else {
                     Point dist = sumPoints(fish.getLocation(), 1.0, otherLocation, -1.0);
                     dist = normalisePoint(dist, 1000);
