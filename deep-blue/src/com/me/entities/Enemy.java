@@ -9,6 +9,7 @@ public class Enemy extends SeaObjects
 	public int y;
 	public boolean forward = true;
 	public int type;
+	public boolean attacking = false;
 	
 	//KEYS FOR ENEMY TYPES
 	/*
@@ -54,9 +55,12 @@ public class Enemy extends SeaObjects
 	//Algorithm that once aligned in the y direction will burst across the screen towards player
 	public void burst(float player_y, int multiplier)
 	{
+		if(attacking == true)
+			x-= 8;
 		if(pursue(player_y, multiplier) == 1)
 		{
-			x -= 50;
+			x -= 8;
+			attacking = true;
 		}
 	}
 	

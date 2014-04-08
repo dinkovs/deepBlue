@@ -2,7 +2,6 @@ package com.me.screens;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Images;
@@ -24,7 +22,6 @@ import com.me.entities.Player;
 import com.me.entities.PowerUp;
 import com.swarmconnect.SwarmLeaderboard;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Intersector;
 
 public class GameScreen implements Screen {
 
@@ -93,13 +90,13 @@ public class GameScreen implements Screen {
 	// Set up School Spawning
 	public void spawnSchool() {
 
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 20; i++) {
 			Fish fish = new Fish(Color.YELLOW);
 			fish.setSpeed(2);
 			fish.setMaxTurnTheta(2);
 			flock.addFish(fish);
 		}
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 20; i++) {
 			Fish fish = new Fish(Color.GREEN);
 			fish.setSpeed(2);
 			fish.setMaxTurnTheta(2);
@@ -139,7 +136,7 @@ public class GameScreen implements Screen {
 		}
 		else if(type == 1) //barracuda
 		{
-			enemy.burst(player.y, 1);
+			enemy.burst(player.y, 2);
 		}
 	}
 
