@@ -34,6 +34,7 @@ public class GameScreen implements Screen {
 	PowerUp scorePlus;
 	PowerUp scoreSpeedUp;
 	PowerUp fishPowerUp;
+	PowerUp bubbleBeam;
 	Hook hook1;
 	Hook hook2;
 	float powerUpCountDown;
@@ -76,6 +77,7 @@ public class GameScreen implements Screen {
 		scorePlus = new PowerUp(1, 800);
 		scoreSpeedUp = new PowerUp(2, 800);
 		fishPowerUp = new PowerUp(3, 1200);
+		bubbleBeam = new PowerUp(4, 1000);
 		hook1 = new Hook();
 		hook2 = new Hook();
 
@@ -203,10 +205,16 @@ public class GameScreen implements Screen {
 		// DRAW OBJECTS
 		if (!scoreSpeedUp.activated)
 			batch.draw(scoreSpeedUp.image, scoreSpeedUp.x, scoreSpeedUp.y);
+		
 		if (!scorePlus.activated)
 			batch.draw(scorePlus.image, scorePlus.x, scorePlus.y);
+		
 		if (!fishPowerUp.activated)
 			batch.draw(fishPowerUp.image, fishPowerUp.x, fishPowerUp.y);
+		
+		if (!bubbleBeam.activated)
+			batch.draw(bubbleBeam.image, bubbleBeam.x, bubbleBeam.y);
+		
 		if ((int)(invincibleTimer*3)%2 == 0)
 			batch.draw(player.getImage(), player.x, player.y);
 		
@@ -233,6 +241,15 @@ public class GameScreen implements Screen {
 			fishPowerUp.active = true;
 			fishCountDown = 30;
 			player.form = 1;
+		}
+		
+		if (player.boundingBox.overlaps(bubbleBeam.boundingBox)
+				&& !bubbleBeam.activated) {
+			bubbleBeam.active = true;
+			bubbleBeam.activated = true;
+			score += 150;
+			powerUpCountDown = 10;
+			
 		}
 
 		if (player.boundingBox.overlaps(hook1.boundingBox) && player.y != 0
@@ -280,6 +297,8 @@ public class GameScreen implements Screen {
 			scoreSpeedUp.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 30000) < 1000)
 			scorePlus.reset(camera.position.x);
+		if ((System.currentTimeMillis() % 28000) < 1000)
+			bubbleBeam.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 25000) < 1000)
 			hook1.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 30000) < 1000)

@@ -13,6 +13,7 @@ public class PowerUp extends SeaObjects{
 	 * 1 - ScorePlus
 	 * 2 - ScoreSpeedUp
 	 * 3 - FishPowerUp
+	 * 4 - BubbleBeam
 	 */
 	int type;
 	SpriteBatch batch;
@@ -30,6 +31,8 @@ public class PowerUp extends SeaObjects{
 		case 3:
 			image = Images.fishpowerup_sprite;
 			break;
+		case 4:
+			image = Images.bubblebeam_sprite;
 		}
 		
 		this.x = x;
