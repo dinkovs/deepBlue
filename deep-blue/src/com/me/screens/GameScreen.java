@@ -265,6 +265,12 @@ public class GameScreen implements Screen {
 		batch.draw(hook2.image, hook2.x, hook2.y);
 
 		// CHECK COLLISIONS
+		for (int i = 0; i < enemies.size(); i++) {
+			Enemy enemy = enemies.get(i);
+			if (player.boundingBox.overlaps(enemy.boundingBox)) {
+				System.out.println("OMG NOOB");
+			}
+		}
 		if (player.boundingBox.overlaps(scoreSpeedUp.boundingBox)
 				&& !scoreSpeedUp.activated) {
 			scoreSpeedUp.active = true;

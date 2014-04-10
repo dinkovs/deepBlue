@@ -85,4 +85,9 @@ public class Enemy extends SeaObjects
 	{
 		//TODO
 	}	
+	
+	public Rectangle getBounds() {
+		return boundingBox;
+	}
+	
 }
