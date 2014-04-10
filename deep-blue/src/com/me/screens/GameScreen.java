@@ -36,6 +36,7 @@ public class GameScreen implements Screen {
 	PowerUp scoreSpeedUp;
 	PowerUp fishPowerUp;
 	PowerUp bubbleBeam;
+	PowerUp lifePowerUp;
 	Hook hook1;
 	Hook hook2;
 	float powerUpCountDown;
@@ -83,6 +84,7 @@ public class GameScreen implements Screen {
 		scoreSpeedUp = new PowerUp(2, 800);
 		fishPowerUp = new PowerUp(3, 1200);
 		bubbleBeam = new PowerUp(4, 1000);
+		lifePowerUp = new PowerUp(5, -1000);
 		hook1 = new Hook();
 		hook2 = new Hook();
 
@@ -253,6 +255,9 @@ public class GameScreen implements Screen {
 		if (!bubbleBeam.activated)
 			batch.draw(bubbleBeam.image, bubbleBeam.x, bubbleBeam.y);
 		
+		if (!lifePowerUp.activated)
+			batch.draw(lifePowerUp.image, lifePowerUp.x, lifePowerUp.y);
+		
 		if ((int)(invincibleTimer*3)%2 == 0)
 			batch.draw(player.getImage(), player.x, player.y);
 		
@@ -271,6 +276,12 @@ public class GameScreen implements Screen {
 				&& !scorePlus.activated) {
 			scorePlus.activated = true;
 			score += 100;
+		}
+		
+		if (player.boundingBox.overlaps(lifePowerUp.boundingBox)
+				&& !lifePowerUp.activated) {
+			lifePowerUp.activated = true;
+			player.lives++;
 		}
 
 		if (player.boundingBox.overlaps(fishPowerUp.boundingBox)
@@ -341,6 +352,8 @@ public class GameScreen implements Screen {
 			hook1.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 30000) < 1000)
 			hook2.reset(camera.position.x);
+		if ((System.currentTimeMillis() % lifePowerUp.resetTimer) < 1000)
+			lifePowerUp.reset(camera.position.x);
 
 		// DISPLAY SCORE
 		font.draw(batch, "Score: " + Integer.toString((int) score),

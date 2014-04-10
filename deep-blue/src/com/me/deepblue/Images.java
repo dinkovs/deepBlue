@@ -48,6 +48,8 @@ public class Images {
 	public static Sprite school_sprite2;
 	public static Texture life_image;
 	public static Sprite life_sprite;
+	public static Texture lifepowerup_image;
+	public static Sprite lifepowerup_sprite;
 	public static Texture barracuda_image;
 	public static Sprite barracuda_sprite;
 	public static Texture jellyfish_image;
@@ -136,6 +138,10 @@ public class Images {
 		life_image = new Texture(Gdx.files.internal("play/life.png"));
 		life_sprite =  new Sprite(life_image);
 		life_sprite.flip(false, true);
+		
+		lifepowerup_image = new Texture(Gdx.files.internal("play/lifeplus.png"));
+		lifepowerup_sprite =  new Sprite(lifepowerup_image);
+		lifepowerup_sprite.flip(false, true);
 		
 		school_image = new Texture(Gdx.files.internal("play/school.png"));
 		school_sprite =  new Sprite(school_image);

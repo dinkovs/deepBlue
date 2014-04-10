@@ -14,9 +14,11 @@ public class PowerUp extends SeaObjects{
 	 * 2 - ScoreSpeedUp
 	 * 3 - FishPowerUp
 	 * 4 - BubbleBeam
+	 * 5 - Life +1
 	 */
 	int type;
 	SpriteBatch batch;
+	public int resetTimer;
 	
 	public PowerUp(int type, float x) {
 		
@@ -33,6 +35,10 @@ public class PowerUp extends SeaObjects{
 			break;
 		case 4:
 			image = Images.bubblebeam_sprite;
+			break;
+		case 5:
+			image = Images.lifepowerup_sprite;
+			resetTimer = 20000;
 		}
 		
 		this.x = x;
@@ -49,6 +55,8 @@ public class PowerUp extends SeaObjects{
 		y = (float) (100 + (Math.random() * 400));
 		boundingBox.x = this.x;
 		boundingBox.y = this.y;
+		
+		if(type == 5) resetTimer += 20000;
 		
 		active = false;
 		activated = false;
