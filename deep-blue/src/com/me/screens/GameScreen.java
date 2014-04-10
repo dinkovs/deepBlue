@@ -271,6 +271,12 @@ public class GameScreen implements Screen {
 				System.out.println("OMG NOOB");
 			}
 		}
+		/*for (int i = 0; i < jellies.size(); i++) {
+			Jellyfish jellyfish = jellies.get(i);
+			if (player.boundingBox.overlaps(jellyfish.boundingBox)) {
+				System.out.println("You've got to try this sandwich");
+			}
+		}*/
 		if (player.boundingBox.overlaps(scoreSpeedUp.boundingBox)
 				&& !scoreSpeedUp.activated) {
 			scoreSpeedUp.active = true;
