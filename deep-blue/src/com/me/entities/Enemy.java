@@ -30,7 +30,7 @@ public class Enemy extends SeaObjects
 			case(1):super.image = Images.barracuda_sprite;
 					break;
 		}
-    	boundingBox = new Rectangle (this.x,y,144,121);
+		boundingBox = new Rectangle (this.x, y, image.getWidth(), image.getHeight());
 	}
 	
 	//Lame pursue algorithm only "chases" on the y at some vertical speed based on multiplier

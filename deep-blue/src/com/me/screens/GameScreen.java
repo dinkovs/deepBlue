@@ -314,7 +314,6 @@ public class GameScreen implements Screen {
 			if ((hook2.y + hook2.image.getHeight() - 128) < player.y)
 				player.pullUp();
 		}
-		
 		if (player.y < 0 && !player.invincible)
 			loseLife();
 			
