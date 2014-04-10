@@ -91,9 +91,9 @@ public class Flock {
 		                weight *= - Math.pow((double)( distance - separationRange ) / ( detectionRange - separationRange ), 2);
 		            }
 		            Point attract = sumPoints(otherLocation, -1.0, fish.getLocation(), 1.0);
-		            attract = normalisePoint(attract, weight); // weight is variable
+		            attract = normalisePoint(attract, weight); 
 		            Point dist = sumPoints(align, 1.0, attract, 1.0);
-		            dist = normalisePoint(dist, 100); // final weight is 100
+		            dist = normalisePoint(dist, 100); 
 		            target = sumPoints(target, 1.0, dist, 1.0);
             	}
             	//Other type of fish in the flock we will avoid them
@@ -101,7 +101,7 @@ public class Flock {
                     Point dist = sumPoints(fish.getLocation(), 1.0, otherLocation, -1.0);
                     dist = normalisePoint(dist, 1000);
                     double weight = Math.pow((1 - (double)distance/detectionRange), 2);
-                    target = sumPoints(target, 1.0, dist, weight); // weight is variable
+                    target = sumPoints(target, 1.0, dist, weight); 
                 }
                
                 numFish++;

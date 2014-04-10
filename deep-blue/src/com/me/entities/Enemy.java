@@ -38,7 +38,7 @@ public class Enemy extends SeaObjects
 	//return 1 when aligned 0 when not
 	public int pursue(float player_y, int multiplier)
 	{
-		if(y != player_y)
+		if((y > player_y + 10) || (y < player_y - 10))
 		{
 			if(y > player_y)
 				y -= multiplier;
@@ -56,10 +56,10 @@ public class Enemy extends SeaObjects
 	public void burst(float player_y, int multiplier)
 	{
 		if(attacking == true)
-			x-= 8;
+			x-= 5;
 		if(pursue(player_y, multiplier) == 1)
 		{
-			x -= 8;
+			x -= 5;
 			attacking = true;
 		}
 	}

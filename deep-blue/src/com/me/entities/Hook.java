@@ -11,7 +11,8 @@ public class Hook extends SeaObjects{
 		image = Images.hook_sprite;
 		hooked = false;
 		x = (float) (100 + (Math.random() * 1200)) + 1200;
-		y = (float) (Math.random() * -300) - 200;
+		y = (float) (Math.random() * (250)) - 300;
+				//(float) (Math.random() * -300) - 200; 
 		boundingBox = new Rectangle (this.x, y, image.getWidth(), image.getHeight());
 	}
 	
@@ -19,7 +20,7 @@ public class Hook extends SeaObjects{
 		if(x < (cameraX-600) || x > (cameraX+600)){
 			hooked = false;
 			x = cameraX + 600 + (float) (100 + (Math.random() * 1200));
-			y = (float) (Math.random() * -300) - 200;
+			y = (float) (Math.random() * (250)) - 300;
 			boundingBox.x = x;
 			boundingBox.y = y;
 		}

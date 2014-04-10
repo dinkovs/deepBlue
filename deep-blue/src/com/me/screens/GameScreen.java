@@ -18,6 +18,7 @@ import com.me.entities.Enemy;
 import com.me.entities.Fish;
 import com.me.entities.Flock;
 import com.me.entities.Hook;
+import com.me.entities.Jellyfish;
 import com.me.entities.Player;
 import com.me.entities.PowerUp;
 import com.swarmconnect.SwarmLeaderboard;
@@ -45,11 +46,15 @@ public class GameScreen implements Screen {
 	long start = System.currentTimeMillis(); // Keep track of enemy spawning
 	long startGameTime = System.currentTimeMillis(); // Keep track of total game
 														// length
+	
+	long jellyStartTime = System.currentTimeMillis();
+	long jellyCurrentTime;
 	long current; // Keep track of current time versus start time
 	boolean firstEnemy = false;
 	double levelSpeed = 1;
 	Flock flock = new Flock();
 	Random ran = new Random();
+	ArrayList<Jellyfish> jellies = new ArrayList<Jellyfish>();
 
 	private BitmapFont font = new BitmapFont();
 	// for the turtle
@@ -109,7 +114,7 @@ public class GameScreen implements Screen {
 	// Spawn Enemy Function
 	public void spawnEnemies() {
 		current = System.currentTimeMillis();
-		if(current - start > Math.random() * ((1000000 - 40000) + 1))
+		if(current - start > Math.random() * (30000 - 8000) + 8000)
 		{
 			//Make sure enemy spawns off to the right of the screen with a random Y height
 			enemies.add(new Enemy((int) camera.position.x + 700, 
@@ -135,10 +140,33 @@ public class GameScreen implements Screen {
 		if(type == 0) //shark
 		{
 			enemy.pursue(player.y, 1);
+			enemy.x-=2;
 		}
 		else if(type == 1) //barracuda
 		{
 			enemy.burst(player.y, 2);
+		}
+	}
+	
+	//Jellyfish spawning
+	public void spawnJellies()
+	{
+		jellyCurrentTime = System.currentTimeMillis();
+		if(jellyCurrentTime - jellyStartTime > Math.random() * (20000 - 5000) + 5000)
+		{
+			jellies.add(new Jellyfish((float) camera.position.x + 700, 
+					100 + (float) (Math.random() * ((500 - 100) + 1))));
+			jellyStartTime = System.currentTimeMillis();
+			jellyCurrentTime = System.currentTimeMillis();
+		}
+	}
+	
+	//Remove Jellies
+	public void removeJellies() {
+		for(int i = 0; i < jellies.size(); i++)
+		{
+			if(jellies.get(i).x < (player.x - 2000))
+				jellies.remove(i);
 		}
 	}
 
@@ -175,6 +203,10 @@ public class GameScreen implements Screen {
 		//Enemy Spawning
 		spawnEnemies();
 		
+		//JellySpawning and removing
+		spawnJellies();
+		removeJellies();
+		
 		//Check for enemies that have gone off the screen
 		removeEnemies();
 		
@@ -200,6 +232,12 @@ public class GameScreen implements Screen {
 		for(int p = 0; p < enemies.size(); p++)
 		{
 			batch.draw(enemies.get(p).image, enemies.get(p).x, enemies.get(p).y);
+		}
+		
+		//DRAW JELLIES
+		for(int u = 0; u < jellies.size();u++)
+		{
+			batch.draw(jellies.get(u).image, jellies.get(u).x, jellies.get(u).y);
 		}
 
 		// DRAW OBJECTS
