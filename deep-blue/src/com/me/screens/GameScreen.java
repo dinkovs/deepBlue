@@ -239,7 +239,7 @@ public class GameScreen implements Screen {
 		//DRAW JELLIES
 		for(int u = 0; u < jellies.size();u++)
 		{
-			batch.draw(jellies.get(u).image, jellies.get(u).x, jellies.get(u).y);
+			batch.draw(jellies.get(u).getImage(), jellies.get(u).x, jellies.get(u).y);
 		}
 
 		// DRAW OBJECTS

@@ -53,7 +53,6 @@ public class Images {
 	public static Texture barracuda_image;
 	public static Sprite barracuda_sprite;
 	public static Texture jellyfish_image;
-	public static Sprite jellyfish_sprite;
 
 	
 	
@@ -151,9 +150,7 @@ public class Images {
 		school_sprite2 =  new Sprite(school_image2);
 		school_sprite2.flip(true, true);
 		
-		jellyfish_image = new Texture(Gdx.files.internal("play/jellyfish.jpg"));
-		jellyfish_sprite =  new Sprite(jellyfish_image);
-		jellyfish_sprite.flip(true, true);
+		jellyfish_image = new Texture(Gdx.files.internal("play/jellyfish.png"));
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));
