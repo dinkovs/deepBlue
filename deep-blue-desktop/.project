@@ -23,7 +23,7 @@
 		<link>
 			<name>res</name>
 			<type>2</type>
-			<location>/Users/PSD/Desktop/adt-bundle-mac-x86_64-20131030/eclipse/Eclipse.app/Contents/MacOS/C::/Users/PSD/deepBlue/deep-blue/res</location>
+			<location>C:/Users/PSD/Desktop/adt-bundle-mac-x86_64-20131030/eclipse/Eclipse.app/Contents/MacOS/C::/Users/PSD/deepBlue/deep-blue/res</location>
 		</link>
 	</linkedResources>
 </projectDescription>

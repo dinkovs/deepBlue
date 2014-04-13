@@ -6,7 +6,6 @@
 	<classpathentry exported="true" kind="lib" path="libs/bodyeditor-loader.jar" sourcepath="libs/bodyeditor-loader-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/tween-engine-api.jar" sourcepath="libs/tween-engine-api-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-freetype.jar"/>
-	<classpathentry exported="true" kind="lib" path="/SwarmConnect/libs/Swarm.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-freetype-natives.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

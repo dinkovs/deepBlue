@@ -7,6 +7,7 @@
 	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-android.jar" sourcepath="libs/gdx-backend-android-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="/deep-blue/libs/bodyeditor-loader.jar" sourcepath="/deep-blue/libs/bodyeditor-loader-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="/deep-blue/libs/tween-engine-api.jar" sourcepath="/deep-blue/libs/tween-engine-api-sources.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-backend-android-sources.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
@@ -25,6 +26,5 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="deep-blue-android/libs/x86"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="libs/gdx-freetype.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
