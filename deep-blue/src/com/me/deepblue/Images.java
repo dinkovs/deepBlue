@@ -23,6 +23,8 @@ public class Images {
 	public static Sprite leaderboards_sprite;
 	public static Texture credits_image;
 	public static Sprite credits_sprite;
+	public static Texture usernamebg_image;
+	public static Sprite usernamebg_sprite;
 	
 	//Play Images
 	public static Texture sea_image;
@@ -73,6 +75,11 @@ public class Images {
 		background_image.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		background_sprite = new Sprite(background_image);
 		background_sprite.flip(false, true);
+		
+		usernamebg_image = new Texture(Gdx.files.internal("menu/usernamebg.png"));
+		usernamebg_image.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		usernamebg_sprite = new Sprite(usernamebg_image);
+		usernamebg_sprite.flip(false, true);
 		
 		play_image = new Texture(Gdx.files.internal("menu/play.png"));
 		play_image.setFilter(TextureFilter.Linear, TextureFilter.Linear);

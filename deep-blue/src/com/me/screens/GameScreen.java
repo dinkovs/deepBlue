@@ -28,8 +28,8 @@ public class GameScreen implements Screen {
 	DeepBlue game;
 	OrthographicCamera camera;
 	public SpriteBatch batch;
-//////FileHandle fontFile;
-//////FreeTypeFontGenerator generator;
+	FileHandle fontFile;
+	FreeTypeFontGenerator generator;
 	Player player;
 	PowerUp scorePlus;
 	PowerUp scoreSpeedUp;
@@ -56,7 +56,7 @@ public class GameScreen implements Screen {
 	Random ran = new Random();
 	ArrayList<Jellyfish> jellies = new ArrayList<Jellyfish>();
 
-//////private BitmapFont font = new BitmapFont();
+	private BitmapFont font = new BitmapFont();
 	// for the turtle
 	Character speedy;
 	ArrayList<Bubble> bubbles;
@@ -88,11 +88,11 @@ public class GameScreen implements Screen {
 		hook2 = new Hook();
 
 		// cartoon blocks
-	//////fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
-	//////generator = new FreeTypeFontGenerator(fontFile);
-	//////font = generator.generateFont(70);
-	//////generator.dispose();
-	//////font.setScale(1, -1);
+		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
+		generator = new FreeTypeFontGenerator(fontFile);
+		font = generator.generateFont(70);
+		generator.dispose();
+		font.setScale(1, -1);
 	}
 
 	// Set up School Spawning
@@ -334,9 +334,9 @@ public class GameScreen implements Screen {
 			scoreSpeedUp.active = false;
 		} else {
 			powerUpCountDown -= .02;
-		//////font.draw(batch,
-		//////	"Score Speed-Up: " + Integer.toString((int) powerUpCountDown),
-		//////	camera.position.x - 200, camera.position.y + 190);
+			font.draw(batch,
+					"Score Speed-Up: " + Integer.toString((int) powerUpCountDown),
+					camera.position.x - 200, camera.position.y + 190);
 			if (scoreSpeedUp.active == true)
 				score += .1;
 		}
@@ -346,9 +346,9 @@ public class GameScreen implements Screen {
 			player.form = 0;
 		} else {
 			fishCountDown -= .02;
-		//////font.draw(batch,
-		//////	"Fish Mode: " + Integer.toString((int) fishCountDown),
-		//////	camera.position.x - 150, camera.position.y + 240);
+			font.draw(batch,
+					"Fish Mode: " + Integer.toString((int) fishCountDown),
+					camera.position.x - 150, camera.position.y + 240);
 		}
 
 		// RESET THE POWERUPS
@@ -366,8 +366,8 @@ public class GameScreen implements Screen {
 			lifePowerUp.reset(camera.position.x);
 
 		// DISPLAY SCORE
-	//////font.draw(batch, "Score: " + Integer.toString((int) score),
-	//////	camera.position.x - 590, 10);
+		font.draw(batch, "Score: " + Integer.toString((int) score),
+				camera.position.x - 590, 10);
 		
 		//DISPLAY LIFE
 		for(int i = 1; i <= player.lives; i++) {
