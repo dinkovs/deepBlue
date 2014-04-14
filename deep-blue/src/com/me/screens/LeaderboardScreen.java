@@ -14,7 +14,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Images;
@@ -31,6 +33,9 @@ public class LeaderboardScreen implements Screen{
 	BufferedReader br;
 	BufferedWriter wr;
 	ArrayList<String> data;
+	FileHandle fontFile;
+	private BitmapFont font = new BitmapFont();
+	FreeTypeFontGenerator generator;
 	
 	public LeaderboardScreen (DeepBlue game, int wave_x) {
 		this.game = game;
@@ -41,17 +46,31 @@ public class LeaderboardScreen implements Screen{
 		
 		batch = new SpriteBatch();
 		click = new Vector3();
-
 		
+		// cartoon blocks
+				fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
+				generator = new FreeTypeFontGenerator(fontFile);
+				font = generator.generateFont(70);
+				generator.dispose();
+				font.setScale((float)0.5, -(float)0.5);
+
 		try 
 		{
-			br = new BufferedReader(new FileReader("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
+			/*br = new BufferedReader(new FileReader("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
 			
 			wr = new BufferedWriter(new FileWriter("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
+			*/
+			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
+			
+			//wr = new BufferedWriter(new FileWriter("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
 			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+		data = new ArrayList<String>();
+		data.add("gg");
+		
+		data = getData();
 	}
 	
 	/**
@@ -145,6 +164,12 @@ public class LeaderboardScreen implements Screen{
 		batch.draw(Images.wave_sprite, wave_x, 0);
 		batch.draw(Images.wave_sprite1, wave_x - 1200, 0);
 		wave_x++;
+		
+		
+		for(int i = 0; i < 10; i++)
+			font.draw(batch, data.get(i),
+				400, 300 - i*font.getLineHeight());
+		
 		
 		batch.end();
 	}
