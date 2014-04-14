@@ -94,9 +94,6 @@ public class GameScreen implements Screen {
 		font = generator.generateFont(70);
 		generator.dispose();
 		font.setScale(1, -1);
-		
-		System.out.println("Working Directory = " +
-	              System.getProperty("user.dir"));
 	}
 
 	// Set up School Spawning
@@ -236,9 +233,16 @@ public class GameScreen implements Screen {
 		//DRAW THE ENEMIES
 		for(int p = 0; p < enemies.size(); p++)
 		{
-			batch.draw(enemies.get(p).image, enemies.get(p).x, enemies.get(p).y);
-			enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
-							enemies.get(p).image.getWidth(),enemies.get(p).image.getHeight());
+			if(enemies.get(p).type == 1) {
+				batch.draw(enemies.get(p).image, enemies.get(p).x, enemies.get(p).y);
+				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
+					enemies.get(p).image.getWidth(),enemies.get(p).image.getHeight());
+			}
+			else if(enemies.get(p).type == 0) {
+				batch.draw(enemies.get(p).getImage(), enemies.get(p).x, enemies.get(p).y);
+				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
+					enemies.get(p).getImage().getRegionWidth(),enemies.get(p).getImage().getRegionHeight());
+			}
 		}
 		
 		//DRAW JELLIES
