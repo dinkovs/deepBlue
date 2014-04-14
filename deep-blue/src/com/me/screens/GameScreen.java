@@ -94,6 +94,9 @@ public class GameScreen implements Screen {
 		font = generator.generateFont(70);
 		generator.dispose();
 		font.setScale(1, -1);
+		
+		System.out.println("Working Directory = " +
+	              System.getProperty("user.dir"));
 	}
 
 	// Set up School Spawning

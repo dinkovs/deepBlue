@@ -1,5 +1,14 @@
 package com.me.screens;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
@@ -19,6 +28,9 @@ public class LeaderboardScreen implements Screen{
 	Vector3 click;
 	SpriteBatch batch;
 	int wave_x;
+	BufferedReader br;
+	BufferedWriter wr;
+	ArrayList<String> data;
 	
 	public LeaderboardScreen (DeepBlue game, int wave_x) {
 		this.game = game;
@@ -29,21 +41,91 @@ public class LeaderboardScreen implements Screen{
 		
 		batch = new SpriteBatch();
 		click = new Vector3();
+
 		
-		scores = new int[10];
-		usernames = new String[10];
+		try 
+		{
+			br = new BufferedReader(new FileReader("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
+			
+			wr = new BufferedWriter(new FileWriter("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
+			
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * This method gets all the current data in the text file
+	 * @return
+	 */
+	public ArrayList<String> getData()
+	{
+		data = new ArrayList<String>();
 		
-		FileHandle scoresFile = Gdx.files.internal("data/scores.txt");
-		FileHandle usernamesFile = Gdx.files.internal("data/usernames.txt");
+		try
+		{
+			String line;
+			
+			while((line = br.readLine()) != null)
+			{
+				data.add(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	/**
+	 * 
+	 * @param str
+	 * 	The string that you want to add so it should look liek this ->
+	 * 
+	 * 					140,Sponge Bob Square Tard	
+	 * 
+	 * @return
+	 * 	returns a 0 if there is no new high 
+	 *  returns index of new score
+	 */
+	public int checkNewScore(String str)
+	{	
+		String[] pieces = str.split("\\,");
 		
-		String scoresString = scoresFile.readString();
-		String usernamesString = usernamesFile.readString();
+		int newScore = Integer.getInteger(pieces[0]);
 		
-		System.out.println(usernamesString);
-		System.out.println(scoresString);
+		for(int i = 0; i < data.size(); i++)
+		{
+			String[] data_pieces = data.get(i).split("\\,");
+			int oldScore = Integer.getInteger(data_pieces[0]);
+			
+			if(newScore > oldScore)
+			{
+				data.add(str);
+				data.remove(data.size() - 1);
+				return i;
+			}	
+		}
+		return 0;
+	}
+	
+	/**
+	 * If there is a new score call this method to actually write it to the text file
+	 */
+	public void writeNewScores()
+	{
+		ArrayList<String> data = getData();
+		String[] sortedData = (String[]) data.toArray();
+	    Arrays.sort(sortedData);
 		
-		
-		
+		for(int i = 0; i < sortedData.length;i++)
+		{
+			try
+			{
+			wr.write(sortedData[i]);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@Override
