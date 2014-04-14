@@ -30,7 +30,7 @@ public class Enemy extends SeaObjects
 			case(1):super.image = Images.barracuda_sprite;
 					break;
 		}
-		boundingBox = new Rectangle (this.x, y, image.getWidth(), image.getHeight());
+		boundingBox = new Rectangle (this.x, this.y, image.getWidth(), image.getHeight());
 	}
 	
 	//Lame pursue algorithm only "chases" on the y at some vertical speed based on multiplier
@@ -41,9 +41,15 @@ public class Enemy extends SeaObjects
 		if((y > player_y + 10) || (y < player_y - 10))
 		{
 			if(y > player_y)
+			{
 				y -= multiplier;
+				boundingBox.y -= multiplier;
+			}
 			else
+			{
 				y += multiplier;
+				boundingBox.x += multiplier;
+			}
 			return 0;
 		}
 		else
@@ -56,10 +62,14 @@ public class Enemy extends SeaObjects
 	public void burst(float player_y, int multiplier)
 	{
 		if(attacking == true)
+		{
 			x-= 5;
+			boundingBox.x -= 5;
+		}
 		if(pursue(player_y, multiplier) == 1)
 		{
 			x -= 5;
+			boundingBox.x -= 5;
 			attacking = true;
 		}
 	}

@@ -1,6 +1,7 @@
 package com.me.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.me.deepblue.Images;
 
 /**
@@ -29,7 +30,7 @@ public class Jellyfish extends SeaObjects{
 	 */
 	public TextureRegion getImage() {
 		if (imageIterator < 21)
-	   		imageIterator += 0.5;
+	   		imageIterator += 0.25;
 	   	else
 	   		imageIterator = 0;
 	   	return imageJelly[(int)imageIterator / 2][1 - ((int)imageIterator % 2)];

@@ -38,7 +38,7 @@ public class Player extends SeaObjects {
     public Player(ArrayList<Bubble> bubbles, GameScreen play_screen) {
     	x = 400;
     	y = 250;
-    	boundingBox = new Rectangle (this.x,y,144,121);
+    	boundingBox = new Rectangle (this.x,this.y,128,100);
     	imageIterator = -1;
     	
     	form = 0;
@@ -51,14 +51,14 @@ public class Player extends SeaObjects {
     public TextureRegion getImage() {
 		if (form == 0 ) {
 			if (imageIterator < 49)
-    			imageIterator += 0.5;
+    			imageIterator += 0.25;
     		else
     			imageIterator = 0;
     		return imageTurtle[(int)imageIterator / 5][4 - ((int)imageIterator % 5)];
 		}
 		else if (form == 1) {
 			if (imageIterator < 21)
-    			imageIterator += 0.5;
+    			imageIterator += 0.25;
     		else
     			imageIterator = 0;
     		return imageFish[(int)imageIterator / 2][1 - ((int)imageIterator % 2)];

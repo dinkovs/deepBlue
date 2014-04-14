@@ -5,7 +5,6 @@ import java.awt.Point;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Rectangle;
 import com.me.deepblue.Images;
 
 public class Fish {
@@ -24,7 +23,6 @@ public class Fish {
 
 	private double currentSpeed;
 	private int maxTurnTheta;
-	public Rectangle boundingBox;
 
 	Fish(int x, int y, int theta, Color color) {
 		location.x = x;
@@ -37,7 +35,6 @@ public class Fish {
 		this((int) (Math.random() * map.width),
 				(int) (Math.random() * map.height),
 				(int) (Math.random() * 360), color);
-		boundingBox = new Rectangle (location.x,location.y,20,16);
 		if(color == Color.GREEN)
 			image = Images.school_sprite;
 		else

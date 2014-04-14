@@ -22,6 +22,7 @@ import com.me.entities.Jellyfish;
 import com.me.entities.Player;
 import com.me.entities.PowerUp;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Rectangle;
 
 public class GameScreen implements Screen {
 
@@ -115,7 +116,7 @@ public class GameScreen implements Screen {
 	// Spawn Enemy Function
 	public void spawnEnemies() {
 		current = System.currentTimeMillis();
-		if(current - start > Math.random() * (30000 - 8000) + 8000)
+		if(current - start > Math.random() * (20000 - 8000) + 8000)
 		{
 			//Make sure enemy spawns off to the right of the screen with a random Y height
 			enemies.add(new Enemy((int) camera.position.x + 700, 
@@ -156,7 +157,7 @@ public class GameScreen implements Screen {
 		if(jellyCurrentTime - jellyStartTime > Math.random() * (20000 - 5000) + 5000)
 		{
 			jellies.add(new Jellyfish((float) camera.position.x + 700, 
-					100 + (float) (Math.random() * ((500 - 100) + 1))));
+					(float) Math.random() * (600 - 100) + 100));
 			jellyStartTime = System.currentTimeMillis();
 			jellyCurrentTime = System.currentTimeMillis();
 		}
@@ -189,8 +190,8 @@ public class GameScreen implements Screen {
 
 		// Scroll Speed Increase 
 		long currentGameTime = System.currentTimeMillis();
-		if (currentGameTime - startGameTime > 25000) {
-			levelSpeed+= .2;
+		if (currentGameTime - startGameTime > 30000) {
+			levelSpeed+= .5;
 			startGameTime = System.currentTimeMillis();
 			currentGameTime = System.currentTimeMillis();
 		}
@@ -233,12 +234,17 @@ public class GameScreen implements Screen {
 		for(int p = 0; p < enemies.size(); p++)
 		{
 			batch.draw(enemies.get(p).image, enemies.get(p).x, enemies.get(p).y);
+			enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
+							enemies.get(p).image.getWidth(),enemies.get(p).image.getHeight());
 		}
 		
 		//DRAW JELLIES
 		for(int u = 0; u < jellies.size();u++)
 		{
 			batch.draw(jellies.get(u).getImage(), jellies.get(u).x, jellies.get(u).y);
+			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y,
+											jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight());
+			
 		}
 
 		// DRAW OBJECTS
@@ -258,7 +264,10 @@ public class GameScreen implements Screen {
 			batch.draw(lifePowerUp.image, lifePowerUp.x, lifePowerUp.y);
 		
 		if ((int)(invincibleTimer*3)%2 == 0)
+		{
 			batch.draw(player.getImage(), player.x, player.y);
+			player.boundingBox = new Rectangle (player.x, player.y, player.getImage().getRegionWidth(), player.getImage().getRegionHeight());
+		}
 		
 		batch.draw(hook1.image, hook1.x, hook1.y);
 		batch.draw(hook2.image, hook2.x, hook2.y);
@@ -266,16 +275,20 @@ public class GameScreen implements Screen {
 		// CHECK COLLISIONS
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy enemy = enemies.get(i);
-			if (player.boundingBox.overlaps(enemy.boundingBox)) {
+			if (player.boundingBox.overlaps(enemy.boundingBox) && !player.invincible) {
 				System.out.println("OMG NOOB");
+				loseLife();
+			}
+			
+		}
+		for (int i = 0; i < jellies.size(); i++) {
+			Jellyfish jellyfish = jellies.get(i);
+			if (player.boundingBox.overlaps(jellyfish.boundingBox) && !player.invincible) {
+				System.out.println("You've got to try this sandwich");
+				loseLife();
 			}
 		}
-		/*for (int i = 0; i < jellies.size(); i++) {
-			Jellyfish jellyfish = jellies.get(i);
-			if (player.boundingBox.overlaps(jellyfish.boundingBox)) {
-				System.out.println("You've got to try this sandwich");
-			}
-		}*/
+		
 		if (player.boundingBox.overlaps(scoreSpeedUp.boundingBox)
 				&& !scoreSpeedUp.activated) {
 			scoreSpeedUp.active = true;
@@ -358,12 +371,15 @@ public class GameScreen implements Screen {
 			scorePlus.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 28000) < 1000)
 			bubbleBeam.reset(camera.position.x);
-		if ((System.currentTimeMillis() % 25000) < 1000)
-			hook1.reset(camera.position.x);
-		if ((System.currentTimeMillis() % 30000) < 1000)
-			hook2.reset(camera.position.x);
 		if ((System.currentTimeMillis() % lifePowerUp.resetTimer) < 1000)
 			lifePowerUp.reset(camera.position.x);
+		
+		//Hook Resetting
+		if ((System.currentTimeMillis() % 15000) < 1000)
+			hook1.reset(camera.position.x);
+		if ((System.currentTimeMillis() % 20000) < 1000)
+			hook2.reset(camera.position.x);
+		
 
 		// DISPLAY SCORE
 		font.draw(batch, "Score: " + Integer.toString((int) score),
