@@ -16,7 +16,7 @@ public class DeepBlue extends Game implements ApplicationListener{
 	
 	@Override
 	public void create() {
-		main_menu_screen = new MenuScreen(this);
+		main_menu_screen = new MenuScreen(this, 0);
 		
 		setScreen(main_menu_screen);
 		

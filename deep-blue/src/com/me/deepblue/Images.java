@@ -55,6 +55,12 @@ public class Images {
 	public static Texture barracuda_image;
 	public static Sprite barracuda_sprite;
 	public static Texture jellyfish_image;
+	
+	//Leaderboard Images
+	public static Texture goBack_image;
+	public static Sprite goBack_sprite;
+	public static Texture table_image;
+	public static Sprite table_sprite;
 
 	
 	
@@ -166,6 +172,14 @@ public class Images {
 		shark_image = new Texture(Gdx.files.internal("menu/shark.png"));
 		shark_sprite = new Sprite(shark_image);
 		*/
+	}
+	
+	public static void loadLeaderboards() {
+		goBack_image = new Texture(Gdx.files.internal("leaderboards/goback.png"));
+		goBack_sprite = new Sprite(goBack_image);
+		
+		table_image = new Texture(Gdx.files.internal("leaderboards/table.png"));
+		table_sprite = new Sprite(table_image);
 	}
 	
 }

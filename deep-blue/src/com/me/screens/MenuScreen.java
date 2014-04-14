@@ -19,17 +19,17 @@ public class MenuScreen implements Screen{
 	OrthographicCamera camera;
 	Vector3 click;
 	SpriteBatch batch;
-	int wave_x = 0;
+	int wave_x;
 	String username;
 	
 	public GameScreen play_screen;
 	public LeaderboardScreen leaderboard_screen;
 	private boolean enteredName;
 	
-	public MenuScreen(DeepBlue game){
+	public MenuScreen(DeepBlue game, int wave_x){
 		Images.loadMainMenu();
 		this.game = game;
-		
+		this.wave_x = wave_x;
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true,1200,600);
