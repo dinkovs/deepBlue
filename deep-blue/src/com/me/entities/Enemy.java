@@ -1,5 +1,6 @@
 package com.me.entities;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.me.deepblue.Images;
 
@@ -10,6 +11,8 @@ public class Enemy extends SeaObjects
 	public boolean forward = true;
 	public int type;
 	public boolean attacking = false;
+	TextureRegion[][] imageShark = TextureRegion.split(Images.shark_image, 355, 250);
+	float imageIterator;
 	
 	//KEYS FOR ENEMY TYPES
 	/*
@@ -25,12 +28,30 @@ public class Enemy extends SeaObjects
 		this.type = type;
 		switch(type)
 		{
-			case(0):super.image = Images.shark_sprite;
-					break;
 			case(1):super.image = Images.barracuda_sprite;
 					break;
 		}
-		boundingBox = new Rectangle (this.x, this.y, image.getWidth(), image.getHeight());
+		if(type == 1)
+			boundingBox = new Rectangle (this.x, this.y, image.getWidth(), image.getHeight());
+		else if (type == 0)
+			boundingBox = new Rectangle (this.x, this.y, image.getWidth(), image.getHeight());
+	}
+	
+	/*
+	 * Iterates through the sprite sheet and retrieves the appropriate image of the enemy,
+	 * making the animation possible
+	 * 
+	 * @Martin Dinkov
+	 */
+	public TextureRegion getImage() {
+		if(type == 0) {
+			if (imageIterator < 13)
+	   			imageIterator += 0.25;
+	   		else
+	   			imageIterator = 0;
+	   		return imageShark[(int)imageIterator / 2][1 - ((int)imageIterator % 2)];
+	   	}
+		return null;
 	}
 	
 	//Lame pursue algorithm only "chases" on the y at some vertical speed based on multiplier
