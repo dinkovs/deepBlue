@@ -1,11 +1,13 @@
 package com.me.deepblue;
 
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.screens.MenuScreen;
+import com.me.deepblue.ScoreoidConfig;
 
 public class DeepBlue extends Game implements ApplicationListener{
 

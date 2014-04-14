@@ -2,6 +2,7 @@ package com.me.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,6 +12,8 @@ import com.me.deepblue.Images;
 
 public class LeaderboardScreen implements Screen{
 
+	int[] scores;
+	String[] usernames;
 	DeepBlue game;
 	OrthographicCamera camera;
 	Vector3 click;
@@ -26,6 +29,21 @@ public class LeaderboardScreen implements Screen{
 		
 		batch = new SpriteBatch();
 		click = new Vector3();
+		
+		scores = new int[10];
+		usernames = new String[10];
+		
+		FileHandle scoresFile = Gdx.files.internal("data/scores.txt");
+		FileHandle usernamesFile = Gdx.files.internal("data/usernames.txt");
+		
+		String scoresString = scoresFile.readString();
+		String usernamesString = usernamesFile.readString();
+		
+		System.out.println(usernamesString);
+		System.out.println(scoresString);
+		
+		
+		
 	}
 	
 	@Override
