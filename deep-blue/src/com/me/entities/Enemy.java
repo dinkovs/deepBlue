@@ -34,7 +34,7 @@ public class Enemy extends SeaObjects
 		if(type == 1)
 			boundingBox = new Rectangle (this.x, this.y, image.getWidth(), image.getHeight());
 		else if (type == 0)
-			boundingBox = new Rectangle (this.x, this.y, image.getWidth(), image.getHeight());
+			boundingBox = new Rectangle (this.x, this.y, 355, 250);
 	}
 	
 	/*
