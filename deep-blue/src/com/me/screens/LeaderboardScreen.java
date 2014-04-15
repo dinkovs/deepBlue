@@ -61,21 +61,11 @@ public class LeaderboardScreen implements Screen{
 				generator.dispose();
 				font.setScale((float)0.75, -(float)0.45);
 
-		try 
-		{
+		
 			/*br = new BufferedReader(new FileReader("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
 			
 			wr = new BufferedWriter(new FileWriter("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
 			*/
-			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
-			
-			//wr = new BufferedWriter(new FileWriter("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
-			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		data = new ArrayList<String>();
-		data.add("gg");
 		
 		data = getData();
 		
@@ -92,7 +82,7 @@ public class LeaderboardScreen implements Screen{
 		try
 		{
 			String line;
-			
+			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
 			while((line = br.readLine()) != null)
 			{
 				data.add(line);
@@ -111,14 +101,14 @@ public class LeaderboardScreen implements Screen{
 	 * 					140,Sponge Bob Square Tard	
 	 * 
 	 * @return
-	 * 	returns a 0 if there is no new high 
+	 * 	returns a -1 if there is no new high 
 	 *  returns index of new score
 	 */
 	public int checkNewScore(String str)
 	{	
 		String[] pieces = str.split("\\,");
 		
-		int newScore = Integer.getInteger(pieces[0]);
+		int newScore = Integer.parseInt(pieces[0]);
 		
 		for(int i = 0; i < data.size(); i++)
 		{
@@ -132,7 +122,7 @@ public class LeaderboardScreen implements Screen{
 				return i;
 			}	
 		}
-		return 0;
+		return -1;
 	}
 	
 	/**

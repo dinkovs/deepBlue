@@ -1,6 +1,11 @@
 package com.me.screens;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -56,6 +61,9 @@ public class GameScreen implements Screen {
 	Flock flock = new Flock();
 	Random ran = new Random();
 	ArrayList<Jellyfish> jellies = new ArrayList<Jellyfish>();
+	ArrayList<String> data;
+	BufferedReader br;
+	BufferedWriter wr;
 
 	private BitmapFont font = new BitmapFont();
 	// for the turtle
@@ -87,6 +95,7 @@ public class GameScreen implements Screen {
 		lifePowerUp = new PowerUp(5, -1000);
 		hook1 = new Hook();
 		hook2 = new Hook();
+		data = getData();
 
 		// cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
@@ -96,6 +105,91 @@ public class GameScreen implements Screen {
 		font.setScale(1, -1);
 	}
 
+	/**
+	 * This method gets all the current data in the text file
+	 * @return
+	 */
+	public ArrayList<String> getData()
+	{
+		data = new ArrayList<String>();
+		
+		try
+		{
+			String line;
+			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
+			while((line = br.readLine()) != null)
+			{
+				data.add(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	/**
+	 * 
+	 * @param str
+	 * 	The string that you want to add so it should look liek this ->
+	 * 
+	 * 					140,Sponge Bob Square Tard	
+	 * 
+	 * @return
+	 * 	returns a -1 if there is no new high 
+	 *  returns index of new score
+	 */
+	public int checkNewScore(String str)
+	{	
+		String[] pieces = str.split(",",2);
+		System.out.println(pieces[0]);
+		System.out.println(Integer.parseInt(pieces[0]));
+		int newScore = Integer.parseInt(pieces[0]);
+		
+		for(int i = 0; i < data.size(); i++)
+		{
+			String[] data_pieces = data.get(i).split(",",2);
+			int oldScore = Integer.parseInt(data_pieces[0]);
+			
+			if(newScore > oldScore)
+			{
+				data.add(str);
+				data.remove(data.size() - 1);
+				return i;
+			}	
+		}
+		return -1;
+	}
+	
+	/**
+	 * If there is a new score call this method to actually write it to the text file
+	 */
+	public void writeNewScores()
+	{
+		String[] sortedData = new String[10];
+		for(int i = 0; i < 10; i++)
+			sortedData[i] = data.get(i);
+	    Arrays.sort(sortedData);
+		
+	    try
+	    {
+	    	wr = new BufferedWriter(new FileWriter("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
+	    } catch(Exception e) {
+	    	e.printStackTrace();
+	    }
+	    	
+		for(int i = 0; i < sortedData.length;i++)
+		{
+			try
+			{
+				
+			wr.write(sortedData[i]);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 	// Set up School Spawning
 	public void spawnSchool() {
 
@@ -438,7 +532,9 @@ public class GameScreen implements Screen {
 			invincibleTimer = 5;
 		}
 		else {
-			//GAME OVER
+			if(checkNewScore(Integer.toString((int) score) + "," + game.username) >= 0)
+				writeNewScores();
+			pause();
 		}
 	}
 

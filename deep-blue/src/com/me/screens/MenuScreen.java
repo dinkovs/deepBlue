@@ -20,11 +20,9 @@ public class MenuScreen implements Screen{
 	Vector3 click;
 	SpriteBatch batch;
 	int wave_x;
-	String username;
 	
 	public GameScreen play_screen;
 	public LeaderboardScreen leaderboard_screen;
-	private boolean enteredName;
 	
 	public MenuScreen(DeepBlue game, int wave_x){
 		Images.loadMainMenu();
@@ -37,25 +35,8 @@ public class MenuScreen implements Screen{
 		batch = new SpriteBatch();
 		click = new Vector3();
 		
-		enteredName = false;
-		
-		Gdx.input.getTextInput(new TextInputListener() {
-
-			@Override
-			public void input(String text) {
-				enteredName = true;
-				username = text;
-				System.out.println(username);
-			}
-
-			@Override
-			public void canceled() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		}, "Log-In", "<Enter Username Here>");
 	}
+		
 	
 	@Override
 	public void render(float delta) {
@@ -83,7 +64,7 @@ public class MenuScreen implements Screen{
 		batch.draw(Images.play_sprite, 57, 360);
 		batch.draw(Images.leaderboards_sprite, 640, 371);
 		batch.draw(Images.credits_sprite, 919, 348);
-		if(!enteredName)
+		if(!game.enteredName)
 			batch.draw(Images.usernamebg_sprite, 0, 0);
 		
 		batch.end();
