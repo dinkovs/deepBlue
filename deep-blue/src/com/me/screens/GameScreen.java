@@ -586,10 +586,18 @@ public class GameScreen implements Screen {
 	public void pause() {
 		if(Gdx.input.isKeyPressed(Keys.U))
 			gameState = PLAYING;
+		
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.draw(Images.pauseScreen_sprite, camera.position.x - 600, camera.position.y - 300);
+		batch.end();
 	}
 	
 	public void gameover() {
-		
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.draw(Images.gameOver_sprite, camera.position.x - 600, camera.position.y - 300);
+		batch.end();
 	}
 
 	@Override
