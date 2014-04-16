@@ -163,11 +163,11 @@ public class Images {
 		gameOver_sprite =  new Sprite(gameOver_image);
 		gameOver_sprite.flip(false, true);
 		
-		school_image = new Texture(Gdx.files.internal("play/school.png"));
+		school_image = new Texture(Gdx.files.internal("play/fishy_v2.png"));
 		school_sprite =  new Sprite(school_image);
 		school_sprite.flip(true, true);
 		
-		school_image2 = new Texture(Gdx.files.internal("play/school2.png"));
+		school_image2 = new Texture(Gdx.files.internal("play/fishy_v1.png"));
 		school_sprite2 =  new Sprite(school_image2);
 		school_sprite2.flip(true, true);
 		

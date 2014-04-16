@@ -119,17 +119,10 @@ public class GameScreen implements Screen {
 		try
 		{
 			String line;
-<<<<<<< HEAD
 			br = new BufferedReader(
 					new FileReader(
 							System.getProperty("user.dir")+ "/leaderBoard.txt"));
 			while ((line = br.readLine()) != null) {
-
-=======
-			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
-			while((line = br.readLine()) != null)
-			{
->>>>>>> FETCH_HEAD
 				data.add(line);
 			}
 		} catch (Exception e) {
@@ -181,7 +174,6 @@ public class GameScreen implements Screen {
 		{
 			sortedData[i] = data.get(i);
 		}
-<<<<<<< HEAD
 		
 		Arrays.sort(sortedData);
 
@@ -195,21 +187,7 @@ public class GameScreen implements Screen {
 
 		for (int i = 0; i < sortedData.length; i++) {
 			try {
-=======
-	    Arrays.sort(sortedData);
-		
-	    try
-	    {
-	    	wr = new BufferedWriter(new FileWriter("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
-	    } catch(Exception e) {
-	    	e.printStackTrace();
-	    }
-	    	
-		for(int i = 0; i < sortedData.length;i++)
-		{
-			try
-			{
->>>>>>> FETCH_HEAD
+
 				System.out.println(sortedData[i]);
 			wr.write(sortedData[i]);
 			} catch(Exception e) {
@@ -303,18 +281,7 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		// RENDERING CODE GOES HERE
-<<<<<<< HEAD
 
-=======
-		
-		//if(paused)
-		
-		
-		
-		
-		
-		
->>>>>>> FETCH_HEAD
 		//Spawn the school make sure it hasn't already been spawned
 		if(t != 1)
 		{
@@ -368,7 +335,7 @@ public class GameScreen implements Screen {
 		for(int p = 0; p < enemies.size(); p++)
 		{
 			if(enemies.get(p).type == 1) {
-				batch.draw(enemies.get(p).image, enemies.get(p).x, enemies.get(p).y);
+				batch.draw(enemies.get(p).getImage(), enemies.get(p).x, enemies.get(p).y);
 				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
 					enemies.get(p).image.getWidth(),enemies.get(p).image.getHeight());
 			}
