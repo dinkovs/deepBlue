@@ -41,6 +41,7 @@ public class GameScreen implements Screen {
 	DeepBlue game;
 	OrthographicCamera camera;
 	public SpriteBatch batch;
+	public MenuScreen main_menu_screen;
 	FileHandle fontFile;
 	FreeTypeFontGenerator generator;
 	Player player;
@@ -596,6 +597,13 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(Images.gameOver_sprite, camera.position.x - 600, camera.position.y - 300);
+		
+		if(Gdx.input.isTouched()) {
+			dispose();
+			main_menu_screen = new MenuScreen(game, 0);
+			game.setScreen(main_menu_screen);
+		}
+		
 		batch.end();
 	}
 
