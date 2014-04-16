@@ -12,6 +12,7 @@ public class Enemy extends SeaObjects
 	public int type;
 	public boolean attacking = false;
 	TextureRegion[][] imageShark = TextureRegion.split(Images.shark_image, 355, 250);
+	TextureRegion[][] imageBarracuda = TextureRegion.split(Images.barracuda_image,244,100);
 	float imageIterator;
 	
 	//KEYS FOR ENEMY TYPES
@@ -26,15 +27,11 @@ public class Enemy extends SeaObjects
 		this.x = x;
 		this.y = y;
 		this.type = type;
-		switch(type)
-		{
-			case(1):super.image = Images.barracuda_sprite;
-					break;
-		}
+		
 		if(type == 1)
-			boundingBox = new Rectangle (this.x, this.y, image.getWidth(), image.getHeight());
+			boundingBox = new Rectangle (this.x, this.y, 460, 200);
 		else if (type == 0)
-			boundingBox = new Rectangle (this.x, this.y, 355, 250);
+			boundingBox = new Rectangle (this.x, this.y, 235, 90);
 	}
 	
 	/*
@@ -51,6 +48,13 @@ public class Enemy extends SeaObjects
 	   			imageIterator = 0;
 	   		return imageShark[(int)imageIterator / 2][1 - ((int)imageIterator % 2)];
 	   	}
+		if(type == 1) {
+			if(imageIterator < 3)
+				imageIterator += .25;
+			else
+				imageIterator = 0;
+			return imageBarracuda[(int)imageIterator/2][1-((int)imageIterator % 2)];
+		}
 		return null;
 	}
 	

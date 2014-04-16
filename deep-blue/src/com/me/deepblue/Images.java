@@ -55,6 +55,8 @@ public class Images {
 	public static Texture barracuda_image;
 	public static Sprite barracuda_sprite;
 	public static Texture jellyfish_image;
+	public static Sprite boat_sprite;
+	public static Texture boat_image;
 	
 	//Leaderboard Images
 	public static Texture goBack_image;
@@ -116,16 +118,14 @@ public class Images {
 		sea_sprite1 = new Sprite(sea_image,0,0,1200,600);
 		sea_sprite1.flip(false, true);
 		
-		turtle_image = new Texture(Gdx.files.internal("play/turtle.png"));
-		fish_image = new Texture(Gdx.files.internal("play/fish.png"));
+		turtle_image = new Texture(Gdx.files.internal("play/turtleSwimv2.png"));
+		fish_image = new Texture(Gdx.files.internal("play/fish_spritesheetv2.png"));
 		
 		shark_image = new Texture(Gdx.files.internal("play/shark.png"));
 		shark_sprite =  new Sprite(shark_image);
 		shark_sprite.flip(false, true);
 		
-		barracuda_image = new Texture(Gdx.files.internal("play/barracuda.jpeg"));
-		barracuda_sprite =  new Sprite(barracuda_image);
-		barracuda_sprite.flip(false, true);
+		barracuda_image = new Texture(Gdx.files.internal("play/barracuda_spritesheet.png"));
 		
 		scoreplus_image = new Texture(Gdx.files.internal("play/scoreplus.png"));
 		scoreplus_sprite =  new Sprite(scoreplus_image);
@@ -164,6 +164,10 @@ public class Images {
 		school_sprite2.flip(true, true);
 		
 		jellyfish_image = new Texture(Gdx.files.internal("play/jellyfish.png"));
+		
+		boat_image = new Texture(Gdx.files.internal("play/boat_hull.png"));
+		boat_sprite =  new Sprite(boat_image);
+		boat_sprite.flip(true, true);
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));
