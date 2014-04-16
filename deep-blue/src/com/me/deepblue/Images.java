@@ -55,6 +55,7 @@ public class Images {
 	public static Texture barracuda_image;
 	public static Sprite barracuda_sprite;
 	public static Texture jellyfish_image;
+	public static Texture turtleAttack_image;
 	public static Sprite boat_sprite;
 	public static Texture boat_image;
 	public static Texture gameOver_image;
@@ -69,8 +70,6 @@ public class Images {
 	public static Sprite table_sprite;
 	public static Texture leaderboardTitle_image;
 	public static Sprite leaderboardTitle_sprite;
-
-	
 	
 	public static void loadMainMenu(){
 		blue_image = new Texture(Gdx.files.internal("menu/blueSea.jpg"));
@@ -178,10 +177,12 @@ public class Images {
 		school_sprite2.flip(true, true);
 		
 		jellyfish_image = new Texture(Gdx.files.internal("play/jellyfish.png"));
-		
+
 		boat_image = new Texture(Gdx.files.internal("play/boat_hull.png"));
 		boat_sprite =  new Sprite(boat_image);
 		boat_sprite.flip(true, true);
+
+		turtleAttack_image = new Texture(Gdx.files.internal("play/turtleAttack.png"));
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));

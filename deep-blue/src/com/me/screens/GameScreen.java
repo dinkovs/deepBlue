@@ -41,6 +41,7 @@ public class GameScreen implements Screen {
 	DeepBlue game;
 	OrthographicCamera camera;
 	public SpriteBatch batch;
+	public MenuScreen main_menu_screen;
 	FileHandle fontFile;
 	FreeTypeFontGenerator generator;
 	Player player;
@@ -53,6 +54,7 @@ public class GameScreen implements Screen {
 	Hook hook2;
 	float powerUpCountDown;
 	float fishCountDown;
+	float attackCountDown;
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	float score = 0;
 	int tracker = 0;
@@ -453,7 +455,8 @@ public class GameScreen implements Screen {
 			bubbleBeam.active = true;
 			bubbleBeam.activated = true;
 			score += 150;
-			powerUpCountDown = 10;
+			attackCountDown = 10;
+			player.form = 2;
 			
 		}
 
@@ -495,6 +498,13 @@ public class GameScreen implements Screen {
 					"Fish Mode: " + Integer.toString((int) fishCountDown),
 					camera.position.x - 150, camera.position.y + 240);
 		}
+		
+		if (attackCountDown <= 0) {
+			bubbleBeam.active = false;
+			player.form = 0;
+		} else {
+			attackCountDown -= .02;
+		} 
 
 		// RESET THE POWERUPS
 		if ((System.currentTimeMillis() % 22000) < 1000)
@@ -596,6 +606,13 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(Images.gameOver_sprite, camera.position.x - 600, camera.position.y - 300);
+		
+		if(Gdx.input.isTouched()) {
+			dispose();
+			main_menu_screen = new MenuScreen(game, 0);
+			game.setScreen(main_menu_screen);
+		}
+		
 		batch.end();
 	}
 
