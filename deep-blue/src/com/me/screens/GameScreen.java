@@ -10,7 +10,6 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -35,7 +34,6 @@ public class GameScreen implements Screen {
 	DeepBlue game;
 	OrthographicCamera camera;
 	public SpriteBatch batch;
-	static boolean paused = false;
 	FileHandle fontFile;
 	FreeTypeFontGenerator generator;
 	Player player;
@@ -55,7 +53,7 @@ public class GameScreen implements Screen {
 	long start = System.currentTimeMillis(); // Keep track of enemy spawning
 	long startGameTime = System.currentTimeMillis(); // Keep track of total game
 														// length
-
+	
 	long jellyStartTime = System.currentTimeMillis();
 	long jellyCurrentTime;
 	long current; // Keep track of current time versus start time
@@ -111,24 +109,18 @@ public class GameScreen implements Screen {
 
 	/**
 	 * This method gets all the current data in the text file
-	 * 
 	 * @return
 	 */
-	public ArrayList<String> getData() {
+	public ArrayList<String> getData()
+	{
 		data = new ArrayList<String>();
-
-		try {
+		
+		try
+		{
 			String line;
-<<<<<<< HEAD
-			br = new BufferedReader(
-					new FileReader(
-							"/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
-			while ((line = br.readLine()) != null) {
-=======
 			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
 			while((line = br.readLine()) != null)
 			{
->>>>>>> FETCH_HEAD
 				data.add(line);
 			}
 		} catch (Exception e) {
@@ -136,58 +128,50 @@ public class GameScreen implements Screen {
 		}
 		return data;
 	}
-
+	
 	/**
 	 * 
 	 * @param str
-	 *            The string that you want to add so it should look liek this ->
+	 * 	The string that you want to add so it should look liek this ->
 	 * 
-	 *            140,Sponge Bob Square Tard
+	 * 					140,Sponge Bob Square Tard	
 	 * 
-	 * @return returns a -1 if there is no new high returns index of new score
+	 * @return
+	 * 	returns a -1 if there is no new high 
+	 *  returns index of new score
 	 */
-	public int checkNewScore(String str) {
-		String[] pieces = str.split(",", 2);
-		// System.out.println(pieces[0]);
-		// System.out.println(Integer.parseInt(pieces[0]));
+	public int checkNewScore(String str)
+	{	
+		String[] pieces = str.split(",",2);
+		//System.out.println(pieces[0]);
+		//System.out.println(Integer.parseInt(pieces[0]));
 		int newScore = Integer.parseInt(pieces[0]);
-
-		for (int i = 0; i < data.size(); i++) {
-			String[] data_pieces = data.get(i).split(",", 2);
+		
+		for(int i = 0; i < data.size(); i++)
+		{
+			String[] data_pieces = data.get(i).split(",",2);
 			int oldScore = Integer.parseInt(data_pieces[0]);
-
-			if (newScore > oldScore) {
+			
+			if(newScore > oldScore)
+			{
 				data.add(str);
 				data.remove(data.size() - 1);
 				return i;
-			}
+			}	
 		}
 		return -1;
 	}
-
+	
 	/**
-	 * If there is a new score call this method to actually write it to the text
-	 * file
+	 * If there is a new score call this method to actually write it to the text file
 	 */
-	public void writeNewScores() {
+	public void writeNewScores()
+	{
 		String[] sortedData = new String[10];
-		for (int i = 0; i < 10; i++) {
+		for(int i = 0; i < 10; i++)
+		{
 			sortedData[i] = data.get(i);
 		}
-<<<<<<< HEAD
-		Arrays.sort(sortedData);
-
-		try {
-			wr = new BufferedWriter(
-					new FileWriter(
-							"/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		for (int i = 0; i < sortedData.length; i++) {
-			try {
-=======
 	    Arrays.sort(sortedData);
 		
 	    try
@@ -201,15 +185,15 @@ public class GameScreen implements Screen {
 		{
 			try
 			{
->>>>>>> FETCH_HEAD
 				System.out.println(sortedData[i]);
-				wr.write(sortedData[i]);
-			} catch (Exception e) {
+			wr.write(sortedData[i]);
+			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-
+	
+	
 	// Set up School Spawning
 	public void spawnSchool() {
 
@@ -226,75 +210,74 @@ public class GameScreen implements Screen {
 			flock.addFish(fish);
 		}
 	}
-
+	
 	// Spawn Enemy Function
 	public void spawnEnemies() {
 		current = System.currentTimeMillis();
-		if (current - start > Math.random() * (20000 - 8000) + 8000) {
-			// Make sure enemy spawns off to the right of the screen with a
-			// random Y height
-			enemies.add(new Enemy((int) camera.position.x + 700,
-					100 + (int) (Math.random() * ((500 - 100) + 1)), ran
-							.nextInt(2)));
+		if(current - start > Math.random() * (20000 - 8000) + 8000)
+		{
+			//Make sure enemy spawns off to the right of the screen with a random Y height
+			enemies.add(new Enemy((int) camera.position.x + 700, 
+					100 + (int) (Math.random() * ((500 - 100) + 1)),
+					ran.nextInt(2)));
 			start = System.currentTimeMillis();
 			current = System.currentTimeMillis();
 		}
 	}
-
-	// Check for enemies that have gone off the screen and remove them from the
-	// enemy array.
+	
+	//Check for enemies that have gone off the screen and remove them from the enemy array.
 	public void removeEnemies() {
-		for (int i = 0; i < enemies.size(); i++) {
-			if (enemies.get(i).x < (player.x - 2000))
+		for(int i = 0; i < enemies.size(); i++)
+		{
+			if(enemies.get(i).x < (player.x - 2000))
 				enemies.remove(i);
 		}
 	}
-
-	// Engage enemy AI depending on type of enemy
-	public void enemyAI(int type, Enemy enemy) {
-		if (type == 0) // shark
+	
+	//Engage enemy AI depending on type of enemy
+	public void enemyAI(int type, Enemy enemy)
+	{
+		if(type == 0) //shark
 		{
 			enemy.pursue(player.y, 1);
-			enemy.x -= 2;
-		} else if (type == 1) // barracuda
+			enemy.x-=2;
+		}
+		else if(type == 1) //barracuda
 		{
 			enemy.burst(player.y, 2);
 		}
 	}
-
-	// Jellyfish spawning
-	public void spawnJellies() {
+	
+	//Jellyfish spawning
+	public void spawnJellies()
+	{
 		jellyCurrentTime = System.currentTimeMillis();
-		if (jellyCurrentTime - jellyStartTime > Math.random() * (20000 - 8000)
-				+ 8000) {
-			jellies.add(new Jellyfish((float) camera.position.x + 700,
-					(float) Math.random() * (475 - 50) + 50));
+		if(jellyCurrentTime - jellyStartTime > Math.random() * (20000 - 5000) + 5000)
+		{
+			jellies.add(new Jellyfish((float) camera.position.x + 700, 
+					(float) Math.random() * (600 - 100) + 100));
 			jellyStartTime = System.currentTimeMillis();
 			jellyCurrentTime = System.currentTimeMillis();
 		}
 	}
-
-	// Remove Jellies
+	
+	//Remove Jellies
 	public void removeJellies() {
-		for (int i = 0; i < jellies.size(); i++) {
-			if (jellies.get(i).x < (player.x - 2000))
+		for(int i = 0; i < jellies.size(); i++)
+		{
+			if(jellies.get(i).x < (player.x - 2000))
 				jellies.remove(i);
 		}
 	}
 
 	@Override
 	public void render(float delta) {
-
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		update(Gdx.graphics.getDeltaTime());
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		// RENDERING CODE GOES HERE
-<<<<<<< HEAD
-		// Spawn the school make sure it hasn't already been spawned
-		if (t != 1) {
-=======
 		
 		//if(paused)
 		
@@ -306,15 +289,14 @@ public class GameScreen implements Screen {
 		//Spawn the school make sure it hasn't already been spawned
 		if(t != 1)
 		{
->>>>>>> FETCH_HEAD
 			spawnSchool();
 			t = 1;
 		}
 
-		// Scroll Speed Increase
+		// Scroll Speed Increase 
 		long currentGameTime = System.currentTimeMillis();
 		if (currentGameTime - startGameTime > 30000) {
-			levelSpeed += .5;
+			levelSpeed+= .5;
 			startGameTime = System.currentTimeMillis();
 			currentGameTime = System.currentTimeMillis();
 		}
@@ -324,109 +306,101 @@ public class GameScreen implements Screen {
 			Images.sea_sprite.setPosition(Images.sea_sprite1.getX(), 0);
 			Images.sea_sprite1.setPosition(Images.sea_sprite.getX() + 1200, 0);
 		}
-
-		// Enemy Spawning
+		
+		//Enemy Spawning
 		spawnEnemies();
-
-		// JellySpawning and removing
+		
+		//JellySpawning and removing
 		spawnJellies();
 		removeJellies();
-
-		// Check for enemies that have gone off the screen
+		
+		//Check for enemies that have gone off the screen
 		removeEnemies();
-
-		// Engage the Enemy AI
-		for (int j = 0; j < enemies.size(); j++) {
+		
+		//Engage the Enemy AI
+		for(int j = 0; j < enemies.size(); j++)
+		{
 			enemyAI(enemies.get(j).type, enemies.get(j));
 		}
+	
 
 		// DRAW BACKGROUND
 		Images.sea_sprite.draw(batch);
 		Images.sea_sprite1.draw(batch);
-
-		// DRAW AND UPDATE SCHOOL OF FISH
+		
+		// DRAW AND UPDATE SCHOOL OF FISH 
 		flock.move();
 		for (int k = 0; k < flock.fishes.size(); k++) {
 			Fish fish = (Fish) flock.fishes.elementAt(k);
-			batch.draw(fish.image, fish.getLocation().x + camera.position.x
-					- 600, fish.getLocation().y);
+			batch.draw(fish.image, fish.getLocation().x + camera.position.x - 600, fish.getLocation().y);
 		}
-
-		// DRAW THE ENEMIES
-		for (int p = 0; p < enemies.size(); p++) {
-			if (enemies.get(p).type == 1) {
-				batch.draw(enemies.get(p).getImage(), enemies.get(p).x,
-						enemies.get(p).y);
-				enemies.get(p).boundingBox = new Rectangle(enemies.get(p).x,
-						enemies.get(p).y, 460, 180);
-			} else if (enemies.get(p).type == 0) {
-				batch.draw(enemies.get(p).getImage(), enemies.get(p).x,
-						enemies.get(p).y);
-				enemies.get(p).boundingBox = new Rectangle(enemies.get(p).x,
-						enemies.get(p).y, enemies.get(p).getImage()
-								.getRegionWidth(), enemies.get(p).getImage()
-								.getRegionHeight());
+		
+		//DRAW THE ENEMIES
+		for(int p = 0; p < enemies.size(); p++)
+		{
+			if(enemies.get(p).type == 1) {
+				batch.draw(enemies.get(p).image, enemies.get(p).x, enemies.get(p).y);
+				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
+					enemies.get(p).image.getWidth(),enemies.get(p).image.getHeight());
+			}
+			else if(enemies.get(p).type == 0) {
+				batch.draw(enemies.get(p).getImage(), enemies.get(p).x, enemies.get(p).y);
+				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
+					enemies.get(p).getImage().getRegionWidth(),enemies.get(p).getImage().getRegionHeight());
 			}
 		}
-
-		// DRAW JELLIES
-		for (int u = 0; u < jellies.size(); u++) {
-			batch.draw(jellies.get(u).getImage(), jellies.get(u).x,
-					jellies.get(u).y);
-			jellies.get(u).boundingBox = new Rectangle(jellies.get(u).x,
-					jellies.get(u).y, jellies.get(u).getImage()
-							.getRegionWidth(), jellies.get(u).getImage()
-							.getRegionHeight());
-
+		
+		//DRAW JELLIES
+		for(int u = 0; u < jellies.size();u++)
+		{
+			batch.draw(jellies.get(u).getImage(), jellies.get(u).x, jellies.get(u).y);
+			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y,
+											jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight());
+			
 		}
 
 		// DRAW OBJECTS
 		if (!scoreSpeedUp.activated)
 			batch.draw(scoreSpeedUp.image, scoreSpeedUp.x, scoreSpeedUp.y);
-
+		
 		if (!scorePlus.activated)
 			batch.draw(scorePlus.image, scorePlus.x, scorePlus.y);
-
+		
 		if (!fishPowerUp.activated)
 			batch.draw(fishPowerUp.image, fishPowerUp.x, fishPowerUp.y);
-
+		
 		if (!bubbleBeam.activated)
 			batch.draw(bubbleBeam.image, bubbleBeam.x, bubbleBeam.y);
-
+		
 		if (!lifePowerUp.activated)
 			batch.draw(lifePowerUp.image, lifePowerUp.x, lifePowerUp.y);
-
-		if ((int) (invincibleTimer * 3) % 2 == 0) {
+		
+		if ((int)(invincibleTimer*3)%2 == 0)
+		{
 			batch.draw(player.getImage(), player.x, player.y);
-			player.boundingBox = new Rectangle(player.x, player.y, player
-					.getImage().getRegionWidth(), player.getImage()
-					.getRegionHeight());
+			player.boundingBox = new Rectangle (player.x, player.y, player.getImage().getRegionWidth(), player.getImage().getRegionHeight());
 		}
-
-		batch.draw(hook1.image, hook1.x + 200, hook1.y);
-		batch.draw(Images.boat_image, hook1.x, -3);
-		batch.draw(hook2.image, hook2.x + 200, hook2.y);
-		batch.draw(Images.boat_image, hook2.x, -3);
+		
+		batch.draw(hook1.image, hook1.x, hook1.y);
+		batch.draw(hook2.image, hook2.x, hook2.y);
 
 		// CHECK COLLISIONS
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy enemy = enemies.get(i);
-			if (player.boundingBox.overlaps(enemy.boundingBox)
-					&& !player.invincible) {
+			if (player.boundingBox.overlaps(enemy.boundingBox) && !player.invincible) {
 				System.out.println("OMG NOOB");
 				loseLife();
 			}
-
+			
 		}
 		for (int i = 0; i < jellies.size(); i++) {
 			Jellyfish jellyfish = jellies.get(i);
-			if (player.boundingBox.overlaps(jellyfish.boundingBox)
-					&& !player.invincible) {
+			if (player.boundingBox.overlaps(jellyfish.boundingBox) && !player.invincible) {
 				System.out.println("You've got to try this sandwich");
 				loseLife();
 			}
 		}
-
+		
 		if (player.boundingBox.overlaps(scoreSpeedUp.boundingBox)
 				&& !scoreSpeedUp.activated) {
 			scoreSpeedUp.active = true;
@@ -439,7 +413,7 @@ public class GameScreen implements Screen {
 			scorePlus.activated = true;
 			score += 100;
 		}
-
+		
 		if (player.boundingBox.overlaps(lifePowerUp.boundingBox)
 				&& !lifePowerUp.activated) {
 			lifePowerUp.activated = true;
@@ -453,14 +427,14 @@ public class GameScreen implements Screen {
 			fishCountDown = 30;
 			player.form = 1;
 		}
-
+		
 		if (player.boundingBox.overlaps(bubbleBeam.boundingBox)
 				&& !bubbleBeam.activated) {
 			bubbleBeam.active = true;
 			bubbleBeam.activated = true;
 			score += 150;
 			powerUpCountDown = 10;
-
+			
 		}
 
 		if (player.boundingBox.overlaps(hook1.boundingBox) && player.y != 0
@@ -478,16 +452,15 @@ public class GameScreen implements Screen {
 		}
 		if (player.y < 0 && !player.invincible)
 			loseLife();
+			
 
 		// CHECK POWERUPS
 		if (powerUpCountDown <= 0) {
 			scoreSpeedUp.active = false;
 		} else {
 			powerUpCountDown -= .02;
-			font.draw(
-					batch,
-					"Score Speed-Up: "
-							+ Integer.toString((int) powerUpCountDown),
+			font.draw(batch,
+					"Score Speed-Up: " + Integer.toString((int) powerUpCountDown),
 					camera.position.x - 200, camera.position.y + 190);
 			if (scoreSpeedUp.active == true)
 				score += .1;
@@ -512,33 +485,31 @@ public class GameScreen implements Screen {
 			bubbleBeam.reset(camera.position.x);
 		if ((System.currentTimeMillis() % lifePowerUp.resetTimer) < 1000)
 			lifePowerUp.reset(camera.position.x);
-
-		// Hook Resetting
-		if ((System.currentTimeMillis() % 15000) < 1000) {
+		
+		//Hook Resetting
+		if ((System.currentTimeMillis() % 15000) < 1000)
 			hook1.reset(camera.position.x);
-		}
-		if ((System.currentTimeMillis() % 20000) < 1000) {
+		if ((System.currentTimeMillis() % 20000) < 1000)
 			hook2.reset(camera.position.x);
-		}
+		
 
 		// DISPLAY SCORE
 		font.draw(batch, "Score: " + Integer.toString((int) score),
 				camera.position.x - 590, 10);
-
-		// DISPLAY LIFE
-		for (int i = 1; i <= player.lives; i++) {
-			int x = ((int) camera.position.x) + 600
-					- (i * (10 + Images.life_image.getWidth()));
+		
+		//DISPLAY LIFE
+		for(int i = 1; i <= player.lives; i++) {
+			int x = ((int) camera.position.x) + 600 - (i * (10 + Images.life_image.getWidth())) ;
 			batch.draw(Images.life_sprite, x, 10);
 		}
-
+		
 		if (player.invincible) {
 			if (invincibleTimer <= 0)
 				player.invincible = false;
-			else
+			else 
 				invincibleTimer -= 0.02;
 		}
-
+		
 		camera.position.x += levelSpeed;
 		// System.out.println(camera.position.x++);
 
@@ -548,9 +519,6 @@ public class GameScreen implements Screen {
 
 	public void update(float dt) {
 		camera.update();
-		if (Gdx.input.isKeyPressed(Keys.P)) {
-			paused = true;
-		}
 		player.handleInput(camera.position.x);
 		if (player.x <= camera.position.x - 600) {
 			player.x = camera.position.x - 600;
@@ -565,7 +533,7 @@ public class GameScreen implements Screen {
 			}
 		}
 	}
-
+	
 	public void loseLife() {
 		if (player.lives > 0) {
 			player.lives--;
@@ -573,9 +541,9 @@ public class GameScreen implements Screen {
 			player.y = camera.position.y;
 			player.invincible = true;
 			invincibleTimer = 5;
-		} else {
-			if (checkNewScore(Integer.toString((int) score) + ","
-					+ game.username) >= 0)
+		}
+		else {
+			if(checkNewScore(Integer.toString((int) score) + "," + game.username) >= 0)
 				writeNewScores();
 			pause();
 		}
