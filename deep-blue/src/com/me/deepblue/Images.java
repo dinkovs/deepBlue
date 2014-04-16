@@ -55,6 +55,8 @@ public class Images {
 	public static Texture barracuda_image;
 	public static Sprite barracuda_sprite;
 	public static Texture jellyfish_image;
+	public static Texture gameOver_image;
+	public static Sprite gameOver_sprite;
 	
 	//Leaderboard Images
 	public static Texture goBack_image;
@@ -156,6 +158,10 @@ public class Images {
 		lifepowerup_image = new Texture(Gdx.files.internal("play/lifeplus.png"));
 		lifepowerup_sprite =  new Sprite(lifepowerup_image);
 		lifepowerup_sprite.flip(false, true);
+		
+		gameOver_image = new Texture(Gdx.files.internal("play/gameover.png"));
+		gameOver_sprite =  new Sprite(gameOver_image);
+		gameOver_sprite.flip(false, true);
 		
 		school_image = new Texture(Gdx.files.internal("play/school.png"));
 		school_sprite =  new Sprite(school_image);

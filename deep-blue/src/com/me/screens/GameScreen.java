@@ -37,6 +37,7 @@ public class GameScreen implements Screen {
 	FileHandle fontFile;
 	FreeTypeFontGenerator generator;
 	Player player;
+	boolean paused;
 	PowerUp scorePlus;
 	PowerUp scoreSpeedUp;
 	PowerUp fishPowerUp;
@@ -96,6 +97,7 @@ public class GameScreen implements Screen {
 		hook1 = new Hook();
 		hook2 = new Hook();
 		data = getData();
+		paused = false;
 
 		// cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
@@ -276,6 +278,13 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		// RENDERING CODE GOES HERE
+		
+		//if(paused)
+		
+		
+		
+		
+		
 		
 		//Spawn the school make sure it hasn't already been spawned
 		if(t != 1)
