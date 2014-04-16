@@ -180,6 +180,14 @@ public class Images {
 		
 		table_image = new Texture(Gdx.files.internal("leaderboards/table.png"));
 		table_sprite = new Sprite(table_image);
+		
+		school_image = new Texture(Gdx.files.internal("play/school.png"));
+		school_sprite =  new Sprite(school_image);
+		school_sprite.flip(true, true);
+		
+		school_image2 = new Texture(Gdx.files.internal("play/school2.png"));
+		school_sprite2 =  new Sprite(school_image2);
+		school_sprite2.flip(true, true);
 	}
 	
 }

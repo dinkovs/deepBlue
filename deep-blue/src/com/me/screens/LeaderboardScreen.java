@@ -40,7 +40,7 @@ public class LeaderboardScreen implements Screen{
 	private BitmapFont font = new BitmapFont();
 	public MenuScreen main_menu_screen;
 	FreeTypeFontGenerator generator;
-	//Flock flock = new Flock();
+	Flock flock = new Flock();
 	boolean createFlock = true;
 	
 	public LeaderboardScreen (DeepBlue game, int wave_x) {
@@ -82,7 +82,7 @@ public class LeaderboardScreen implements Screen{
 		try
 		{
 			String line;
-			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
+			br = new BufferedReader(new FileReader("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
 			while((line = br.readLine()) != null)
 			{
 				data.add(line);
@@ -93,58 +93,6 @@ public class LeaderboardScreen implements Screen{
 		return data;
 	}
 	
-	/**
-	 * 
-	 * @param str
-	 * 	The string that you want to add so it should look liek this ->
-	 * 
-	 * 					140,Sponge Bob Square Tard	
-	 * 
-	 * @return
-	 * 	returns a -1 if there is no new high 
-	 *  returns index of new score
-	 */
-	public int checkNewScore(String str)
-	{	
-		String[] pieces = str.split("\\,");
-		
-		int newScore = Integer.parseInt(pieces[0]);
-		
-		for(int i = 0; i < data.size(); i++)
-		{
-			String[] data_pieces = data.get(i).split("\\,");
-			int oldScore = Integer.getInteger(data_pieces[0]);
-			
-			if(newScore > oldScore)
-			{
-				data.add(str);
-				data.remove(data.size() - 1);
-				return i;
-			}	
-		}
-		return -1;
-	}
-	
-	/**
-	 * If there is a new score call this method to actually write it to the text file
-	 */
-	public void writeNewScores()
-	{
-		ArrayList<String> data = getData();
-		String[] sortedData = (String[]) data.toArray();
-	    Arrays.sort(sortedData);
-		
-		for(int i = 0; i < sortedData.length;i++)
-		{
-			try
-			{
-			wr.write(sortedData[i]);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	/*
 	public void spawnSchool() {
 
 		for (int i = 0; i < 20; i++) {
@@ -160,7 +108,7 @@ public class LeaderboardScreen implements Screen{
 			flock.addFish(fish);
 		}
 	}
-	*/
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
@@ -173,21 +121,20 @@ public class LeaderboardScreen implements Screen{
 		batch.begin();
 		
 		batch.draw(Images.blue_sprite, 0, 0);
+	
+		if(createFlock)
+		{
+			spawnSchool();
+			createFlock = false;
+		}
 		
-		//Spawn the school make sure it hasn't already been spawned
-		/*	if(createFlock)
-			{
-				spawnSchool();
-				createFlock = false;
-			}
-		*/
 		// DRAW AND UPDATE SCHOOL OF FISH 
-		/*	flock.move();
-			for (int k = 0; k < flock.fishes.size(); k++) {
-				Fish fish = (Fish) flock.fishes.elementAt(k);
-				batch.draw(fish.image, fish.getLocation().x + camera.position.x - 600, fish.getLocation().y);
-			}
-		*/
+		flock.move();
+		for (int k = 0; k < flock.fishes.size(); k++) {
+			Fish fish = (Fish) flock.fishes.elementAt(k);
+			batch.draw(fish.image, fish.getLocation().x + camera.position.x - 600, fish.getLocation().y);
+		}
+		
 		if(wave_x >= 1200)
 			wave_x = 0;
 		batch.draw(Images.wave_sprite, wave_x, 0);

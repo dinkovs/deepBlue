@@ -116,7 +116,7 @@ public class GameScreen implements Screen {
 		try
 		{
 			String line;
-			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
+			br = new BufferedReader(new FileReader("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
 			while((line = br.readLine()) != null)
 			{
 				data.add(line);
@@ -141,8 +141,8 @@ public class GameScreen implements Screen {
 	public int checkNewScore(String str)
 	{	
 		String[] pieces = str.split(",",2);
-		System.out.println(pieces[0]);
-		System.out.println(Integer.parseInt(pieces[0]));
+		//System.out.println(pieces[0]);
+		//System.out.println(Integer.parseInt(pieces[0]));
 		int newScore = Integer.parseInt(pieces[0]);
 		
 		for(int i = 0; i < data.size(); i++)
@@ -167,12 +167,14 @@ public class GameScreen implements Screen {
 	{
 		String[] sortedData = new String[10];
 		for(int i = 0; i < 10; i++)
+		{
 			sortedData[i] = data.get(i);
+		}
 	    Arrays.sort(sortedData);
 		
 	    try
 	    {
-	    	wr = new BufferedWriter(new FileWriter("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
+	    	wr = new BufferedWriter(new FileWriter("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
 	    } catch(Exception e) {
 	    	e.printStackTrace();
 	    }
@@ -181,7 +183,7 @@ public class GameScreen implements Screen {
 		{
 			try
 			{
-				
+				System.out.println(sortedData[i]);
 			wr.write(sortedData[i]);
 			} catch(Exception e) {
 				e.printStackTrace();
