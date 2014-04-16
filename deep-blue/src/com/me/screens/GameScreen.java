@@ -332,17 +332,18 @@ public class GameScreen implements Screen {
 		}
 		
 		//DRAW THE ENEMIES
+		//1 is cuda, 0 is shark
 		for(int p = 0; p < enemies.size(); p++)
 		{
 			if(enemies.get(p).type == 1) {
 				batch.draw(enemies.get(p).getImage(), enemies.get(p).x, enemies.get(p).y);
-				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
-					100,200);
+				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x + 10,enemies.get(p).y + 35,
+					160,40);
 			}
 			else if(enemies.get(p).type == 0) {
 				batch.draw(enemies.get(p).getImage(), enemies.get(p).x, enemies.get(p).y);
-				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
-					enemies.get(p).getImage().getRegionWidth(),enemies.get(p).getImage().getRegionHeight());
+				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y + 100,
+					100,80);
 			}
 		}
 		
@@ -350,7 +351,7 @@ public class GameScreen implements Screen {
 		for(int u = 0; u < jellies.size();u++)
 		{
 			batch.draw(jellies.get(u).getImage(), jellies.get(u).x, jellies.get(u).y);
-			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y,
+			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y + 15,
 											jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight());
 			
 		}
@@ -374,7 +375,7 @@ public class GameScreen implements Screen {
 		if ((int)(invincibleTimer*3)%2 == 0)
 		{
 			batch.draw(player.getImage(), player.x, player.y);
-			player.boundingBox = new Rectangle (player.x, player.y, player.getImage().getRegionWidth(), player.getImage().getRegionHeight());
+			player.boundingBox = new Rectangle (player.x + 10, player.y + 20, player.getImage().getRegionWidth() - 10, player.getImage().getRegionHeight() - 20);
 		}
 		
 		batch.draw(hook1.image, hook1.x, hook1.y);

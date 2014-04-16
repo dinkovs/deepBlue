@@ -11,8 +11,8 @@ public class Enemy extends SeaObjects
 	public boolean forward = true;
 	public int type;
 	public boolean attacking = false;
-	TextureRegion[][] imageShark = TextureRegion.split(Images.shark_image, 355, 250);
 	TextureRegion[][] imageBarracuda = TextureRegion.split(Images.barracuda_image,244,100);
+	TextureRegion[][] imageShark = TextureRegion.split(Images.shark_image, 355, 250);
 	float imageIterator;
 	
 	//KEYS FOR ENEMY TYPES
