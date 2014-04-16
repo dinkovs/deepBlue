@@ -59,12 +59,9 @@ public class Images {
 	public static Texture boat_image;
 	public static Texture gameOver_image;
 	public static Sprite gameOver_sprite;
-<<<<<<< HEAD
 	public static Texture eelAttack_image;
-=======
 	public static Texture pauseScreen_image;
 	public static Sprite pauseScreen_sprite;
->>>>>>> FETCH_HEAD
 	
 	//Leaderboard Images
 	public static Texture goBack_image;
