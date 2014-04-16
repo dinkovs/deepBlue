@@ -21,12 +21,14 @@ public class Player extends SeaObjects {
 	TextureRegion[][] imageTurtle = TextureRegion.split(Images.turtle_image, 128, 100);
 	TextureRegion[][] imageFish = TextureRegion.split(Images.fish_image, 128, 86);
 	TextureRegion[][] imageTurtAttack = TextureRegion.split(Images.turtleAttack_image, 230, 67);
+	TextureRegion[][] imageFishAttack = TextureRegion.split(Images.fishAttack_image, 230, 86);
 	float imageIterator;
 	
 	/*
 	 * 0 - SPEEDY THE TURTLE
 	 * 1 - FREDDY THE FISH
 	 * 2 - SPEEDY'S ATTACK
+	 * 3 - FREDDY'S ATTACK
 	 */
 	public int form;
 	
@@ -71,6 +73,13 @@ public class Player extends SeaObjects {
     		else
     			imageIterator = 0;
 			return imageTurtAttack[(int)imageIterator / 2][1 - ((int)imageIterator % 2)];
+				}
+		else if (form == 3) {
+			if (imageIterator < 21)
+    			imageIterator += 0.1;
+    		else
+    			imageIterator = 0;
+			return imageFishAttack[(int)imageIterator / 2][1 - ((int)imageIterator % 2)];
 				}
 		return null;
     }

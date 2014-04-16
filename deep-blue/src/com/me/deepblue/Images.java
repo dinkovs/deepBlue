@@ -55,7 +55,11 @@ public class Images {
 	public static Texture barracuda_image;
 	public static Sprite barracuda_sprite;
 	public static Texture jellyfish_image;
+	
+	//power-ups
 	public static Texture turtleAttack_image;
+	public static Texture fishAttack_image;
+	
 	public static Sprite boat_sprite;
 	public static Texture boat_image;
 	public static Texture gameOver_image;
@@ -183,6 +187,7 @@ public class Images {
 		boat_sprite.flip(true, true);
 
 		turtleAttack_image = new Texture(Gdx.files.internal("play/turtleAttack.png"));
+		fishAttack_image = new Texture(Gdx.files.internal("play/fishAttack.png"));
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));

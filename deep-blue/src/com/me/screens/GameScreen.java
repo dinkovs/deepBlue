@@ -409,17 +409,26 @@ public class GameScreen implements Screen {
 		// CHECK COLLISIONS
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy enemy = enemies.get(i);
-			if (player.boundingBox.overlaps(enemy.boundingBox) && !player.invincible) {
-				System.out.println("OMG NOOB");
-				loseLife();
-			}
-			
+			if (player.boundingBox.overlaps(enemy.boundingBox)) {
+				
+				if (!player.invincible) {
+					System.out.println("OMG NOOB");
+					loseLife();
+				} else if (bubbleBeam.activated) {	// if player has bubblebeam PowerUp
+					enemies.remove(i);
+				}
+			}			
 		}
+		
 		for (int i = 0; i < jellies.size(); i++) {
 			Jellyfish jellyfish = jellies.get(i);
-			if (player.boundingBox.overlaps(jellyfish.boundingBox) && !player.invincible) {
-				System.out.println("You've got to try this sandwich");
-				loseLife();
+			if (player.boundingBox.overlaps(jellyfish.boundingBox)) { 
+					
+				if (!player.invincible) {
+					loseLife();
+				} else if (bubbleBeam.activated) {	// if player has bubblebeam PowerUp
+					jellies.remove(i);
+				}
 			}
 		}
 		
@@ -456,7 +465,12 @@ public class GameScreen implements Screen {
 			bubbleBeam.activated = true;
 			score += 150;
 			attackCountDown = 10;
-			player.form = 2;
+
+			if (fishPowerUp.activated)
+				player.form = 3;
+			else {
+				player.form = 2;
+			}
 			
 		}
 
@@ -511,7 +525,7 @@ public class GameScreen implements Screen {
 			scoreSpeedUp.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 30000) < 1000)
 			scorePlus.reset(camera.position.x);
-		if ((System.currentTimeMillis() % 28000) < 1000)
+		if ((System.currentTimeMillis() % 52000) < 1000)
 			bubbleBeam.reset(camera.position.x);
 		if ((System.currentTimeMillis() % lifePowerUp.resetTimer) < 1000)
 			lifePowerUp.reset(camera.position.x);
