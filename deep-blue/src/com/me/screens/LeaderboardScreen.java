@@ -60,12 +60,6 @@ public class LeaderboardScreen implements Screen{
 				font = generator.generateFont(70);
 				generator.dispose();
 				font.setScale((float)0.75, -(float)0.45);
-
-		
-			/*br = new BufferedReader(new FileReader("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
-			
-			wr = new BufferedWriter(new FileWriter("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
-			*/
 		
 		data = getData();
 		
@@ -82,7 +76,7 @@ public class LeaderboardScreen implements Screen{
 		try
 		{
 			String line;
-			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
+			br = new BufferedReader(new FileReader(System.getProperty("user.dir")+ "/leaderBoard.txt"));
 			while((line = br.readLine()) != null)
 			{
 				data.add(line);

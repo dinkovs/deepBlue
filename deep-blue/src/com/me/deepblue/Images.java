@@ -55,13 +55,10 @@ public class Images {
 	public static Texture barracuda_image;
 	public static Sprite barracuda_sprite;
 	public static Texture jellyfish_image;
-<<<<<<< HEAD
 	public static Sprite boat_sprite;
 	public static Texture boat_image;
-=======
 	public static Texture gameOver_image;
 	public static Sprite gameOver_sprite;
->>>>>>> FETCH_HEAD
 	
 	//Leaderboard Images
 	public static Texture goBack_image;

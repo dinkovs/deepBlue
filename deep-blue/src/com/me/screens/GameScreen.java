@@ -35,7 +35,6 @@ public class GameScreen implements Screen {
 	DeepBlue game;
 	OrthographicCamera camera;
 	public SpriteBatch batch;
-	static boolean paused = false;
 	FileHandle fontFile;
 	FreeTypeFontGenerator generator;
 	Player player;
@@ -107,6 +106,7 @@ public class GameScreen implements Screen {
 		font = generator.generateFont(70);
 		generator.dispose();
 		font.setScale(1, -1);
+
 	}
 
 	/**
@@ -119,16 +119,11 @@ public class GameScreen implements Screen {
 
 		try {
 			String line;
-<<<<<<< HEAD
 			br = new BufferedReader(
 					new FileReader(
-							"/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
+							System.getProperty("user.dir")+ "/leaderBoard.txt"));
 			while ((line = br.readLine()) != null) {
-=======
-			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
-			while((line = br.readLine()) != null)
-			{
->>>>>>> FETCH_HEAD
+
 				data.add(line);
 			}
 		} catch (Exception e) {
@@ -174,34 +169,19 @@ public class GameScreen implements Screen {
 		for (int i = 0; i < 10; i++) {
 			sortedData[i] = data.get(i);
 		}
-<<<<<<< HEAD
+		
 		Arrays.sort(sortedData);
 
 		try {
 			wr = new BufferedWriter(
 					new FileWriter(
-							"/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
+							System.getProperty("user.dir")+ "/leaderBoard.txt"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		for (int i = 0; i < sortedData.length; i++) {
 			try {
-=======
-	    Arrays.sort(sortedData);
-		
-	    try
-	    {
-	    	wr = new BufferedWriter(new FileWriter("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
-	    } catch(Exception e) {
-	    	e.printStackTrace();
-	    }
-	    	
-		for(int i = 0; i < sortedData.length;i++)
-		{
-			try
-			{
->>>>>>> FETCH_HEAD
 				System.out.println(sortedData[i]);
 				wr.write(sortedData[i]);
 			} catch (Exception e) {
@@ -291,22 +271,10 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		// RENDERING CODE GOES HERE
-<<<<<<< HEAD
-		// Spawn the school make sure it hasn't already been spawned
-		if (t != 1) {
-=======
-		
-		//if(paused)
-		
-		
-		
-		
-		
-		
+
 		//Spawn the school make sure it hasn't already been spawned
 		if(t != 1)
 		{
->>>>>>> FETCH_HEAD
 			spawnSchool();
 			t = 1;
 		}
