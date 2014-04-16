@@ -10,6 +10,7 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,13 +33,19 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class GameScreen implements Screen {
 
+	public final int PLAYING = 0;
+	public final int PAUSED = 1;
+	public final int GAMEOVER = 2;
+	public int gameState; 
+	
+	
 	DeepBlue game;
 	OrthographicCamera camera;
 	public SpriteBatch batch;
+	public MenuScreen main_menu_screen;
 	FileHandle fontFile;
 	FreeTypeFontGenerator generator;
 	Player player;
-	boolean paused;
 	PowerUp scorePlus;
 	PowerUp scoreSpeedUp;
 	PowerUp fishPowerUp;
@@ -100,7 +107,7 @@ public class GameScreen implements Screen {
 		hook2 = new Hook();
 		eel = new Eel(camera.position.x + 1000 , 390);
 		data = getData();
-		paused = false;
+		gameState = PLAYING;
 
 		// cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
@@ -288,13 +295,31 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		update(Gdx.graphics.getDeltaTime());
+		
+		switch(gameState) {
+		case PLAYING:
+			play(delta);
+			break;
+		case PAUSED:
+			pause();
+			break;
+		case GAMEOVER:
+			gameover();
+			break;
+		}
+	}
+	public void play(float delta) {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		// RENDERING CODE GOES HERE
 
+		if(Gdx.input.isKeyPressed(Keys.P))
+				gameState = PAUSED;
+		
 		//Spawn the school make sure it hasn't already been spawned
 		if(t != 1)
 		{
@@ -561,7 +586,7 @@ public class GameScreen implements Screen {
 		else {
 			if(checkNewScore(Integer.toString((int) score) + "," + game.username) >= 0)
 				writeNewScores();
-			pause();
+			gameState = GAMEOVER;
 		}
 	}
 
@@ -579,7 +604,27 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void pause() {
-
+		if(Gdx.input.isKeyPressed(Keys.U))
+			gameState = PLAYING;
+		
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.draw(Images.pauseScreen_sprite, camera.position.x - 600, camera.position.y - 300);
+		batch.end();
+	}
+	
+	public void gameover() {
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.draw(Images.gameOver_sprite, camera.position.x - 600, camera.position.y - 300);
+		
+		if(Gdx.input.isTouched()) {
+			dispose();
+			main_menu_screen = new MenuScreen(game, 0);
+			game.setScreen(main_menu_screen);
+		}
+		
+		batch.end();
 	}
 
 	@Override
