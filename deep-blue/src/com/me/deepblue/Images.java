@@ -61,6 +61,8 @@ public class Images {
 	public static Sprite goBack_sprite;
 	public static Texture table_image;
 	public static Sprite table_sprite;
+	public static Texture leaderboardTitle_image;
+	public static Sprite leaderboardTitle_sprite;
 
 	
 	
@@ -188,6 +190,10 @@ public class Images {
 		school_image2 = new Texture(Gdx.files.internal("play/school2.png"));
 		school_sprite2 =  new Sprite(school_image2);
 		school_sprite2.flip(true, true);
+		
+		leaderboardTitle_image = new Texture(Gdx.files.internal("leaderboards/leaderboard.png"));
+		leaderboardTitle_sprite =  new Sprite(leaderboardTitle_image);
+		leaderboardTitle_sprite.flip(false, true);
 	}
 	
 }

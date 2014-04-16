@@ -116,7 +116,7 @@ public class GameScreen implements Screen {
 		try
 		{
 			String line;
-			br = new BufferedReader(new FileReader("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
+			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
 			while((line = br.readLine()) != null)
 			{
 				data.add(line);
@@ -174,7 +174,7 @@ public class GameScreen implements Screen {
 		
 	    try
 	    {
-	    	wr = new BufferedWriter(new FileWriter("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
+	    	wr = new BufferedWriter(new FileWriter("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
 	    } catch(Exception e) {
 	    	e.printStackTrace();
 	    }
