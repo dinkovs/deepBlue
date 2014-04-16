@@ -25,7 +25,7 @@ public class DeepBlue extends Game implements ApplicationListener{
 		
 		//background main menu music
 		Music mainMusic;
-		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("menu/mainMusic.mp3"));
+		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainMusic.mp3"));
 		mainMusic.setLooping(true);
 		mainMusic.play();
 		

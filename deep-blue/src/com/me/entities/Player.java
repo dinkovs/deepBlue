@@ -30,9 +30,8 @@ public class Player extends SeaObjects {
 	 * 2 - SPEEDY'S ATTACK
 	 * 3 - FREDDY'S ATTACK
 	 */
-	public int form;
 	
-    //Attributes
+	public int form;
     public int lives;
     
     //Power-up
@@ -83,8 +82,6 @@ public class Player extends SeaObjects {
 				}
 		return null;
     }
-    
-   
 
     public int getLives() { 
     	return lives; 
@@ -108,37 +105,42 @@ public class Player extends SeaObjects {
   	//movement
   	public void handleInput(float cameraX){
   		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
-  			if (form == 0) x -= 5;
-  			else if (form == 1) x -= 10;
+  			if (form == 0 || form == 2) x -= 5;
+	  		else if (form == 1 || form == 3) x -= 10;
 			boundingBox.x = x;
   		}
   		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
   			if (x + 5 <= cameraX + 472) {
-  				if (form == 0) x += 5;
-  	  			else if (form == 1) x += 10;
+  				if (form == 0 || form == 2) x += 5;
+  	  			else if (form == 1 || form == 3) x += 10;
   				boundingBox.x = x;
   			}
   			else x = cameraX + 472;
   		}
   		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
   			if (y + 5 <= 472) {
-  				y += 5;
+  				if (form == 0 || form == 2) y += 5;
+  	  			else if (form == 1 || form == 3) y += 7;
   				boundingBox.y = y;
   			}
   			else y = 472;
   		}
   		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
   			if (y - 5 >= 0) {
-  				y -= 5;
+  				if (form == 0 || form == 2) y -= 5;
+  	  			else if (form == 1 || form == 3) y -= 7;
   				boundingBox.y = y;
   			}
   			else y = 0;
   		}
+  		
+  		/* SPACE NOT USED FOR BUBBLES
   		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
   			for (int i = 1; i <= 10; i++) {
   			System.out.println(i + ". SHOOTING NOW");
   			}
   		}
+  		*/
   	}
 
     

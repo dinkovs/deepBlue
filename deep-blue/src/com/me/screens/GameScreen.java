@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -30,13 +32,12 @@ import com.me.entities.PowerUp;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, ApplicationListener {
 
 	public final int PLAYING = 0;
 	public final int PAUSED = 1;
 	public final int GAMEOVER = 2;
 	public int gameState; 
-	
 	
 	DeepBlue game;
 	OrthographicCamera camera;
@@ -646,5 +647,17 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void hide() {
+	}
+
+	@Override
+	public void create() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
 	}
 }
