@@ -39,6 +39,7 @@ public class GameScreen implements Screen {
 	FileHandle fontFile;
 	FreeTypeFontGenerator generator;
 	Player player;
+	boolean paused;
 	PowerUp scorePlus;
 	PowerUp scoreSpeedUp;
 	PowerUp fishPowerUp;
@@ -98,6 +99,7 @@ public class GameScreen implements Screen {
 		hook1 = new Hook();
 		hook2 = new Hook();
 		data = getData();
+		paused = false;
 
 		// cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
@@ -117,10 +119,16 @@ public class GameScreen implements Screen {
 
 		try {
 			String line;
+<<<<<<< HEAD
 			br = new BufferedReader(
 					new FileReader(
 							"/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
 			while ((line = br.readLine()) != null) {
+=======
+			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
+			while((line = br.readLine()) != null)
+			{
+>>>>>>> FETCH_HEAD
 				data.add(line);
 			}
 		} catch (Exception e) {
@@ -166,6 +174,7 @@ public class GameScreen implements Screen {
 		for (int i = 0; i < 10; i++) {
 			sortedData[i] = data.get(i);
 		}
+<<<<<<< HEAD
 		Arrays.sort(sortedData);
 
 		try {
@@ -178,6 +187,21 @@ public class GameScreen implements Screen {
 
 		for (int i = 0; i < sortedData.length; i++) {
 			try {
+=======
+	    Arrays.sort(sortedData);
+		
+	    try
+	    {
+	    	wr = new BufferedWriter(new FileWriter("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
+	    } catch(Exception e) {
+	    	e.printStackTrace();
+	    }
+	    	
+		for(int i = 0; i < sortedData.length;i++)
+		{
+			try
+			{
+>>>>>>> FETCH_HEAD
 				System.out.println(sortedData[i]);
 				wr.write(sortedData[i]);
 			} catch (Exception e) {
@@ -267,8 +291,22 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		// RENDERING CODE GOES HERE
+<<<<<<< HEAD
 		// Spawn the school make sure it hasn't already been spawned
 		if (t != 1) {
+=======
+		
+		//if(paused)
+		
+		
+		
+		
+		
+		
+		//Spawn the school make sure it hasn't already been spawned
+		if(t != 1)
+		{
+>>>>>>> FETCH_HEAD
 			spawnSchool();
 			t = 1;
 		}

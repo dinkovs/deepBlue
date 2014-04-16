@@ -82,7 +82,7 @@ public class LeaderboardScreen implements Screen{
 		try
 		{
 			String line;
-			br = new BufferedReader(new FileReader("/Users/westwiatt/Documents/Workspace/deep/deepBlue/leaderBoard.txt"));
+			br = new BufferedReader(new FileReader("/Users/martin/Desktop/DeepBlue/deepBlue6/leaderBoard.txt"));
 			while((line = br.readLine()) != null)
 			{
 				data.add(line);
@@ -158,6 +158,7 @@ public class LeaderboardScreen implements Screen{
 		}
 		
 		batch.draw(Images.goBack_sprite, 10, 600-138);
+		batch.draw(Images.leaderboardTitle_sprite, 0, 0);
 		
 		batch.end();
 	}

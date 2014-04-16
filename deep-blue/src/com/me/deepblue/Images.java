@@ -55,14 +55,21 @@ public class Images {
 	public static Texture barracuda_image;
 	public static Sprite barracuda_sprite;
 	public static Texture jellyfish_image;
+<<<<<<< HEAD
 	public static Sprite boat_sprite;
 	public static Texture boat_image;
+=======
+	public static Texture gameOver_image;
+	public static Sprite gameOver_sprite;
+>>>>>>> FETCH_HEAD
 	
 	//Leaderboard Images
 	public static Texture goBack_image;
 	public static Sprite goBack_sprite;
 	public static Texture table_image;
 	public static Sprite table_sprite;
+	public static Texture leaderboardTitle_image;
+	public static Sprite leaderboardTitle_sprite;
 
 	
 	
@@ -155,6 +162,10 @@ public class Images {
 		lifepowerup_sprite =  new Sprite(lifepowerup_image);
 		lifepowerup_sprite.flip(false, true);
 		
+		gameOver_image = new Texture(Gdx.files.internal("play/gameover.png"));
+		gameOver_sprite =  new Sprite(gameOver_image);
+		gameOver_sprite.flip(false, true);
+		
 		school_image = new Texture(Gdx.files.internal("play/school.png"));
 		school_sprite =  new Sprite(school_image);
 		school_sprite.flip(true, true);
@@ -192,6 +203,10 @@ public class Images {
 		school_image2 = new Texture(Gdx.files.internal("play/school2.png"));
 		school_sprite2 =  new Sprite(school_image2);
 		school_sprite2.flip(true, true);
+		
+		leaderboardTitle_image = new Texture(Gdx.files.internal("leaderboards/leaderboard.png"));
+		leaderboardTitle_sprite =  new Sprite(leaderboardTitle_image);
+		leaderboardTitle_sprite.flip(false, true);
 	}
 	
 }
