@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Images;
 import com.me.entities.Bubble;
+import com.me.entities.Eel;
 import com.me.entities.Enemy;
 import com.me.entities.Fish;
 import com.me.entities.Flock;
@@ -65,6 +66,7 @@ public class GameScreen implements Screen {
 	ArrayList<String> data;
 	BufferedReader br;
 	BufferedWriter wr;
+	Eel eel;
 
 	private BitmapFont font = new BitmapFont();
 	// for the turtle
@@ -96,6 +98,7 @@ public class GameScreen implements Screen {
 		lifePowerUp = new PowerUp(5, -1000);
 		hook1 = new Hook();
 		hook2 = new Hook();
+		eel = new Eel(camera.position.x + 1000 , 390);
 		data = getData();
 		paused = false;
 
@@ -258,7 +261,7 @@ public class GameScreen implements Screen {
 		if(jellyCurrentTime - jellyStartTime > Math.random() * (20000 - 5000) + 5000)
 		{
 			jellies.add(new Jellyfish((float) camera.position.x + 700, 
-					(float) Math.random() * (600 - 100) + 100));
+					(float) Math.random() * (500 - 100) + 100));
 			jellyStartTime = System.currentTimeMillis();
 			jellyCurrentTime = System.currentTimeMillis();
 		}
@@ -270,6 +273,16 @@ public class GameScreen implements Screen {
 		{
 			if(jellies.get(i).x < (player.x - 2000))
 				jellies.remove(i);
+		}
+	}
+	
+	//Spawn Eel
+	public void spawnEel()
+	{
+		if (((System.currentTimeMillis() % 10000) < 1000))
+		{
+			if(eel.x < camera.position.x - 700)
+				eel = new Eel(camera.position.x + 1000 , 390);
 		}
 	}
 
@@ -309,6 +322,7 @@ public class GameScreen implements Screen {
 		//JellySpawning and removing
 		spawnJellies();
 		removeJellies();
+		spawnEel();
 		
 		//Check for enemies that have gone off the screen
 		removeEnemies();
@@ -354,6 +368,10 @@ public class GameScreen implements Screen {
 											jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight());
 			
 		}
+		
+		//DRAW EEL
+		if(eel != null)
+			batch.draw(eel.getImage(), eel.x, eel.y);
 
 		// DRAW OBJECTS
 		if (!scoreSpeedUp.activated)
@@ -378,7 +396,9 @@ public class GameScreen implements Screen {
 		}
 		
 		batch.draw(hook1.image, hook1.x, hook1.y);
+		batch.draw(Images.boat_sprite, hook1.x - 210, -3);
 		batch.draw(hook2.image, hook2.x, hook2.y);
+		batch.draw(Images.boat_sprite, hook2.x - 210, -3);
 
 		// CHECK COLLISIONS
 		for (int i = 0; i < enemies.size(); i++) {
