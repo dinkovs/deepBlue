@@ -337,7 +337,7 @@ public class GameScreen implements Screen {
 			if(enemies.get(p).type == 1) {
 				batch.draw(enemies.get(p).getImage(), enemies.get(p).x, enemies.get(p).y);
 				enemies.get(p).boundingBox = new Rectangle (enemies.get(p).x,enemies.get(p).y,
-					enemies.get(p).image.getWidth(),enemies.get(p).image.getHeight());
+					100,200);
 			}
 			else if(enemies.get(p).type == 0) {
 				batch.draw(enemies.get(p).getImage(), enemies.get(p).x, enemies.get(p).y);
