@@ -47,7 +47,7 @@ public class InstructionsScreen implements Screen{
 		if(Gdx.input.isTouched()){
 			click.set(Gdx.input.getX(),Gdx.input.getY(),0);
 			camera.unproject(click);
-			if(click.x >= 10 && click.x <= 138 && click.y >= 600-138 && click.y <= 590){
+			if(click.x >= 10 && click.x <= 200 && click.y >= 600-138 && click.y <= 590){
 				dispose();
 				main_menu_screen = new MenuScreen(game, 0);
 				game.setScreen(main_menu_screen);
