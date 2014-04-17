@@ -71,6 +71,7 @@ public class GameScreen implements Screen {
 	Random ran = new Random();
 	ArrayList<Jellyfish> jellies = new ArrayList<Jellyfish>();
 	ArrayList<String> data;
+	boolean dataSaved;
 	BufferedReader br;
 	BufferedWriter wr;
 	Eel eel;
@@ -108,6 +109,7 @@ public class GameScreen implements Screen {
 		eel = new Eel(camera.position.x + 1000 , 390);
 		data = getData();
 		gameState = PLAYING;
+		dataSaved = false;
 
 		// cartoon blocks
 		fontFile = Gdx.files.internal("menu/Cartoon Blocks.ttf");
@@ -166,7 +168,7 @@ public class GameScreen implements Screen {
 			
 			if(newScore > oldScore)
 			{
-				data.add(str);
+				data.add(i,str);
 				data.remove(data.size() - 1);
 				return i;
 			}	
@@ -179,14 +181,6 @@ public class GameScreen implements Screen {
 	 */
 	public void writeNewScores()
 	{
-		String[] sortedData = new String[10];
-		for(int i = 0; i < 10; i++)
-		{
-			sortedData[i] = data.get(i);
-		}
-		
-		Arrays.sort(sortedData);
-
 		try {
 			wr = new BufferedWriter(
 					new FileWriter(
@@ -195,14 +189,20 @@ public class GameScreen implements Screen {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < sortedData.length; i++) {
+		for (int i = 0; i < 10; i++) {
+			System.out.println(data.get(i));
 			try {
-
-				System.out.println(sortedData[i]);
-			wr.write(sortedData[i]);
+				//System.out.println(data.get(i));
+				wr.write(data.get(i));
+				wr.newLine();
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
+		}
+		try{
+			wr.flush();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -585,9 +585,11 @@ public class GameScreen implements Screen {
 			invincibleTimer = 5;
 		}
 		else {
-			if(checkNewScore(Integer.toString((int) score) + "," + game.username) >= 0)
+			int i = checkNewScore(Integer.toString((int) score) + "," + game.username);
+			if(!dataSaved && i >= 0)
 				writeNewScores();
 			gameState = GAMEOVER;
+			dataSaved = true;
 		}
 	}
 
