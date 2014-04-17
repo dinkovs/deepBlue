@@ -23,6 +23,8 @@ public class MenuScreen implements Screen{
 	
 	public GameScreen play_screen;
 	public LeaderboardScreen leaderboard_screen;
+	public CreditsScreen credits_screen;
+	public InstructionsScreen instructions_screen;
 	
 	public MenuScreen(DeepBlue game, int wave_x){
 		Images.loadMainMenu();
@@ -79,20 +81,20 @@ public class MenuScreen implements Screen{
 				play_screen = new GameScreen(game);
 				game.setScreen(play_screen);
 			}
-			else {
+			else if(click.x >= 639 && click.x <= 847 && click.y >= 372 && click.y <= 510){
 				dispose();
 				leaderboard_screen = new LeaderboardScreen(game, wave_x);
 				game.setScreen(leaderboard_screen);
 			}
 			else if(click.x >= 356 && click.x <= 591 && click.y >= 380 && click.y <= 511){
 				dispose();
-				leaderboard_screen = new LeaderboardScreen(game, wave_x);
-				game.setScreen(leaderboard_screen);
+				instructions_screen = new InstructionsScreen(game);
+				game.setScreen(instructions_screen);
 			}
 			else if(click.x >= 918 && click.x <= 1146 && click.y >= 350 && click.y <= 480){
 				dispose();
-				leaderboard_screen = new LeaderboardScreen(game, wave_x);
-				game.setScreen(leaderboard_screen);
+				credits_screen = new CreditsScreen(game);
+				game.setScreen(credits_screen);
 			}
 		}
 	}

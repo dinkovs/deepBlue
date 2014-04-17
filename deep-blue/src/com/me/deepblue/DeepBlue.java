@@ -8,7 +8,6 @@ import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.screens.MenuScreen;
-import com.me.deepblue.ScoreoidConfig;
 
 public class DeepBlue extends Game implements ApplicationListener{
 

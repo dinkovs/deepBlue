@@ -7,8 +7,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -33,12 +31,13 @@ import com.me.entities.PowerUp;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 
-public class GameScreen implements Screen, ApplicationListener {
+public class GameScreen implements Screen {
 
 	public final int PLAYING = 0;
 	public final int PAUSED = 1;
 	public final int GAMEOVER = 2;
 	public int gameState; 
+	
 	
 	DeepBlue game;
 	OrthographicCamera camera;
@@ -56,7 +55,6 @@ public class GameScreen implements Screen, ApplicationListener {
 	Hook hook2;
 	float powerUpCountDown;
 	float fishCountDown;
-	float attackCountDown;
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	float score = 0;
 	int tracker = 0;
@@ -270,11 +268,7 @@ public class GameScreen implements Screen, ApplicationListener {
 		if(jellyCurrentTime - jellyStartTime > (Math.random() * (18000-(levelSpeed*1000*2))) + (8000 - (levelSpeed*1000)))
 		{
 			jellies.add(new Jellyfish((float) camera.position.x + 700, 
-<<<<<<< HEAD
-					(float) Math.random() * (500 - 100) + 100));
-=======
 					(float) Math.random() * (500 - 50) + 50));
->>>>>>> 3163d812991db46f3f3b7e7446c63f3d461dbd92
 			jellyStartTime = System.currentTimeMillis();
 			jellyCurrentTime = System.currentTimeMillis();
 		}
@@ -396,13 +390,8 @@ public class GameScreen implements Screen, ApplicationListener {
 		for(int u = 0; u < jellies.size();u++)
 		{
 			batch.draw(jellies.get(u).getImage(), jellies.get(u).x, jellies.get(u).y);
-<<<<<<< HEAD
-			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y + 15,
-					jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight());
-=======
 			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y + 35 ,
 					jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight() - 35);
->>>>>>> 3163d812991db46f3f3b7e7446c63f3d461dbd92
 			
 		}
 		
@@ -440,26 +429,17 @@ public class GameScreen implements Screen, ApplicationListener {
 		// CHECK COLLISIONS
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy enemy = enemies.get(i);
-			if (player.boundingBox.overlaps(enemy.boundingBox)) {
-				
-				if (!player.invincible) {
-					System.out.println("OMG NOOB");
-					loseLife();
-				} else if (bubbleBeam.activated) {	// if player has bubblebeam PowerUp
-					enemies.remove(i);
-				}
-			}			
+			if (player.boundingBox.overlaps(enemy.boundingBox) && !player.invincible) {
+				System.out.println("OMG NOOB");
+				loseLife();
+			}
+			
 		}
-		
 		for (int i = 0; i < jellies.size(); i++) {
 			Jellyfish jellyfish = jellies.get(i);
-			if (player.boundingBox.overlaps(jellyfish.boundingBox)) { 
-					
-				if (!player.invincible) {
-					loseLife();
-				} else if (bubbleBeam.activated) {	// if player has bubblebeam PowerUp
-					jellies.remove(i);
-				}
+			if (player.boundingBox.overlaps(jellyfish.boundingBox) && !player.invincible) {
+				System.out.println("You've got to try this sandwich");
+				loseLife();
 			}
 		}
 		
@@ -495,13 +475,7 @@ public class GameScreen implements Screen, ApplicationListener {
 			bubbleBeam.active = true;
 			bubbleBeam.activated = true;
 			score += 150;
-			attackCountDown = 10;
-
-			if (fishPowerUp.activated)
-				player.form = 3;
-			else {
-				player.form = 2;
-			}
+			powerUpCountDown = 10;
 			
 		}
 
@@ -543,20 +517,13 @@ public class GameScreen implements Screen, ApplicationListener {
 					"Fish Mode: " + Integer.toString((int) fishCountDown),
 					camera.position.x - 150, camera.position.y + 240);
 		}
-		
-		if (attackCountDown <= 0) {
-			bubbleBeam.active = false;
-			player.form = 0;
-		} else {
-			attackCountDown -= .02;
-		} 
 
 		// RESET THE POWERUPS
-		if ((System.currentTimeMillis() % 22000) < 1000)
+		if ((System.currentTimeMillis() % 12000) < 1000)
 			scoreSpeedUp.reset(camera.position.x);
 		if ((System.currentTimeMillis() % 30000) < 1000)
 			scorePlus.reset(camera.position.x);
-		if ((System.currentTimeMillis() % 52000) < 1000)
+		if ((System.currentTimeMillis() % 28000) < 1000)
 			bubbleBeam.reset(camera.position.x);
 		if ((System.currentTimeMillis() % lifePowerUp.resetTimer) < 1000)
 			lifePowerUp.reset(camera.position.x);
@@ -681,17 +648,5 @@ public class GameScreen implements Screen, ApplicationListener {
 
 	@Override
 	public void hide() {
-	}
-
-	@Override
-	public void create() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
 	}
 }

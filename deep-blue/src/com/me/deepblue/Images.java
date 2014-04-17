@@ -64,16 +64,9 @@ public class Images {
 	public static Texture boat_image;
 	public static Texture gameOver_image;
 	public static Sprite gameOver_sprite;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	public static Texture eelAttack_image;
->>>>>>> 3163d812991db46f3f3b7e7446c63f3d461dbd92
 	public static Texture pauseScreen_image;
 	public static Sprite pauseScreen_sprite;
-=======
-	public static Texture eelAttack_image;
->>>>>>> 38a8d61... Added Eel
 	
 	//Leaderboard Images
 	public static Texture goBack_image;
@@ -82,6 +75,14 @@ public class Images {
 	public static Sprite table_sprite;
 	public static Texture leaderboardTitle_image;
 	public static Sprite leaderboardTitle_sprite;
+	
+	//Credits Images
+	public static Texture credit_image;
+	public static Sprite credit_sprite;
+	
+	//Instructions Images
+	public static Texture instructions_image;
+	public static Sprite instructions_sprite;
 	
 	public static void loadMainMenu(){
 		blue_image = new Texture(Gdx.files.internal("menu/blueSea.jpg"));
@@ -193,16 +194,10 @@ public class Images {
 
 		boat_image = new Texture(Gdx.files.internal("play/boat_hull.png"));
 		boat_sprite =  new Sprite(boat_image);
-<<<<<<< HEAD
-<<<<<<< HEAD
 		boat_sprite.flip(true, true);
 
 		turtleAttack_image = new Texture(Gdx.files.internal("play/turtleAttack.png"));
 		fishAttack_image = new Texture(Gdx.files.internal("play/fishAttack.png"));
-=======
->>>>>>> 38a8d61... Added Eel
-=======
->>>>>>> 3163d812991db46f3f3b7e7446c63f3d461dbd92
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));
@@ -233,4 +228,15 @@ public class Images {
 		leaderboardTitle_sprite.flip(false, true);
 	}
 	
+	public static void loadInstructions() {
+		instructions_image = new Texture(Gdx.files.internal("instructions/instructions.png"));
+		instructions_sprite =  new Sprite(instructions_image);
+		instructions_sprite.flip(false, true);
+	}
+	
+	public static void loadCredits() {
+		credit_image = new Texture(Gdx.files.internal("credits/credits.png"));
+		credit_sprite =  new Sprite(credit_image);
+		credit_sprite.flip(false, true);
+	}
 }
