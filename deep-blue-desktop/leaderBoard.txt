@@ -1,10 +1,10 @@
 9999,Larry
 8888,Spongebob
 7777,Quagmire
-6666,Quagmire
+6666,Mr. Krabs
 5555,Sandy
 4444,Larry
-3333,Patrick
-2222,Sandy
-2121,martin
-1607,martin
+3333,Cleveland
+2222,Pearl
+1111,Squidward
+0010,Patrick

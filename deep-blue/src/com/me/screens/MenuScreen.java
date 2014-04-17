@@ -3,6 +3,7 @@ package com.me.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,13 +14,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Images;
 
-public class MenuScreen implements Screen{
+public class MenuScreen implements Screen {
 
 	DeepBlue game;
 	OrthographicCamera camera;
 	Vector3 click;
 	SpriteBatch batch;
 	int wave_x;
+	Music mainMusic;
+	Music subMusic;
 	
 	public GameScreen play_screen;
 	public LeaderboardScreen leaderboard_screen;
@@ -36,6 +39,10 @@ public class MenuScreen implements Screen{
 		
 		batch = new SpriteBatch();
 		click = new Vector3();
+		
+		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainMusic.mp3"));
+		mainMusic.setLooping(true);
+		mainMusic.play();
 		
 	}
 		
@@ -74,12 +81,16 @@ public class MenuScreen implements Screen{
 
 	private void onClickListener() {
 		if(Gdx.input.isTouched()){
+			mainMusic.stop();
 			click.set(Gdx.input.getX(),Gdx.input.getY(),0);
 			camera.unproject(click);
 			if(click.x >= 57 && click.x <= 290 && click.y >= 360 && click.y <= 504){
 				dispose();
 				play_screen = new GameScreen(game);
 				game.setScreen(play_screen);
+				subMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/gameMusic.mp3"));
+				subMusic.play();
+				subMusic.setVolume(.2f);
 			}
 			else if(click.x >= 639 && click.x <= 847 && click.y >= 372 && click.y <= 510){
 				dispose();
@@ -98,10 +109,9 @@ public class MenuScreen implements Screen{
 			}
 		}
 	}
-
+	
 	@Override
 	public void show() {
-		
 		
 	}
 

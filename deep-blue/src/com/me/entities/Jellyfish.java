@@ -1,7 +1,6 @@
 package com.me.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.me.deepblue.Images;
 
 /**

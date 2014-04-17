@@ -1,8 +1,5 @@
 package com.me.entities;
 
-
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,7 +14,7 @@ import com.me.screens.GameScreen;
 public class Player extends SeaObjects {
 	
 	Player player;
-	private final int MAX_BUBBLES = 10;
+
 	TextureRegion[][] imageTurtle = TextureRegion.split(Images.turtle_image, 128, 100);
 	TextureRegion[][] imageFish = TextureRegion.split(Images.fish_image, 128, 86);
 	TextureRegion[][] imageTurtAttack = TextureRegion.split(Images.turtleAttack_image, 230, 67);
@@ -35,10 +32,9 @@ public class Player extends SeaObjects {
     public int lives;
     
     //Power-up
-    private ArrayList<Bubble> bubbles;
 	public boolean invincible;
     
-    public Player(ArrayList<Bubble> bubbles, GameScreen play_screen) {
+    public Player(GameScreen play_screen) {
     	x = 400;
     	y = 250;
     	boundingBox = new Rectangle (this.x,this.y,128,100);
@@ -47,7 +43,6 @@ public class Player extends SeaObjects {
     	form = 0;
     	lives = 3;
 	
-    	this.bubbles = bubbles;
     	invincible = false;
 	}
     
@@ -90,13 +85,6 @@ public class Player extends SeaObjects {
     	lives--;
     }
     
-    //initial power-up
-    public void shootBubs() {
-    	if(bubbles.size() == MAX_BUBBLES) return; //10 is the max amount of bubbles
-    	System.out.println("SHOOTING NOW");
-    	bubbles.add(new Bubble(x, y, radians));
-    }
-    
     public void pullUp() {
     	y -= 10;
     	boundingBox.y -= 10;
@@ -134,16 +122,8 @@ public class Player extends SeaObjects {
   			else y = 0;
   		}
   		
-  		/* SPACE NOT USED FOR BUBBLES
-  		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
-  			for (int i = 1; i <= 10; i++) {
-  			System.out.println(i + ". SHOOTING NOW");
-  			}
-  		}
-  		*/
   	}
 
-    
 }
 
             

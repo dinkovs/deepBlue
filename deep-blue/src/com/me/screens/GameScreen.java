@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.me.deepblue.DeepBlue;
 import com.me.deepblue.Images;
-import com.me.entities.Bubble;
 import com.me.entities.Eel;
 import com.me.entities.Enemy;
 import com.me.entities.Fish;
@@ -30,6 +28,7 @@ import com.me.entities.Player;
 import com.me.entities.PowerUp;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.audio.Sound;
 
 public class GameScreen implements Screen {
 
@@ -37,7 +36,8 @@ public class GameScreen implements Screen {
 	public final int PAUSED = 1;
 	public final int GAMEOVER = 2;
 	public int gameState; 
-	
+
+	Sound sound;
 	
 	DeepBlue game;
 	OrthographicCamera camera;
@@ -55,6 +55,7 @@ public class GameScreen implements Screen {
 	Hook hook2;
 	float powerUpCountDown;
 	float fishCountDown;
+	float attackCountDown;
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	float score = 0;
 	int tracker = 0;
@@ -79,7 +80,6 @@ public class GameScreen implements Screen {
 	private BitmapFont font = new BitmapFont();
 	// for the turtle
 	Character speedy;
-	ArrayList<Bubble> bubbles;
 	ShapeRenderer sr; // <--- for bubbles, for now
 	int t = 0;
 	private float invincibleTimer;
@@ -92,11 +92,7 @@ public class GameScreen implements Screen {
 		camera.setToOrtho(true, 1200, 600);
 
 		batch = new SpriteBatch();
-
-		// allows player to shoot bubbles
-		sr = new ShapeRenderer();
-		bubbles = new ArrayList<Bubble>();
-		player = new Player(bubbles, this);
+		player = new Player(this);
 
 		// IMPLEMENT GAME OBJECTS
 		scorePlus = new PowerUp(1, -800);
@@ -430,94 +426,149 @@ public class GameScreen implements Screen {
 		// CHECK COLLISIONS
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy enemy = enemies.get(i);
-			if (player.boundingBox.overlaps(enemy.boundingBox) && !player.invincible) {
-				loseLife();
+			if (player.boundingBox.overlaps(enemy.boundingBox)) {
+				if (!(player.invincible || bubbleBeam.active)) {
+					sound = Gdx.audio.newSound(Gdx.files.internal("sounds/damage.mp3"));
+					sound.play(.2f);
+					loseLife();
+				} else if (bubbleBeam.active) {  // if player has bubblebeam PowerUp
+					score += 150;
+					sound = Gdx.audio.newSound(Gdx.files.internal("sounds/enemykill.mp3"));
+					sound.play(.4f);
+					enemies.remove(i);
+				}	
 			}
-			
 		}
+		
 		for (int i = 0; i < jellies.size(); i++) {
 			Jellyfish jellyfish = jellies.get(i);
-			if (player.boundingBox.overlaps(jellyfish.boundingBox) && !player.invincible) {
+			if (player.boundingBox.overlaps(jellyfish.boundingBox)) { 
+				if (!(player.invincible || bubbleBeam.active)) {
+					sound = Gdx.audio.newSound(Gdx.files.internal("sounds/jellyspark.mp3"));
+					sound.play(.2f);
+					loseLife();
+				} else if (bubbleBeam.active) {
+					score += 100;
+					sound = Gdx.audio.newSound(Gdx.files.internal("sounds/enemykill.mp3"));
+					sound.play(.4f);
+					jellies.remove(i);
+				}
+			}
+		}
+		
+		if (player.boundingBox.overlaps(eel.boundingBox)) {
+			if (!(player.invincible || bubbleBeam.active)) {
+				sound = Gdx.audio.newSound(Gdx.files.internal("sounds/damage.mp3"));
+				sound.play(.2f);
 				loseLife();
 			}
 		}
-		if (player.boundingBox.overlaps(eel.boundingBox) && !player.invincible && eel.imageIterator <= 7 && eel.imageIterator >= 4) {
-			loseLife();
-		}
-		if (player.boundingBox.overlaps(scoreSpeedUp.boundingBox)
-				&& !scoreSpeedUp.activated) {
-			scoreSpeedUp.active = true;
-			scoreSpeedUp.activated = true;
-			powerUpCountDown = 10;
-		}
-
-		if (player.boundingBox.overlaps(scorePlus.boundingBox)
-				&& !scorePlus.activated) {
+		
+		if (player.boundingBox.overlaps(scorePlus.boundingBox) && !scorePlus.activated) {
 			scorePlus.activated = true;
+			sound = Gdx.audio.newSound(Gdx.files.internal("sounds/plus100.mp3"));
+			sound.play(.3f);
 			score += 100;
 		}
 		
-		if (player.boundingBox.overlaps(lifePowerUp.boundingBox)
-				&& !lifePowerUp.activated) {
+		if (player.boundingBox.overlaps(lifePowerUp.boundingBox) && !lifePowerUp.activated) {
 			lifePowerUp.activated = true;
+			sound = Gdx.audio.newSound(Gdx.files.internal("sounds/lifeplus.mp3"));
+			sound.play(.2f);
 			player.lives++;
 		}
-
-		if (player.boundingBox.overlaps(fishPowerUp.boundingBox)
-				&& !fishPowerUp.activated) {
-			fishPowerUp.activated = true;
+		
+		if (player.boundingBox.overlaps(scoreSpeedUp.boundingBox) && !scoreSpeedUp.activated) {
+			scoreSpeedUp.active = true;
+			scoreSpeedUp.activated = true;
+			sound = Gdx.audio.newSound(Gdx.files.internal("sounds/speedup.mp3"));
+			sound.play(.3f);
+			powerUpCountDown = 10;
+		}
+				
+				
+		if (player.boundingBox.overlaps(fishPowerUp.boundingBox) && !fishPowerUp.activated) {
 			fishPowerUp.active = true;
-			fishCountDown = 30;
-			player.form = 1;
+			fishPowerUp.activated = true;
+			sound = Gdx.audio.newSound(Gdx.files.internal("sounds/fishpowerup.mp3"));
+			sound.play(.3f);
+			fishCountDown = 20;
+			if (player.form == 2) {
+				player.form = 3;
+			} else {
+				player.form = 1;
+			}
 		}
 		
-		if (player.boundingBox.overlaps(bubbleBeam.boundingBox)
-				&& !bubbleBeam.activated) {
+		if (player.boundingBox.overlaps(bubbleBeam.boundingBox) && !bubbleBeam.activated) {
 			bubbleBeam.active = true;
 			bubbleBeam.activated = true;
+			sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bubblebeam.mp3"));
+			sound.play(.3f);
 			score += 150;
-			powerUpCountDown = 10;
-			
+			attackCountDown = 10;
+			if (fishPowerUp.active) {
+				player.form = 3;
+				if (fishCountDown < 10) fishCountDown = 10;
+			} else {
+			player.form = 2;
+			}
 		}
-
-		if (player.boundingBox.overlaps(hook1.boundingBox) && player.y != 0
-				&& !hook1.hooked) {
+		
+		//HOOKS
+		if (player.boundingBox.overlaps(hook1.boundingBox) && player.y != 0 && !hook1.hooked) {
 			hook1.pullUp();
 			if ((hook1.y + hook1.image.getHeight() - 128) < player.y)
 				player.pullUp();
 		}
-
-		if (player.boundingBox.overlaps(hook2.boundingBox) && player.y != 0
-				&& !hook2.hooked) {
+		
+		if (player.boundingBox.overlaps(hook2.boundingBox) && player.y != 0 && !hook2.hooked) {
 			hook2.pullUp();
 			if ((hook2.y + hook2.image.getHeight() - 128) < player.y)
 				player.pullUp();
 		}
-		if (player.y < 0 && !player.invincible)
+		
+		if (player.y < 0 && !player.invincible) {
+			sound = Gdx.audio.newSound(Gdx.files.internal("sounds/damage.mp3"));
+			sound.play(.2f);
 			loseLife();
-			
-
+		}
+		
 		// CHECK POWERUPS
+		//scorespeedup
 		if (powerUpCountDown <= 0) {
 			scoreSpeedUp.active = false;
 		} else {
 			powerUpCountDown -= .02;
 			font.draw(batch,
-					"Score Speed-Up: " + Integer.toString((int) powerUpCountDown),
-					camera.position.x - 200, camera.position.y + 190);
+			"Score Speed-Up: " + Integer.toString((int) powerUpCountDown),
+			camera.position.x - 200, camera.position.y + 190);
 			if (scoreSpeedUp.active == true)
 				score += .1;
 		}
-
+		//fish
 		if (fishCountDown <= 0) {
 			fishPowerUp.active = false;
-			player.form = 0;
+			if (attackCountDown <= 0) {
+				player.form = 0;
+			}
 		} else {
 			fishCountDown -= .02;
 			font.draw(batch,
-					"Fish Mode: " + Integer.toString((int) fishCountDown),
-					camera.position.x - 150, camera.position.y + 240);
+			"Fish Mode: " + Integer.toString((int) fishCountDown),
+			camera.position.x - 150, camera.position.y + 240);
 		}
+		//attack
+		if (attackCountDown <= 0) {
+			bubbleBeam.active = false;
+			if (fishPowerUp.active) {
+				player.form = 1;
+			} else {
+				player.form = 0;
+			}
+		} else {
+			attackCountDown -= .02;
+		} 
 
 		// RESET THE POWERUPS
 		if ((System.currentTimeMillis() % 12000) < 1000)
@@ -569,14 +620,6 @@ public class GameScreen implements Screen {
 			player.x = camera.position.x - 600;
 		}
 		score += 0.02;
-		// for shooting bubbles
-		for (int i = 0; i < bubbles.size(); i++) {
-			bubbles.get(i).update(dt);
-			if (bubbles.get(i).shouldRemove()) {
-				bubbles.remove(i);
-				i--;
-			}
-		}
 	}
 	
 	public void loseLife() {
@@ -586,6 +629,11 @@ public class GameScreen implements Screen {
 			player.y = camera.position.y;
 			player.invincible = true;
 			invincibleTimer = 5;
+			
+			score -= 250;
+			if (score < 0) {
+				score = 0;
+			}
 		}
 		else {
 			int i = checkNewScore(Integer.toString((int) score) + "," + game.username);
@@ -593,13 +641,6 @@ public class GameScreen implements Screen {
 				writeNewScores();
 			gameState = GAMEOVER;
 			dataSaved = true;
-		}
-	}
-
-	public void draw() {
-		// drawing bubbles
-		for (int i = 0; i < bubbles.size(); i++) {
-			bubbles.get(i).draw(sr);
 		}
 	}
 

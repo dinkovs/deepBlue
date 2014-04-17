@@ -5,7 +5,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.screens.MenuScreen;
 
@@ -21,13 +20,9 @@ public class DeepBlue extends Game implements ApplicationListener{
 		main_menu_screen = new MenuScreen(this, 0);
 		
 		setScreen(main_menu_screen);
-		
-		//background main menu music
-		Music mainMusic;
-		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/mainMusic.mp3"));
-		mainMusic.setLooping(true);
-		mainMusic.play();
-		
+
+	
+			
 		//username dialog box
 		enteredName = false;
 		Gdx.input.getTextInput(new TextInputListener() {
@@ -41,11 +36,10 @@ public class DeepBlue extends Game implements ApplicationListener{
 
 			@Override
 			public void canceled() {
-				// TODO Auto-generated method stub
-				
+				Gdx.app.exit();
 			}
 			
-			}, "Log-In", "<Enter Username Here>");
+			}, "Log-In (12 characters max)", "<Username>");
 		}
 
 		
