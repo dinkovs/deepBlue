@@ -196,9 +196,15 @@ public class GameScreen implements Screen, ApplicationListener {
 			try {
 				//System.out.println(data.get(i));
 				wr.write(data.get(i));
+				wr.newLine();
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
+		}
+		try{
+			wr.flush();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
