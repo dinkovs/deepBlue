@@ -227,7 +227,7 @@ public class GameScreen implements Screen {
 	// Spawn Enemy Function
 	public void spawnEnemies() {
 		current = System.currentTimeMillis();
-		if(current - start > (Math.random() * (20000-(levelSpeed*1000*2))) + (5000 - (levelSpeed*500)))
+		if(current - start > (Math.random() * (20000-(levelSpeed*1000*2))) + (7000 - (levelSpeed*500)))
 		{
 			//Make sure enemy spawns off to the right of the screen with a random Y height
 			enemies.add(new Enemy((int) camera.position.x + 700, 
@@ -265,7 +265,7 @@ public class GameScreen implements Screen {
 	public void spawnJellies()
 	{
 		jellyCurrentTime = System.currentTimeMillis();
-		if(jellyCurrentTime - jellyStartTime > (Math.random() * (18000-(levelSpeed*1000*2))) + (5000 - (levelSpeed*1000)))
+		if(jellyCurrentTime - jellyStartTime > (Math.random() * (18000-(levelSpeed*1000*2))) + (8000 - (levelSpeed*1000)))
 		{
 			jellies.add(new Jellyfish((float) camera.position.x + 700, 
 					(float) Math.random() * (500 - 50) + 50));
