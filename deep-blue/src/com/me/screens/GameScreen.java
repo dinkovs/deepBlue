@@ -227,7 +227,7 @@ public class GameScreen implements Screen {
 	// Spawn Enemy Function
 	public void spawnEnemies() {
 		current = System.currentTimeMillis();
-		if(current - start > Math.random() * (20000 - 8000) + 8000)
+		if(current - start > (Math.random() * (20000-(levelSpeed*1000*2))) + (5000 - (levelSpeed*500)))
 		{
 			//Make sure enemy spawns off to the right of the screen with a random Y height
 			enemies.add(new Enemy((int) camera.position.x + 700, 
@@ -265,7 +265,7 @@ public class GameScreen implements Screen {
 	public void spawnJellies()
 	{
 		jellyCurrentTime = System.currentTimeMillis();
-		if(jellyCurrentTime - jellyStartTime > Math.random() * (20000 - 10000) + 10000)
+		if(jellyCurrentTime - jellyStartTime > (Math.random() * (18000-(levelSpeed*1000*2))) + (5000 - (levelSpeed*1000)))
 		{
 			jellies.add(new Jellyfish((float) camera.position.x + 700, 
 					(float) Math.random() * (500 - 50) + 50));
@@ -333,6 +333,7 @@ public class GameScreen implements Screen {
 			levelSpeed+= .5;
 			startGameTime = System.currentTimeMillis();
 			currentGameTime = System.currentTimeMillis();
+			System.out.println(levelSpeed);
 		}
 
 		// Scrolling screen code
@@ -389,8 +390,8 @@ public class GameScreen implements Screen {
 		for(int u = 0; u < jellies.size();u++)
 		{
 			batch.draw(jellies.get(u).getImage(), jellies.get(u).x, jellies.get(u).y);
-			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y + 15,
-					jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight());
+			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y + 35 ,
+					jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight() - 35);
 			
 		}
 		
@@ -528,9 +529,9 @@ public class GameScreen implements Screen {
 			lifePowerUp.reset(camera.position.x);
 		
 		//Hook Resetting
-		if ((System.currentTimeMillis() % 15000) < 1000)
+		if ((System.currentTimeMillis() % (15000 - levelSpeed*1000)) < 1000)
 			hook1.reset(camera.position.x);
-		if ((System.currentTimeMillis() % 20000) < 1000)
+		if ((System.currentTimeMillis() % (20000- levelSpeed*1000)) < 1000)
 			hook2.reset(camera.position.x);
 		
 
