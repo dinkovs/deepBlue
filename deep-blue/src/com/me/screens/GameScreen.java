@@ -101,11 +101,11 @@ public class GameScreen implements Screen, ApplicationListener {
 		player = new Player(bubbles, this);
 
 		// IMPLEMENT GAME OBJECTS
-		scorePlus = new PowerUp(1, 800);
-		scoreSpeedUp = new PowerUp(2, 800);
-		fishPowerUp = new PowerUp(3, 1200);
+		scorePlus = new PowerUp(1, -800);
+		scoreSpeedUp = new PowerUp(2, -800);
+		fishPowerUp = new PowerUp(3, -800);
 		bubbleBeam = new PowerUp(4, 1000);
-		lifePowerUp = new PowerUp(5, -1000);
+		lifePowerUp = new PowerUp(5, -800);
 		hook1 = new Hook();
 		hook2 = new Hook();
 		eel = new Eel(camera.position.x + 1000 , 390);
@@ -229,7 +229,7 @@ public class GameScreen implements Screen, ApplicationListener {
 	// Spawn Enemy Function
 	public void spawnEnemies() {
 		current = System.currentTimeMillis();
-		if(current - start > Math.random() * (20000 - 8000) + 8000)
+		if(current - start > (Math.random() * (20000-(levelSpeed*1000*2))) + (7000 - (levelSpeed*500)))
 		{
 			//Make sure enemy spawns off to the right of the screen with a random Y height
 			enemies.add(new Enemy((int) camera.position.x + 700, 
@@ -267,10 +267,14 @@ public class GameScreen implements Screen, ApplicationListener {
 	public void spawnJellies()
 	{
 		jellyCurrentTime = System.currentTimeMillis();
-		if(jellyCurrentTime - jellyStartTime > Math.random() * (20000 - 5000) + 5000)
+		if(jellyCurrentTime - jellyStartTime > (Math.random() * (18000-(levelSpeed*1000*2))) + (8000 - (levelSpeed*1000)))
 		{
 			jellies.add(new Jellyfish((float) camera.position.x + 700, 
+<<<<<<< HEAD
 					(float) Math.random() * (500 - 100) + 100));
+=======
+					(float) Math.random() * (500 - 50) + 50));
+>>>>>>> 3163d812991db46f3f3b7e7446c63f3d461dbd92
 			jellyStartTime = System.currentTimeMillis();
 			jellyCurrentTime = System.currentTimeMillis();
 		}
@@ -335,6 +339,7 @@ public class GameScreen implements Screen, ApplicationListener {
 			levelSpeed+= .5;
 			startGameTime = System.currentTimeMillis();
 			currentGameTime = System.currentTimeMillis();
+			System.out.println(levelSpeed);
 		}
 
 		// Scrolling screen code
@@ -391,8 +396,13 @@ public class GameScreen implements Screen, ApplicationListener {
 		for(int u = 0; u < jellies.size();u++)
 		{
 			batch.draw(jellies.get(u).getImage(), jellies.get(u).x, jellies.get(u).y);
+<<<<<<< HEAD
 			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y + 15,
 					jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight());
+=======
+			jellies.get(u).boundingBox = new Rectangle (jellies.get(u).x, jellies.get(u).y + 35 ,
+					jellies.get(u).getImage().getRegionWidth(), jellies.get(u).getImage().getRegionHeight() - 35);
+>>>>>>> 3163d812991db46f3f3b7e7446c63f3d461dbd92
 			
 		}
 		
@@ -550,11 +560,13 @@ public class GameScreen implements Screen, ApplicationListener {
 			bubbleBeam.reset(camera.position.x);
 		if ((System.currentTimeMillis() % lifePowerUp.resetTimer) < 1000)
 			lifePowerUp.reset(camera.position.x);
+		if ((System.currentTimeMillis() % fishPowerUp.resetTimer) < 1000)
+			fishPowerUp.reset(camera.position.x);
 		
 		//Hook Resetting
-		if ((System.currentTimeMillis() % 15000) < 1000)
+		if ((System.currentTimeMillis() % (15000 - levelSpeed*1000)) < 1000)
 			hook1.reset(camera.position.x);
-		if ((System.currentTimeMillis() % 20000) < 1000)
+		if ((System.currentTimeMillis() % (20000- levelSpeed*1000)) < 1000)
 			hook2.reset(camera.position.x);
 		
 

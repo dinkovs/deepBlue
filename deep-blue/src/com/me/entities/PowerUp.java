@@ -32,6 +32,7 @@ public class PowerUp extends SeaObjects{
 			break;
 		case 3:
 			image = Images.fishpowerup_sprite;
+			resetTimer = 30000;
 			break;
 		case 4:
 			image = Images.bubblebeam_sprite;
@@ -56,8 +57,14 @@ public class PowerUp extends SeaObjects{
 		boundingBox.x = this.x;
 		boundingBox.y = this.y;
 		
-		if(type == 5) resetTimer += 20000;
-		
+		switch(type) {
+		case(3):
+			resetTimer += 10000;
+		case(5):
+			resetTimer += 20000;
+			break;
+		}
+				
 		active = false;
 		activated = false;
 	}

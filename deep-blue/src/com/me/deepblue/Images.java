@@ -65,6 +65,10 @@ public class Images {
 	public static Texture gameOver_image;
 	public static Sprite gameOver_sprite;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	public static Texture eelAttack_image;
+>>>>>>> 3163d812991db46f3f3b7e7446c63f3d461dbd92
 	public static Texture pauseScreen_image;
 	public static Sprite pauseScreen_sprite;
 =======
@@ -190,12 +194,15 @@ public class Images {
 		boat_image = new Texture(Gdx.files.internal("play/boat_hull.png"));
 		boat_sprite =  new Sprite(boat_image);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		boat_sprite.flip(true, true);
 
 		turtleAttack_image = new Texture(Gdx.files.internal("play/turtleAttack.png"));
 		fishAttack_image = new Texture(Gdx.files.internal("play/fishAttack.png"));
 =======
 >>>>>>> 38a8d61... Added Eel
+=======
+>>>>>>> 3163d812991db46f3f3b7e7446c63f3d461dbd92
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));
