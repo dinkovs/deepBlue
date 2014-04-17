@@ -64,8 +64,12 @@ public class Images {
 	public static Texture boat_image;
 	public static Texture gameOver_image;
 	public static Sprite gameOver_sprite;
+<<<<<<< HEAD
 	public static Texture pauseScreen_image;
 	public static Sprite pauseScreen_sprite;
+=======
+	public static Texture eelAttack_image;
+>>>>>>> 38a8d61... Added Eel
 	
 	//Leaderboard Images
 	public static Texture goBack_image;
@@ -129,6 +133,7 @@ public class Images {
 		
 		turtle_image = new Texture(Gdx.files.internal("play/turtleSwimv2.png"));
 		fish_image = new Texture(Gdx.files.internal("play/fish_spritesheetv2.png"));
+		eelAttack_image = new Texture(Gdx.files.internal("play/eelAttack_spritesheet.png"));
 		
 		shark_image = new Texture(Gdx.files.internal("play/shark.png"));
 		shark_sprite =  new Sprite(shark_image);
@@ -174,20 +179,23 @@ public class Images {
 		
 		school_image = new Texture(Gdx.files.internal("play/fishy_v2.png"));
 		school_sprite =  new Sprite(school_image);
-		school_sprite.flip(true, true);
+		school_sprite.flip(false, true);
 		
 		school_image2 = new Texture(Gdx.files.internal("play/fishy_v1.png"));
 		school_sprite2 =  new Sprite(school_image2);
-		school_sprite2.flip(true, true);
+		school_sprite2.flip(false, true);
 		
 		jellyfish_image = new Texture(Gdx.files.internal("play/jellyfish.png"));
 
 		boat_image = new Texture(Gdx.files.internal("play/boat_hull.png"));
 		boat_sprite =  new Sprite(boat_image);
+<<<<<<< HEAD
 		boat_sprite.flip(true, true);
 
 		turtleAttack_image = new Texture(Gdx.files.internal("play/turtleAttack.png"));
 		fishAttack_image = new Texture(Gdx.files.internal("play/fishAttack.png"));
+=======
+>>>>>>> 38a8d61... Added Eel
 		
 		/*
 		fish_image = new Texture(Gdx.files.internal("menu/fish.png"));
