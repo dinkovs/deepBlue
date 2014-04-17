@@ -84,6 +84,16 @@ public class MenuScreen implements Screen{
 				leaderboard_screen = new LeaderboardScreen(game, wave_x);
 				game.setScreen(leaderboard_screen);
 			}
+			else if(click.x >= 356 && click.x <= 591 && click.y >= 380 && click.y <= 511){
+				dispose();
+				leaderboard_screen = new LeaderboardScreen(game, wave_x);
+				game.setScreen(leaderboard_screen);
+			}
+			else if(click.x >= 918 && click.x <= 1146 && click.y >= 350 && click.y <= 480){
+				dispose();
+				leaderboard_screen = new LeaderboardScreen(game, wave_x);
+				game.setScreen(leaderboard_screen);
+			}
 		}
 	}
 

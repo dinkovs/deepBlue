@@ -1,4 +1,3 @@
-//151 183
 package com.me.deepblue;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
