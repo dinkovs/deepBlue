@@ -99,11 +99,11 @@ public class GameScreen implements Screen {
 		player = new Player(bubbles, this);
 
 		// IMPLEMENT GAME OBJECTS
-		scorePlus = new PowerUp(1, 800);
-		scoreSpeedUp = new PowerUp(2, 800);
-		fishPowerUp = new PowerUp(3, 1200);
+		scorePlus = new PowerUp(1, -800);
+		scoreSpeedUp = new PowerUp(2, -800);
+		fishPowerUp = new PowerUp(3, -800);
 		bubbleBeam = new PowerUp(4, 1000);
-		lifePowerUp = new PowerUp(5, -1000);
+		lifePowerUp = new PowerUp(5, -800);
 		hook1 = new Hook();
 		hook2 = new Hook();
 		eel = new Eel(camera.position.x + 1000 , 390);
@@ -527,6 +527,8 @@ public class GameScreen implements Screen {
 			bubbleBeam.reset(camera.position.x);
 		if ((System.currentTimeMillis() % lifePowerUp.resetTimer) < 1000)
 			lifePowerUp.reset(camera.position.x);
+		if ((System.currentTimeMillis() % fishPowerUp.resetTimer) < 1000)
+			fishPowerUp.reset(camera.position.x);
 		
 		//Hook Resetting
 		if ((System.currentTimeMillis() % (15000 - levelSpeed*1000)) < 1000)
