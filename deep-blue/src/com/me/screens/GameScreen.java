@@ -396,9 +396,10 @@ public class GameScreen implements Screen {
 		}
 		
 		//DRAW EEL
-		if(eel != null)
+		if(eel != null) {
 			batch.draw(eel.getImage(), eel.x, eel.y);
-
+			eel.boundingBox = new Rectangle (eel.x+15,eel.y + 18,eel.getImage().getRegionWidth()-20, eel.getImage().getRegionHeight());
+		}
 		// DRAW OBJECTS
 		if (!scoreSpeedUp.activated)
 			batch.draw(scoreSpeedUp.image, scoreSpeedUp.x, scoreSpeedUp.y);
@@ -430,7 +431,6 @@ public class GameScreen implements Screen {
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy enemy = enemies.get(i);
 			if (player.boundingBox.overlaps(enemy.boundingBox) && !player.invincible) {
-				System.out.println("OMG NOOB");
 				loseLife();
 			}
 			
@@ -438,11 +438,12 @@ public class GameScreen implements Screen {
 		for (int i = 0; i < jellies.size(); i++) {
 			Jellyfish jellyfish = jellies.get(i);
 			if (player.boundingBox.overlaps(jellyfish.boundingBox) && !player.invincible) {
-				System.out.println("You've got to try this sandwich");
 				loseLife();
 			}
 		}
-		
+		if (player.boundingBox.overlaps(eel.boundingBox) && !player.invincible && eel.imageIterator <= 7 && eel.imageIterator >= 4) {
+			loseLife();
+		}
 		if (player.boundingBox.overlaps(scoreSpeedUp.boundingBox)
 				&& !scoreSpeedUp.activated) {
 			scoreSpeedUp.active = true;

@@ -14,7 +14,7 @@ import com.me.deepblue.Images;
 public class Eel extends SeaObjects{
 
 	TextureRegion[][] imageEel = TextureRegion.split(Images.eelAttack_image, 90, 235);
-	float imageIterator;
+	public float imageIterator;
 	
 	public Eel(float x, float y)
 	{
@@ -30,7 +30,7 @@ public class Eel extends SeaObjects{
 	 */
 	public TextureRegion getImage() {
 		if (imageIterator < 29)
-	   		imageIterator += 0.25;
+	   		imageIterator += 0.06;
 	   	else
 	   		imageIterator = 0;
 	   	return imageEel[(int)imageIterator / 5][4 - ((int)imageIterator % 5)];
