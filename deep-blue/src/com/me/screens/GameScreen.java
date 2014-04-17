@@ -265,7 +265,7 @@ public class GameScreen implements Screen {
 	public void spawnJellies()
 	{
 		jellyCurrentTime = System.currentTimeMillis();
-		if(jellyCurrentTime - jellyStartTime > Math.random() * (20000 - 5000) + 5000)
+		if(jellyCurrentTime - jellyStartTime > Math.random() * (20000 - 10000) + 10000)
 		{
 			jellies.add(new Jellyfish((float) camera.position.x + 700, 
 					(float) Math.random() * (500 - 50) + 50));
