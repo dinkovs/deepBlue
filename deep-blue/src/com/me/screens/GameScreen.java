@@ -459,7 +459,7 @@ public class GameScreen implements Screen {
 		}
 		
 		if (player.boundingBox.overlaps(eel.boundingBox)) {
-			if (!(player.invincible || bubbleBeam.active)) {
+			if (!(player.invincible || bubbleBeam.active) && eel.imageIterator >= 3 && eel.imageIterator <= 7) {
 				sound = Gdx.audio.newSound(Gdx.files.internal("sounds/damage.mp3"));
 				sound.play(.2f);
 				loseLife();
