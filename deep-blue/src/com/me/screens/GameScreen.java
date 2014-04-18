@@ -313,8 +313,10 @@ public class GameScreen implements Screen {
 		batch.begin();
 		// RENDERING CODE GOES HERE
 
-		if(Gdx.input.isKeyPressed(Keys.P))
+		if(Gdx.input.isKeyPressed(Keys.P)){
+				game.subMusic.pause();
 				gameState = PAUSED;
+		}
 		
 		//Spawn the school make sure it hasn't already been spawned
 		if(t != 1)
@@ -651,8 +653,10 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void pause() {
-		if(Gdx.input.isKeyPressed(Keys.U))
+		if(Gdx.input.isKeyPressed(Keys.U)){
 			gameState = PLAYING;
+			game.subMusic.play();
+		}
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();

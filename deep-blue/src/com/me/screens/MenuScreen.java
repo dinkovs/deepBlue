@@ -22,7 +22,7 @@ public class MenuScreen implements Screen {
 	SpriteBatch batch;
 	int wave_x;
 	Music mainMusic;
-	Music subMusic;
+	
 	
 	public GameScreen play_screen;
 	public LeaderboardScreen leaderboard_screen;
@@ -51,6 +51,11 @@ public class MenuScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		if(game.subMusic.isPlaying()) {
+			game.subMusic.stop();
+			game.subMusic.dispose();
+		}
 		
 		camera.update();
 		onClickListener();
@@ -88,9 +93,8 @@ public class MenuScreen implements Screen {
 				dispose();
 				play_screen = new GameScreen(game);
 				game.setScreen(play_screen);
-				subMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/gameMusic.mp3"));
-				subMusic.play();
-				subMusic.setVolume(.2f);
+				game.subMusic.play();
+				game.subMusic.setVolume(.2f);
 			}
 			else if(click.x >= 639 && click.x <= 847 && click.y >= 372 && click.y <= 510){
 				dispose();
